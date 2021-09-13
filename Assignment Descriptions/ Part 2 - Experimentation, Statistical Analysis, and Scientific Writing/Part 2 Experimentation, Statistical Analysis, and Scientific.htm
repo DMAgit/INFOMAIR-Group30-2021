@@ -1,0 +1,1158 @@
+<!DOCTYPE HTML ><!-- listContent.jsp -->
+
+
+<html  lang="en-US-UU">
+ <head>
+  <title>Part 2: Experimentation, Statistical Analysis, and Scientific ...</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta id="request-method" name="request-method" content="GET">
+  <meta name="author" content="Blackboard">
+  <meta name="copyright" content="&copy; 1997-2021 Blackboard Inc. All Rights Reserved. U.S. Patent No. 7,493,396 and 7,558,853. Additional Patents Pending.">
+  <meta name="keywords" content="Blackboard">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+<script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"e99ceaa32b",applicationID:"9670169"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1210.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+  <link rel="SHORTCUT ICON" type="image/x-icon" href="/ui/bb-icon2.ico">
+     <link rel="stylesheet" type="text/css" href="/common/shared.css?v=3900.13.0-rel.31+9040981" id="css_0">
+     <link rel="stylesheet" type="text/css" href="/themes/as_2015/theme.css?v=3900.13.0-rel.31+9040981" id="css_1">
+     <link rel="stylesheet" type="text/css" href="/themes/as_2015/app_nav.css?v=3900.13.0-rel.31+9040981" id="css_2">
+     <link rel="stylesheet" type="text/css" href="/webapps/vtbe-tinymce/css/prism/prism.css?v=3900.13.0-rel.31+9040981" id="css_3">
+     <link rel="stylesheet" type="text/css" href="/webapps/videointegration/css/video-integration.css?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981" id="css_4">
+          <style type="text/css" id="courseMenuCustomCSS">
+
+
+.noteditmode .listCm .courseMenu a:hover span, 
+.noteditmode .listCm .courseMenu a:focus span {
+	color:#FFFFFF!important;
+}
+
+#courseMenuPalette_paletteTitleHeading h3 {
+   background-color: #333333;
+}
+
+#courseMenu_folderView ul {
+   background-color: #333333;
+}
+
+#courseMenuPalette div.navPaletteContent ul li a,
+#courseMenuPalette h3 a,
+#previewCourseMenu h3 a,
+.navPaletteContent h3 a.submenuLink:before,
+.navPaletteContent h3 a.submenuLink_active:before,
+#courseMenuPalette div.navPaletteContent ul li a span,
+#courseMenuPalette .navPaletteContent .subhead
+{
+  color: #FFFFFF;
+  text-shadow: none;
+  /*should only be 2012*/
+}
+
+#courseMenuPalette ul.courseMenu li.divider hr
+{
+  background-color: #FFFFFF;
+}
+
+#courseMenuPalette ul.courseMenu li h4
+{
+  color: #FFFFFF;
+}
+
+#courseMenuPalette h4.treehead
+{
+  color: #FFFFFF;
+}
+
+#courseMenuPalette div.navPaletteContent
+{
+  background-color: #333333;
+}
+
+#courseMenuPalette_contents li {
+  background-color: #333333;
+}
+
+/*Active course menu view bubble stem*/
+#courseMenuPalette .actionBarMicro .active > a:after {
+  border-bottom-color: #333333;
+}
+
+/* 2016 Theme override default blue and white on course creation */
+
+
+/* if theme is classic */
+
+</style>
+      <style type="text/css">.topGlobalLinks a.home{background-image:url(/images/console/icons/home_0.gif)}.bottom-buttons-home a{background-image:url(/images/console/icons/home_0.gif);background-repeat:no-repeat;background-position:50% 0}.topGlobalLinks a.help{background-image:url(/images/console/icons/help_0.gif)}.bottom-buttons-help a{background-image:url(/images/console/icons/help_0.gif);background-repeat:no-repeat;background-position:50% 0}.topGlobalLinks a.logout{background-image:url(/images/console/icons/logout_0.gif)}.global-nav-bar .logout-link,.global-nav-bar .logout-link:hover,.global-nav-bar .logout-link:focus{background-image:url(/images/console/icons/logout_0.gif);background-repeat:no-repeat;background-position:50% 0}</style>
+       <link rel="stylesheet" type="text/css" media="print" href="/ui/styles/print.css?v=3900.13.0-rel.31+9040981">
+    <script type="text/javascript" src="/javascript/i18n.js?v=3900.13.0-rel.31+9040981"></script>
+      <script language='javascript' type='text/javascript'>
+
+var JS_RESOURCES = new Object();
+
+function _init_bundle_JS_RESOURCES() {
+
+    JS_RESOURCES['validation.email'] = 'A fully qualified email address (for example, info@blackboard.com) must be entered.';
+    JS_RESOURCES['validation.radio.required'] = 'Make a selection to continue.';
+    JS_RESOURCES['assessment.incomplete.confirm.backtrackProhibited.survey'] = 'The following questions may be incomplete:\n {0}\nClick cancel to return to the survey. Click Ok to save the incomplete answer.';
+    JS_RESOURCES['common.list.separator.comma'] = '{0}, {1}';
+    JS_RESOURCES['active.filter.search.terms'] = 'Search Terms';
+    JS_RESOURCES['validation.points.decimal.places.error.location'] = 'Point Values are limited to 5 decimal places: {0}.';
+    JS_RESOURCES['validation.maximum_length.plural'] = 'Must not contain more than {1} characters: {0}.\nReduce the size of the input by {2} characters.';
+    JS_RESOURCES['assessment.incomplete.confirm.backtrackProhibited'] = 'The following questions may be incomplete:\n {0}\nClick cancel to return to the test. Click Ok to save the incomplete answer.';
+    JS_RESOURCES['validation.multiSelect.minItems'] = 'Multiselect box should contain at least {0} number of items.';
+    JS_RESOURCES['validation.cmp_field.required'] = 'A value must be provided for {0}\nwhen {1} field is not empty';
+    JS_RESOURCES['warning.email'] = 'Email address is a recommended field. Users will be unable to use parts of the system without an email address.';
+    JS_RESOURCES['validation.maximum_length.no_name.singular'] = 'Must not contain more than {0} characters.\nReduce the size of the input by one character.';
+    JS_RESOURCES['validation.multiSelect.maxItems'] = 'Multiselect box should not contain more than {0} number of items.';
+    JS_RESOURCES['validation.number'] = 'A valid numeric value must be entered: {0}.';
+    JS_RESOURCES['validation.date.required'] = 'A complete date value must be provided: {0}.';
+    JS_RESOURCES['portalmodule.section.remove'] = 'Delete: {0}?';
+    JS_RESOURCES['show.helptext'] = 'Show Help Text';
+    JS_RESOURCES['validation.password'] = 'Password cannot be empty or contain only spaces.';
+    JS_RESOURCES['validation.percent'] = 'A valid percent value between 0 and 100 must be entered.';
+    JS_RESOURCES['validation.mismatch'] = 'The values entered do not match: {0}.\nConfirm: {0}.';
+    JS_RESOURCES['validation.maximum_length.no_name.plural'] = 'Must not contain more than {0} characters.\nReduce the size of the input by {1} characters.';
+    JS_RESOURCES['validation.invalid_value'] = 'Invalid numeric value provided: {0}.';
+    JS_RESOURCES['field_name.substitute'] = '\'\'{0}\'\' input field';
+    JS_RESOURCES['validation.required'] = 'A value must be provided: {0}.';
+    JS_RESOURCES['active.filter.free.form.text.blank'] = 'Specify a value for the search text field';
+    JS_RESOURCES['validate.alignment.missing.content'] = 'You selected alignments but did not select any alignable content to copy.';
+    JS_RESOURCES['validation.system_role.reserve'] = '"bb" is not permitted at the beginning of a role ID.';
+    JS_RESOURCES['validation.date_past'] = 'The end date cannot be earlier than the start date.';
+    JS_RESOURCES['validation.invalid_chars'] = 'Contains illegal characters: {0}.\nDelete these characters: {1}';
+    JS_RESOURCES['confirm.delete_item_value'] = 'This item {0} will be deleted. Continue?';
+    JS_RESOURCES['hide.helptext'] = 'Hide Help Text';
+    JS_RESOURCES['validate.range.lessthen.str'] = 'Less Than {0}';
+    JS_RESOURCES['validation.date_past.confirm'] = 'The time is in the past.\nContinue with this time?';
+    JS_RESOURCES['validate.login.invalid.username.or.pass'] = 'Enter a username and password.';
+    JS_RESOURCES['validation.negative'] = 'A valid non-negative value must be entered: {0}.';
+    JS_RESOURCES['validation.url'] = 'A valid URL (for example, http://www.myschool.edu) must be entered.';
+    JS_RESOURCES['validate.range.overlap'] = 'criteria ({0}) overlaps criteria ({1}).';
+    JS_RESOURCES['validate.range.between.str'] = 'Between {0} and {1}';
+    JS_RESOURCES['validation.portal.tool.items.remove'] = 'Delete: {0}?';
+    JS_RESOURCES['validation.association.refresh.confirm'] = 'The associated items information might have been updated.\nClick \'OK\' to refresh the list or click \'Cancel\' to keep the current page.';
+    JS_RESOURCES['validate.enrolloptions.error.codeconflict'] = 'The Access Code Enrollment option conflicts with the selection of {instructor} Led enrollment.';
+    JS_RESOURCES['validation.points.decimal.places'] = 'Point Values are limited to 5 decimal places.';
+    JS_RESOURCES['validation.option.required'] = 'At least one option must be selected from the list.';
+    JS_RESOURCES['list.checkToSelectAllItems'] = 'Check to select all items';
+    JS_RESOURCES['active.filter.changed.alert'] = 'criteria now contains';
+    JS_RESOURCES['vtbe.artifact.footer.validate.nameIfSaveArtifact'] = 'Specify a Name in order to Save as a Reusable Object.';
+    JS_RESOURCES['validate.invalidate.number'] = 'Please input valid number instead of {0}.';
+    JS_RESOURCES['validation.valid_course_id'] = 'Course id contains illegal characters or multibyte characters.';
+    JS_RESOURCES['assessment.incomplete.confirm'] = 'The following questions may be incomplete:\n {0}\nClick cancel to return to the test. Click Ok to submit assessment.';
+    JS_RESOURCES['validate.enrolloptions.error.nooption'] = 'Warning: Choose either the {instructor} Led or the Self-Enrollment option.';
+    JS_RESOURCES['validation.date_equal'] = 'The start date cannot be equal to the end date.';
+    JS_RESOURCES['validation.cmp_field.rejected'] = 'The {0} cannot be used without a corresponding {1} value.';
+    JS_RESOURCES['validation.time.required'] = 'A complete time value must be provided: {0}.';
+    JS_RESOURCES['validation.integer_number'] = 'A valid integer numeric value must be entered: {0}.';
+    JS_RESOURCES['validation.maximum_length'] = 'Must not contain more than 255 characters';
+    JS_RESOURCES['validate.enrolloptions.error.emailrequestconflict'] = 'The selected email enrollment option conflicts with the self-enrollment selection.';
+    JS_RESOURCES['invalid_char.space'] = 'space';
+    JS_RESOURCES['validate.range.morethen.str'] = 'More Than {0}';
+    JS_RESOURCES['notification.submit'] = 'Action already submitted.\nWait until the action is complete.';
+    JS_RESOURCES['validation.plain_text.confirm'] = 'To display equations correctly in this document, Smart Text or HTML format must be selected.\nClick \'OK\' to save in selected Plain Text format or click \'Cancel\' to select a new format.';
+    JS_RESOURCES['invalid_char.comma'] = 'comma';
+    JS_RESOURCES['validation.allow_negtive.percent'] = 'A valid percent value between -100 and 100 must be entered.';
+    JS_RESOURCES['confirm.remove_item'] = 'This action is final and cannot be undone. Continue?';
+    JS_RESOURCES['list.uncheckToDeselectAllItems'] = 'Uncheck to deselect all items';
+    JS_RESOURCES['validation.maximum_length.singular'] = 'Must not contain more than {1} characters: {0}.\nReduce the size of the input by one character.';
+    JS_RESOURCES['validation.rubric.decimalplaces'] = 'Too many decimal places. Maximum is 5.';
+    JS_RESOURCES['validation.minimum_length'] = 'A minimum of {0} characters must be entered: {1}.';
+    JS_RESOURCES['vtbe.artifact.footer.validate.saveLocationIfSaveArtifact'] = 'Specify a location for the Reusable Object.';
+    JS_RESOURCES['assessment.incomplete.confirm.survey'] = 'The following questions may be incomplete:\n {0}\nClick cancel to return to the survey. Click Ok to submit assessment.';
+    JS_RESOURCES['validation.image_type'] = 'Unknown image type: {0}. Image may not display correctly.';
+    JS_RESOURCES['validate.invalidate.number.space'] = 'Space';
+
+    JS_RESOURCES.getString = i18n_get_string;
+    JS_RESOURCES.getFormattedString = i18n_get_formatted_string;
+
+}
+
+_init_bundle_JS_RESOURCES();
+
+</script>
+<script language='javascript' type='text/javascript'>
+
+var LOCALE_SETTINGS = new Object();
+
+function _init_bundle_LOCALE_SETTINGS() {
+
+    LOCALE_SETTINGS['LOCALE_SETTINGS.ADDRESS_FIELD_ORDER'] = 'STREET_1 STREET_2 CITY STATE ZIP_CODE COUNTRY';
+    LOCALE_SETTINGS['number_format.exponent'] = 'eE';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN.2'] = '{1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.YEAR_CHARACTER.03255'] = '';
+    LOCALE_SETTINGS['BBI18N.SOLARIS_CHARSET'] = 'ISO8859-1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN.1'] = '{0}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_MONTH.03255'] = 'ddd';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.internal_date_format'] = 'MM/dd/yy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_MONTH.03259'] = 'MMMM yyyy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.TIME_ORDER.00519'] = 'HMP';
+    LOCALE_SETTINGS['float.format'] = '^(([0-9]{1,3}(\\,[0-9]{3})*)|[0-9]*)(\\.[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.SORT_COLUMN'] = 'familyName';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.SHORT'] = '{1} {2} {3}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_SHORT.02097'] = 'SUN MON TUE WED THU FRI SAT';
+    LOCALE_SETTINGS['float.allow.negative.format'] = '^((([-]?[0-9]{1,3}(\\,[0-9]{3})*)|[-]?[0-9]*)(\\.[0-9]+)?|\\.[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TYPE'] = 'GREGORIAN';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.GIVEN_INITIAL_FAMILY_NAME'] = '{4} {2} {3}';
+    LOCALE_SETTINGS['efloat.format'] = '^[+-]?[0-9]*(\\.[0-9]+)?([eE][+-]?[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_WEEK.03260'] = 'MMM d[ yyyy]{ \'&#8212;\'[ MMM] d yyyy}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_FULL.02100'] = 'January February March April May June July August September October November December';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NUMBERS_HIJRI_LOCALIZED.00521'] = 'NO';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.LONG'] = '{0} {1} {2} {3}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.WORK_FIELD_ORDER'] = 'JOB_TITLE DEPARTMENT COMPANY B_PHONE_1 B_PHONE_2 B_FAX';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_FULL_HIJRI.02100'] = 'Muḥarram,Ṣafar,Rabīʿ\'al-Awwal,Rabīʿ\'ath-Thānī,Jumādā\'al-Ūlā,Jumādā\'ath-Thāniya,Rajab,Shaʿbān,Ramaḍān,Shawwāl,Dhū\'al-Qaʿda,Dhū\'al-Ḥijja';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.GREETING'] = 'Welcome, {1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_SHORT.00520'] = 'Jan Feb  Mar Apr  May Jun Jul Aug Sep Oct Nov Dec';
+    LOCALE_SETTINGS['number_format.thousands_sep'] = ',';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_WEEK.03256'] = 'ddd M/d';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.SHORT_SURNAME'] = '{3}, {1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.AM_PM.00522'] = 'AM PM';
+    LOCALE_SETTINGS['number_format.negative_prefix'] = '-';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DATE_ORDER.00519'] = 'MDY';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.PHONE_FIELD_ORDER'] = 'H_PHONE_1 H_PHONE_2 H_FAX M_PHONE';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_MIN.02099'] = 'Su Mo Tu We Th Fr Sa';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.24HR_SUPPORT.03208'] = '1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.FIRST_DAY_OF_WEEK.03207'] = '0';
+    LOCALE_SETTINGS['BBI18N.WINDOWS_CHARSET'] = 'ISO-8859-1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_SHORT_HIJRI.00520'] = 'Muḥarram,Ṣafar,Rabīʿ\'I,Rabīʿ\'II,Jumādā\'I,Jumādā\'II,Rajab,Shaʿbān,Ramaḍān,Shawwāl,Dhū\'al-Qaʿda,Dhū\'al-Ḥijja';
+    LOCALE_SETTINGS['BBI18N.LINUX_CHARSET'] = 'iso88591';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_CHARACTER.03253'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_CHARACTER.03254'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN_ORDER'] = 'title,givenName,middleName,familyName,suffix,otherName';
+    LOCALE_SETTINGS['number_format.decimal_point'] = '.';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_DAY.03258'] = 'dddd, MMM d, yyyy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAYS.00521'] = '01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.OVERRIDE_LONG_TIME_WITH_FULL'] = 'false';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_FULL.02098'] = 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.date_display_pattern'] = 'MM/DD/YY';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.EXTENDED_SURNAME'] = '{2} {3}';
+    LOCALE_SETTINGS['thousand.sep.format'] = ',';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NUMBERS_HIJRI.00521'] = '0 1 2 3 4 5 6 7 8 9';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.ADDRESS_ORDER.07832'] = 'street,city,region,postal_code,country';
+    LOCALE_SETTINGS['number_format.negative_suffix'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_DAY.03257'] = 'dddd M/d';
+
+    LOCALE_SETTINGS.getString = i18n_get_string;
+    LOCALE_SETTINGS.getFormattedString = i18n_get_formatted_string;
+
+}
+
+_init_bundle_LOCALE_SETTINGS();
+
+</script>
+
+      <script language='javascript' type='text/javascript'>
+
+var LOCALE_SETTINGS = new Object();
+
+function _init_bundle_LOCALE_SETTINGS() {
+
+    LOCALE_SETTINGS['LOCALE_SETTINGS.ADDRESS_FIELD_ORDER'] = 'STREET_1 STREET_2 CITY STATE ZIP_CODE COUNTRY';
+    LOCALE_SETTINGS['number_format.exponent'] = 'eE';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN.2'] = '{1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.YEAR_CHARACTER.03255'] = '';
+    LOCALE_SETTINGS['BBI18N.SOLARIS_CHARSET'] = 'ISO8859-1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN.1'] = '{0}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_MONTH.03255'] = 'ddd';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.internal_date_format'] = 'MM/dd/yy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_MONTH.03259'] = 'MMMM yyyy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.TIME_ORDER.00519'] = 'HMP';
+    LOCALE_SETTINGS['float.format'] = '^(([0-9]{1,3}(\\,[0-9]{3})*)|[0-9]*)(\\.[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.SORT_COLUMN'] = 'familyName';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.SHORT'] = '{1} {2} {3}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_SHORT.02097'] = 'SUN MON TUE WED THU FRI SAT';
+    LOCALE_SETTINGS['float.allow.negative.format'] = '^((([-]?[0-9]{1,3}(\\,[0-9]{3})*)|[-]?[0-9]*)(\\.[0-9]+)?|\\.[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TYPE'] = 'GREGORIAN';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.GIVEN_INITIAL_FAMILY_NAME'] = '{4} {2} {3}';
+    LOCALE_SETTINGS['efloat.format'] = '^[+-]?[0-9]*(\\.[0-9]+)?([eE][+-]?[0-9]+)?$';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_WEEK.03260'] = 'MMM d[ yyyy]{ \'&#8212;\'[ MMM] d yyyy}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_FULL.02100'] = 'January February March April May June July August September October November December';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NUMBERS_HIJRI_LOCALIZED.00521'] = 'NO';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.LONG'] = '{0} {1} {2} {3}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.WORK_FIELD_ORDER'] = 'JOB_TITLE DEPARTMENT COMPANY B_PHONE_1 B_PHONE_2 B_FAX';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_FULL_HIJRI.02100'] = 'Muḥarram,Ṣafar,Rabīʿ\'al-Awwal,Rabīʿ\'ath-Thānī,Jumādā\'al-Ūlā,Jumādā\'ath-Thāniya,Rajab,Shaʿbān,Ramaḍān,Shawwāl,Dhū\'al-Qaʿda,Dhū\'al-Ḥijja';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.GREETING'] = 'Welcome, {1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_SHORT.00520'] = 'Jan Feb  Mar Apr  May Jun Jul Aug Sep Oct Nov Dec';
+    LOCALE_SETTINGS['number_format.thousands_sep'] = ',';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_WEEK.03256'] = 'ddd M/d';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.SHORT_SURNAME'] = '{3}, {1}';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.AM_PM.00522'] = 'AM PM';
+    LOCALE_SETTINGS['number_format.negative_prefix'] = '-';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DATE_ORDER.00519'] = 'MDY';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.PHONE_FIELD_ORDER'] = 'H_PHONE_1 H_PHONE_2 H_FAX M_PHONE';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_MIN.02099'] = 'Su Mo Tu We Th Fr Sa';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.24HR_SUPPORT.03208'] = '1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.FIRST_DAY_OF_WEEK.03207'] = '0';
+    LOCALE_SETTINGS['BBI18N.WINDOWS_CHARSET'] = 'ISO-8859-1';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_SHORT_HIJRI.00520'] = 'Muḥarram,Ṣafar,Rabīʿ\'I,Rabīʿ\'II,Jumādā\'I,Jumādā\'II,Rajab,Shaʿbān,Ramaḍān,Shawwāl,Dhū\'al-Qaʿda,Dhū\'al-Ḥijja';
+    LOCALE_SETTINGS['BBI18N.LINUX_CHARSET'] = 'iso88591';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_CHARACTER.03253'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.MONTH_CHARACTER.03254'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NAME.COLUMN_ORDER'] = 'title,givenName,middleName,familyName,suffix,otherName';
+    LOCALE_SETTINGS['number_format.decimal_point'] = '.';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_TITLE_FORMAT_DAY.03258'] = 'dddd, MMM d, yyyy';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAYS.00521'] = '01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.OVERRIDE_LONG_TIME_WITH_FULL'] = 'false';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.DAY_FULL.02098'] = 'Sunday Monday Tuesday Wednesday Thursday Friday Saturday';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.date_display_pattern'] = 'MM/DD/YY';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.EXTENDED_SURNAME'] = '{2} {3}';
+    LOCALE_SETTINGS['thousand.sep.format'] = ',';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.NUMBERS_HIJRI.00521'] = '0 1 2 3 4 5 6 7 8 9';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.ADDRESS_ORDER.07832'] = 'street,city,region,postal_code,country';
+    LOCALE_SETTINGS['number_format.negative_suffix'] = '';
+    LOCALE_SETTINGS['LOCALE_SETTINGS.CALENDAR_COLUMN_FORMAT_DAY.03257'] = 'dddd M/d';
+
+    LOCALE_SETTINGS.getString = i18n_get_string;
+    LOCALE_SETTINGS.getFormattedString = i18n_get_formatted_string;
+
+}
+
+_init_bundle_LOCALE_SETTINGS();
+
+</script>
+
+         <script type="text/javascript" src="/javascript/cdn.js"></script>
+    <script type="text/javascript" src="/groupjs/BECC166BDCEC37CED8B592345B7F4671.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/UserDataDWRFacade.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/MashupDWRFacade.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/mathImg.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/titlebartagutils.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/ngui/inventoryList.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/groupjs/548621C5E220FF3FB38DFD1E1CC168F3.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/CourseMenuDWRFacade.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/UserPageInstructionsSettingDWRFacade.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/dwr/engine.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/ngui/breadcrumbs.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/ngui/tree.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/ngui/coursemenu.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/javascript/dwr/util.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/groupjs/5304DD2B3593AF9437938697C946EC88.js?v=3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/UserDWRFacade.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/bb-social-learning-bb_bb60/js/mybb.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/blackboard/dwr_open/interface/ToolActivityService.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/bb-gate-bb_bb60/js/tool_service.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    <script type="text/javascript" src="/webapps/privacy-disclosure/js/cookieConsent.js?v=3900.13.0-rel.31+9040981_3900.13.0-rel.31+9040981"></script>
+    </head>
+  <body id="learn-oe-body" >
+  
+<h1 class="hideoff hideFromQuickLinks">Open Quick Links</h1><div id=quick_links_wrap><a id=quick_links_lightbox_link href="#" onclick="quickLinks.lightboxHelper.toggleLightbox(); return false;" role=button aria-haspopup=true tabindex=1 title="Open&#x20;Quick&#x20;Links">Quick Links</a></div><div id=quickLinksLightboxDiv class=hideoff aria-hidden=true style="display:none"><div class=ax-content><div class=content-lite><div id=quick_links_landmarks_section><h2 class=hideFromQuickLinks>Page Landmarks</h2><ul class=shortcut-list id=quick_links_landmark_list></ul></div><div id=quick_links_headings_section><h2 class=hideFromQuickLinks>Content Outline</h2><ul class=shortcut-list id=quick_links_heading_list></ul></div></div><div id=quick_links_hotkeys_section class=legend><h2 class=hideFromQuickLinks>Keyboard Shortcuts</h2><ul class=keycombos id=quick_links_hotkey_list></ul></div></div></div><h1 class="hideoff hideFromQuickLinks"></h1><div class=global-nav-bar-wrap><div class=global-nav-bar-wrap-mobile-nav><button class="hamburger hamburger--squeeze" type=button><span class=hamburger-box><span class=hamburger-inner></span></span></button></div><div class="global-nav-bar logout"><a id="topframe.logout.label" href="/webapps/login/?action=logout" target=_top class="nav-link logout-link" title=Logout> Logout</a></div><div id=global-nav class=global-nav-bar role=navigation data-preview=false><div class=hideoff>Global Menu</div><button id=global-nav-link class="nav-link u_floatThis-right" href="#global-nav-flyout" aria-haspopup=true aria-controls=global-nav-flyout tabindex=1 accesskey=m title="Open&#x20;Global&#x20;Navigation&#x20;Menu"><img src="/images/ci/ng/default_profile_avatar.svg" alt="" id=global-avatar dataToolTitle="User Avatar Image" class=global-top-avatar /> Dimitar Angelov<span id=badgeTotal style="visibility: hidden" title=""><span class=hideoff id=badgeAXLabel>Activity Updates</span><span class=badge id=badgeTotalCount title=""></span></span><img src="/images/ci/mybb/arrowDown-topnav.png" alt="Expand Global Nav" id=global-toggle-img class=global-toggle /></button><div id=global-nav-flyout class=flyout-menu style="display: none;"><ul id=bottomButtons class=bottom-buttons><li class=bottom-buttons-home><a id="topframe.home.label" href="http://uu.blackboard.com/" target=_blank class=home title=Home> Home</a></li><li class=bottom-buttons-help><a id="topframe.help.label" href="#" onClick="globalNavigation.openHelpWindow('http://www.uu.nl/NL/Informatie/studenten/azlijst/Pages/Blackboard.aspx');" class=help title=Help> Help</a></li></ul></div></div></div>
+<!-- global_nav.jsp -->
+
+<div id="globalNavPageNavArea">
+    <table class="bouncer" summary="Top frame table" role="presentation">
+      <tr>
+        <td>
+          <div class="topTabs bgBanner" id="topTabs">
+
+            <div class="brandingImgWrap">
+              <a href="http://www.uu.nl/" target="_blank" title="Utrecht University">
+                <img  src="/branding/_1_1/UU_logo_EN_CMYK_diap_groter.fw_1350.fw.png"  alt="Utrecht University" title="Utrecht University" class="bannerImage"/>
+</a>
+            </div>
+
+              <div class="tabWrapper-right">
+              <H2 CLASS="hideoff">Top Frame Tabs</H2>
+              <table class="appTabs transparent" id="appTabList" summary="Tab List table" role="presentation">
+                <tr>
+                  <td id="My Blackboard"  class="active"  >
+                      <a href="/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_29_1" TARGET="_top" aria-current="true">
+                        <span>My Blackboard</span>
+                      </a>
+                    </td>
+                  <td id="Communities"  >
+                      <a href="/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_28_1" TARGET="_top" aria-current="false">
+                        <span>Communities</span>
+                      </a>
+                    </td>
+                  <td id="bbcms.label"  >
+                      <a href="/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_115_1" TARGET="_top" aria-current="false">
+                        <span>Content Collection</span>
+                      </a>
+                    </td>
+                  <td id="Portfolio"  >
+                      <a href="/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_116_1" TARGET="_top" aria-current="false">
+                        <span>Portfolio</span>
+                      </a>
+                    </td>
+                  <td id="Support"  >
+                      <a href="/webapps/portal/execute/tabs/tabAction?tab_tab_group_id=_92_1" TARGET="_top" aria-current="false">
+                        <span>Support</span>
+                      </a>
+                    </td>
+                  </tr>
+              </table>
+              <div class="clearfloats"></div>
+            </div>
+              </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+<div id="ftueTooltip" class="receipt good pointTop" style="visibility:hidden;">
+		<span class="arrow"></span>
+		<span class="tooltipTitle">Access Assist</span>
+		<span tabindex="-1" aria-live="assertive">Assist is in your Blackboard menu. It&#x27;s easy to add your institutional resources in Assist.</span>
+	</div>
+
+	
+
+<div id="globalNavPageContentArea">
+
+<h2 class="hideoff">
+ Current Location
+</h2>
+
+<div id="breadcrumbs" class="breadcrumbs clearfix ">
+ <div class="breadcrumb-controls clearfix" id="breadcrumb_controls_id">
+
+
+
+
+
+<div id="helpTextToggle" class="helpLink hidden">
+  <a href="#" id="helpTextToggleLink" class="browseIcon">
+	<img id="helpTextToggleImg" src="/images-ltr/ci/ng/small_help_on2.gif" alt="Turn help text off and on"/></a>
+</div>
+ <input type='hidden' name='showHelperSetting' id='showHelperSetting' value=''>
+ </div>
+
+ <div class="path  noToggle" role="navigation">
+ <ol class="clearfix">
+    	<li
+    class="root coursePath"
+        > <a href="/webapps/blackboard/execute/courseMain?course_id=_134418_1"  title="2021-2022 1-GS Methods in AI research (INFOMAIR)">        <span id="crumb_1">
+                      2021-2022 1-GS Methods in AI research (INFOMAIR)
+                  </span>
+      </a>      <div id="arrowContext_1"
+         class="courseArrow"       onClick="page.ContextMenu.changeArrowInBreadcrumb(1, event );">
+<span class="contextMenuContainer" style=" display: inline;" bb:menuGeneratorURL="/webapps/blackboard/execute/getCrossCourseMenuHTML?course_id=_134418_1" bb:navItem="" bb:contextParameters="" bb:menuOrder="" bb:overwriteNavItems="" bb:beforeShowFunc="">
+   
+  <a  id="cmlink_35cbe2de6610450abc1f1b37c12ac67e" role="button" onfocus="page.ContextMenu.LI(event, 'cmdiv_35cbe2de6610450abc1f1b37c12ac67e',false);" onmouseover="page.ContextMenu.LI(event, 'cmdiv_35cbe2de6610450abc1f1b37c12ac67e',false);" class="cmimg editmode jsInit  " href="#contextMenu" title="Course-to-Course Navigation"> <img src="/images/ci/icons/cmlink_generic.gif" alt="Course-to-Course Navigation" ></a>
+  <div id="cmdiv_35cbe2de6610450abc1f1b37c12ac67e" class="cmdiv" style="display: none;">
+   <ul id="cmul0_35cbe2de6610450abc1f1b37c12ac67e"> 
+    <li class="contextmenubar_top">
+      <a href="#close" class="close-menu">
+        <span class="close-contextmenu" data-icon="X" role="presentation" aria-hidden="true"></span>
+        <img alt="Close Menu" src="/images/ci/ng/close_mini.gif"></a>
+    </li>      
+       </ul>   
+  </div>
+</span>
+</div>    </li>
+   	<li
+        > <a href="/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3930870_1&mode=reset"  title="Team Project">        <span id="crumb_2">
+                      Team Project
+                  </span>
+      </a>          </li>
+   	<li
+    class="placeholder"        >         <span id="crumb_3">
+                      Part 2: Experimentation, Statistical Analysis, and Scientific Writing
+                  </span>
+                </li>
+  </ol>
+ </div>
+
+</div>
+
+<div class="locationPane">
+ <nav role="navigation" aria-label="Course Menu" id="navigationPane" class="navigationPane ">
+ 
+ <div id="menuWrap" class="menuWrap" >
+  <div id="puller" >
+  <a id="menuPuller" class="clickpuller" title="Hide Course Menu" href="#">
+   <img id="expander" alt="Hide Course Menu" src="/images/spacer.gif"/>
+  </a>
+ </div>
+<div class="menuWrap-inner">
+  <div id="courseMenuPalette" class="navPalette listCm navPaletteExpCol"><div class="actionBarMicro clearfix"><h2 class="hideoff">Menu Management Options</h2><ul class="nav clearfix u_floatThis-right"><li id="refreshMenuLink" class="secondaryButton "><a href="#" title="Refresh"><span><img src="/images/ci/ng/small_refresh.gif" alt="Refresh"></span></a></li><li id="courseMapButton" class="secondaryButton "><a href="#" title="Display Course Menu in a Window"><span><img src="/images/ci/ng/small_new_window.gif" alt="Display Course Menu in a Window"></span></a></li></ul></div><div class="navPaletteContent"><h2 class="hideoff" tabindex="-1">Course Menu:</h2><div id="courseMenuPalette_paletteTitleHeading"><div class="navPaletteTitle"><h3><a href="#" role="button" aria-expanded="true" class="comboLink" aria-controls="courseMenuPalette_contents" title="Collapse 2021-2022 1-GS Methods in AI research (INFOMAIR)" id="courseMenu_link">2021-2022 1-GS Methods in AI research (INFOMAIR)</a></h3><h3><a href="/webapps/blackboard/execute/courseMain?course_id=_134418_1" target="" class="submenuLink" id="courseMenu_combo" title="Go to Course Entry Page"><img src="/images/ci/icons/generic_dbl_arrow_right.gif" alt="Course Entry Page"></a></h3></div></div><ul id="courseMenuPalette_contents" class="courseMenu"><li id="paletteItem:_1094790_1" class="clearfix "><a href="/webapps/blackboard/content/launchLink.jsp?course_id=_134418_1&tool_id=_114_1&tool_type=TOOL&mode=view&mode=reset" target="_self"><span title="Announcements">Announcements</span></a></li><li id="paletteItem:_1094791_1" class="clearfix "><a href="/webapps/blackboard/content/launchLink.jsp?course_id=_134418_1&toc_id=_1094791_1&mode=view&mode=reset" target="_self"><span title="Dashboard">Dashboard</span></a></li><li id="paletteItem:_1094792_1" class="clearfix "><a href="/webapps/blackboard/content/launchLink.jsp?course_id=_134418_1&tool_id=_167_1&tool_type=TOOL&mode=view&mode=reset" target="_self"><span title="Staff Information">Staff Information</span></a></li><li id="paletteItem:_1094785_1" class="clearfix "><a href="/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3834884_1&mode=reset" target="_self"><span title="Course Information">Course Information</span></a></li><li id="paletteItem:_1094786_1" class="clearfix "><a href="/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3834887_1&mode=reset" target="_self"><span title="Course Content (lecture slides etc.)">Course Content (lecture slides etc.)</span></a></li><li id="paletteItem:_1136985_1" class="clearfix "><a href="/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3930870_1&mode=reset" target="_self"><span title="Team Project">Team Project</span></a></li><li id="paletteItem:_1137249_1" class="clearfix "><a href="/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3937161_1&mode=reset" target="_self"><span title="Questionnaire and submitting project deliverables">Questionnaire and submitting project deliverables</span></a></li><li id="paletteItem:_1094793_1" class="clearfix divider"><hr></li><li id="paletteItem:_1094794_1" class="clearfix "><a href="/webapps/blackboard/content/launchLink.jsp?course_id=_134418_1&tool_id=_178_1&tool_type=TOOL&mode=view&mode=reset" target="_self"><span title="My Grades">My Grades</span></a></li></ul></div></div><div id="myGroups" class="navPalette tools navPaletteExpCol"><div class="navPaletteContent"><div id="myGroups_paletteTitleHeading"><div class="navPaletteTitle"><h3><a href="#" role="button" aria-expanded="true" id="myGroups_link" aria-controls="myGroups_contents" title="Collapse My Groups"> My Groups </a></h3></div></div><ul id="myGroups_contents" class=""><li id="mygroups._323561_1"><h4 role="presentation"><a class="comboLink" role="button" href="#" aria-controls="mygroups._323561_1_groupContents" id="mygroups._323561_1_groupExpanderLink" title="Expand Team 30">Team 30</a></h4><a class="submenuLink" href="/webapps/blackboard/execute/modulepage/viewGroup?course_id=_134418_1&group_id=_323561_1" title="Go to Group Homepage: Team 30"><img alt="Group Homepage: Team 30" src="/images/ci/icons/generic_dbl_arrow_right.gif"></a><ul class="submenu" id="mygroups._323561_1_groupContents" style="display:none;"><li>&nbsp;</li></ul></li></ul></div></div>
+  </div>
+ </div>
+ </nav>
+ <div role="main" id="contentPanel" class="contentPane  ">
+<div class="shadow">
+       <div id="editmodeWrapper"> 
+ 
+  <div id="content" class="contentBox ">
+   
+<div id="pageTitleDiv" class="pageTitle clearfix ">
+
+  
+<div id="pageTitleBar" class='pageTitleIcon' tabindex="0">
+    <img src="/images/ci/sets/set01/folder_on.gif" alt="" id="titleicon"><h1 id="pageTitleHeader" tabindex="-1" ><span id="pageTitleText">
+  <span style="color:#000000;">Part 2: Experimentation, Statistical Analysis, and Scientific Writing</span>  </span></h1>
+        <span id="_titlebarExtraContent" class="titleButtons"></span>
+</div>
+
+
+<form name="contentForm" action="listContent.jsp?content_id=_3937101_1&course_id=_134418_1" method="POST">
+    <div><!-- inline elements cannot be listed directly in a form. (it's invalid html) -->
+        <input type="hidden" name="rstatus" id="rstatus" value=""      />
+
+
+ 
+  <input type="hidden" name="reviewed_content_id" id="reviewed_content_id" value=""      />
+
+
+ 
+  <input type="hidden" name="action" id="action" value=""      />
+
+
+ 
+</div>
+  </form>
+
+  
+</div>
+
+      <div class="container clearfix" id="containerdiv">
+    <h2 class="hideoff">Content</h2>
+    <script type="text/javascript" src="/webapps/achievements/js/achievement.js"></script><link rel="stylesheet" href="/webapps/achievements/css/achievements.css" type="text/css" media="screen" /><script type="text/javascript">
+var jsonArray = [];
+handleAchievements(jsonArray);
+</script>
+
+<!-- remember whether this list is paged -->
+<input type="hidden" name="isPaged" value="false" />
+
+<!-- begin edit paging (top) --> 
+  <!-- end top paging edit -->
+
+
+
+<!-- Begin top list actionbar /paging area -->
+ 
+<ul id="content_listContainer" class="contentList">
+
+
+
+<li id="contentListItem:_3937103_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937103_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Part 2 overview</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div class="vtbegenerated_div"><strong>Learning goals for Part 2</strong></div> 
+ <ol> 
+  <li>Designing an experiment with human participants as a way to test a hypothesis that follows from a research question. </li> 
+  <li>Conducting an experiment with human participants as a way to test a hypothesis (and experiencing the difficulty of collecting good data, and why you need to think about this). </li> 
+  <li>Analyzing empirical data using statistical techniques. </li> 
+  <li>Writing a scientific report about your system's empirical evaluation and its place in AI. </li> 
+ </ol> 
+ <div class="vtbegenerated_div">The level that we aim to achieve is that you get a first impression of all these facets, that allows you to better understand the most important considerations for all these steps, and where to find further information on these topics. In addition, the project should improve your ability to express your thoughts in writing, and to be able to better interpret other published scientific experimental work. Even further skills can be obtained in other courses (e.g., Experimentation in Psychology, Linguistics, and AI) and in your final thesis project.</div> 
+ <div class="vtbegenerated_div"><strong>Motivation for the assignment</strong><br>In the development of software or AI technology, you typically want to test the performance of the technology that you developed. Such tests can both entail (1) software tests, and (2) human experience tests. Typically, AI products need to score well on both fronts. <br>For a software/technological test, you want to assess whether all the system functionality works in the way you designed it. For example:</div> 
+ <ul> 
+  <li>Does the system result in system crashes? This is a count or binary (yes/no) question. </li> 
+  <li>Does a search system return its search results faster after some optimization method for searching has been made? Here you could use a statistical test. </li> 
+  <li>Do all the features of the system work as intended? For example, in case the software has a graphical interface, does every button press result in the right action? Here you could use a qualitative or quantitative analysis. </li> 
+ </ul> 
+ <div class="vtbegenerated_div">For a human experience test you typically want to test whether the<em> human (end) user</em> of the technology (or other stakeholders such as management or clients) receives benefits of a system change. For example, compared to an old system, does the new system result in a statistically significant difference in:</div> 
+ <ul> 
+  <li>Finding/doing something faster? For example, finding a suitable film to watch on Netflix faster? (output metric: time interval between start of program and start of film) </li> 
+  <li>Making fewer errors? For example, do users click on the right icon on a banner? (output metric: frequency of errors) </li> 
+  <li>Achieving more of a specific company target objective? For example, are there more product sales, or do people click more frequently on some advertisement? (output metric: number of sales, number of clicks) </li> 
+  <li>Having a better affective state? For example, does a human decision support system reduce stress in humans (output metrics: some physiological measure such as skin conductance, or perhaps a subjective measure of mental workload such as NASA-TLX) </li> 
+  <li>Being more satisfied with the project? For example, when booking a hotel through a website, do they rate the service of the website higher? (output metric: score on a survey) </li> 
+ </ul> 
+ <div class="vtbegenerated_div">In part 1 of the assignment, you have designed a system, and therefore also focused on the software/technical analysis of it (does it have all required functionality and not break?). You will now test whether your system also significantly improves some aspect of <em>human/user</em> experience in different operating conditions.<br><br>The assignment consists of four parts:</div> 
+ <ol> 
+  <li>Design: What can be tested about your system within the constraints set by this course? Why is this an appropriate test and what is your hypothesis? </li> 
+  <li>Method: How can you test this hypothesis in an experiment? What are the necessary characteristics of participants, materials, design, procedure, and output metrics? </li> 
+  <li>Statistical analysis: With what test do you test whether there is indeed the hypothesized difference? </li> 
+  <li>Write-up: Write-up your text in various sections. </li> 
+ </ol> 
+ <div class="vtbegenerated_div"><br></div> 
+ <div class="vtbegenerated_div" style="margin-top: 0.49cm;margin-bottom: 0.49cm;line-height: 100.0%;">Each lab session will place relatively more emphasis on a specific theme. All students are encouraged to write throughout the lab series.</div> 
+ <div class="vtbegenerated_div"><strong>Planning and feedback</strong><br>Although each week one specific theme will be central, it is important to read ahead what is expected of you for all parts. Occasionally, you will be asked to hand-in a short write-up of your progress. These write-ups are mostly meant for documenting your activities and are occasionally used for peer-feedback and/or feedback by the lecturer. Feedback by peers and lecturers on in-between write-ups will be formative. This means that no grade will be given, and that the feedback is intended to help you create a better final product. When asked to give feedback on others, please be critical and constructive. Do not just say that "everything is OK", but instead think of how you can perhaps help them along.</div> 
+</div>
+  </div>
+
+ <div id="_3937103_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+
+
+
+<li id="contentListItem:_3937104_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937104_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Part 2a: Experiment Design</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div class="vtbegenerated_div"><strong>Research question</strong></div> 
+ <div class="vtbegenerated_div">The first step is to come up with a research question that you can test in an experiment. In part 1 you have designed a restaurant recommendation system. In the design you were forced to incorporate specific components, but you’ve also thought about components that you could turn on or off in the system (see assignment 1C). In your final report, you want to reflect on the choices you made for that system and test the impact that turning a component on or off has on human behavior and/or experience, as assessed in an experiment.<br><br>With your group, you should discuss the following: What was your goal for the components that can be turned on or off? Why did you choose that/those component(s)? And how can you test their effect on human behavior and/or experience? <br>Some motivation on why you are doing what you are doing typically goes into the <em>introduction</em> of a scientific manuscript.</div> 
+ <div class="vtbegenerated_div"><strong>Design</strong></div> 
+ <div class="vtbegenerated_div">More specifically, you can consider the following aspects in “designing” your experiment, which you can also use in your writing (side-note: look at other papers and in the APA manual regarding what conventions are for reporting, see <a href="https://uu.blackboard.com/webapps/blackboard/content/listContentEditable.jsp?content_id=_3939478_1&amp;course_id=_134418_1">Appendix A</a> and <a href="https://uu.blackboard.com/webapps/blackboard/content/listContentEditable.jsp?content_id=_3939478_1&amp;course_id=_134418_1">Appendix C</a>):</div> 
+ <ul> 
+  <li>What was your research question? Can this question be translated into a concrete hypothesis and can that be measured in human performance? For example, in an improvement in response time, accuracy, subjective rating, reduction of errors? The research question will be discussed in the <em>introduction</em> of your report. </li> 
+  <li>Who are your participants? How many do you need? Formally you can test this using a so-called <em>power test</em>, or it can be guided by experience and previous literature. For pragmatic reasons, you might want to keep this limited to about 15 to 30 for this assignment (depending on how complicated your design is and how quickly you can collect data). Note that fewer participants might mean that it is harder to detect differences with your statistical test (a “type II error”). Think also about how you will recruit your participants. Can these be your fellow classmates? Can it be friends? Make sure that participants know what it is expected of them before they do the task (i.e., how you instruct them), but also ensure that they don’t know what the exact test is, so they are not biased to give specific (desirable) answers. The information on participants is discussed in the <em>participants</em> subsection of your methods section. </li> 
+  <li>N.B.: For a “real” experiment you also have to receive approval by an ethics board and extensive consent procedures. These are very important for research, but a full ethical approval process will not be used during this course due to time constraints. Please be considerate and respectful of your participants and do not place them in any situation that can be or lead to (future or present) discomfort. Please also treat their data confidentially and in an anonymized way. </li> 
+  <li>What is the task that participants do? You’ve thought about this for part 1 of the assignment, but you describe the task and materials again briefly in the <em>materials</em> subsection of your methods section. </li> 
+  <li>A typical experiment has some form of an <em>intervention</em> or <em>manipulation</em>. The intervention will be discussed in the <em>design</em> subsection of the <em>methods</em> section of your report. 
+   <ul> 
+    <li>For statistical reasons it is often useful to just have 1 intervention or change with two options that only differ on one aspect. In that way you can compare two groups, and if you find a difference you know which groups were different (you do not always know this with 3 or more groups). So, what could be your intervention? Which features can you turn on or off, and what is the most crucial one that you want to test? Are you sure that this change only affects 1 aspect of the software and not multiple (if it impacts multiple you know that when you find a difference that this difference exists, but you can not explain WHAT caused this difference)? For example, an intervention could be that one group drinks coffee, and another group drinks tea, to test whether drinking coffee improves performance. </li> 
+    <li>Often in experiments, one of the two conditions is the "baseline" or "control" condition, and the other is the actual intervention (or: treatment) condition. What do you use? </li> 
+    <li>Statistically, it is often beneficial to run a <em>within-subjects</em> experiment in which participants experience all conditions, and between participants you control the order of experience (counterbalancing). You do need to be careful that a previous experience does not spill over to later conditions (“strategy transfer”) and thereby confounds your measurements. </li> 
+   </ul> </li> 
+  <li>Typically experimental measurements are <em>"noisy"</em> due to various factors such as variation between participants (we all differ in our preferences, in our alertness, in our moods, etc) and within the participants (they might get tired over time, or occasionally not pay attention) and inaccuracies in the measurement (not everything might be measured exactly when you thought it would). Therefore, many experiments measure human performance over <em>multiple</em> trials or time-points, and later analyze average human performance. Can you conduct multiple trials without biasing the response of the user?&nbsp; How many trials do you need to compensate for the noise in your measurement? This will be reported in the procedure section of the <em>methods</em> section of your report. </li> 
+  <li>What measures do you take exactly? How do you log this? Is any preprocessing of the data needed? How do you average it and how do you conduct statistics on it? Can you do a simple statistical test (such as a t-test) or is more needed? For the context of this course, you should favor simple tests on data that requires little pre-processing. For a within-subjects design with just 2 conditions, a typical test might be a two-sided paired t-test (paired here meaning that for each participant you have a “pair” of data points from each condition). This will be reported in the <em>measurements</em> section of the <em>methods</em> section of your report. </li> 
+  <li>How would you go through the empirical cycle? (that is: how does the real world and literature influence your hypothesis, how does this impact your method, your test, and the impact on your hypothesis and the real world?). This will affect multiple sections of your report. 
+   <div></div> </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><strong>Interim progress update</strong></div> 
+ <div class="vtbegenerated_div">The goal of your interim progress update is to gather focus on your thoughts about your experiment by briefly reporting on it. The time-line for the interim report is:</div> 
+ <ul> 
+  <li>Thursday 14 October at 22:00 (Dutch time) the latest: one version of your interim report is shared on Microsoft teams with your peer group and with your lab lecturer (share it within your own channel). The expected content of the interim report is below. </li> 
+  <li>Sunday17 October at 22:00 (Dutch time) the latest: each student provides peer-feedback to assigned groups individually, using the form in Appendix D1. The feedback is then shared on the page of the group that you reviewed. Each student reviews individually. For groups that form a peer-group with 3 groups, the groups decide among themselves who is peer-reviewing which group. </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><br>Content of the interim report for this week:&nbsp; you need to submit a brief document (guideline: 1 A4 page) that outlines (for as far as you know) the aspects below. Note that these aspects also form the basis of the peer feedback.</div> 
+ <ul> 
+  <li>One paragraph on: (1) What your research question is, (2) why this is a relevant research question. </li> 
+  <li>A short overview of your experimental method. Below are some specific questions to consider for each section: 
+   <ul> 
+    <li>Participants: How many participants (and why)? Are there specific requirements? How will you recruit them? </li> 
+    <li>Materials: What will be the main task of the participants? How will they perform this? </li> 
+    <li>Design: What will you manipulate? Will this be within- or between-subjects? </li> 
+    <li>Procedure: What will the procedure be? How long is the experiment? </li> 
+    <li>Measurements: what will you measure (speed, accuracy, user acceptance, ..). Do you need multiple observations per participant, or just one? </li> 
+   </ul> </li> 
+  <li>Hypothesis: what is your hypothesis, and why? What type of statistical test do you plan to use to test this hypothesis? </li> 
+  <li>How is the distribution of labor within the team? Is everyone contributing an equal share? </li> 
+  <li>Any concrete questions you might have about your research question or design that your peers or the lecturer can help you with </li> 
+ </ul> 
+ <div class="vtbegenerated_div">For your own additional progress, you should now also have sufficient information to:</div> 
+ <ul> 
+  <li>Write the methods section of your report in more detail. You are highly encouraged to do this now! </li> 
+  <li>Craft an experiment that can be conducted (part 2B) </li> 
+  <li>Anticipate how you will collect data and how you will analyze it (part 2C) </li> 
+ </ul> 
+</div>
+  </div>
+
+ <div id="_3937104_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+
+
+
+<li id="contentListItem:_3937106_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937106_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Part 2b: Method implementation and data collection</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div class="vtbegenerated_div">Based on your design and write-up of the design, you should now be able to implement the experiment such that you can collect data quickly and carefully. Recall that the purpose of this assignment is for you to gain experience with running an experiment. So, not everything will be perfect, and the lecturers know this when they assess your assignment. However, try to run your experiment as good and professional as possible. <br><br>Make sure that your experiment logs the data that you need and that you store it in a way that you can process and analyze it. Consistent with the perspective that was given in the class on experimentation, and the paper by Cairns (2016), you already know that you should think about how you will analyze your data (step 2C) before you collect the data.<br><br><strong>Note on safety and hygiene (esp. in context of COVID-19) and data collection</strong><br>Please be cautious for safety and hygiene when collecting data, especially in the context of COVID-19. Follow the guidelines of the RIVM (Dutch National Institute for Public Health and the Environment, <a onclick="this.href='/webapps/blackboard/content/contentWrapper.jsp?content_id=_3937106_1&amp;displayName=Linked+File&amp;navItem=content&amp;attachment=true&amp;course_id=_134418_1&amp;tab_group=courses&amp;href=https%3A%2F%2Fwww.rivm.nl%2Fen';" href="https://www.rivm.nl/en">https://www.rivm.nl/en</a>) and any further national, local, or university regulations. Keep your health and that of your participants in mind. Please also think more generally about good hygiene practice.<br>Make sure to follow general guidelines and encourage them to not come to the experiment location if they (or someone close to them, such as housemates) show any symptoms that might suggest COVID-19. <br><br>For many experiments, participants might have to run an experiment that is based on code (i.e., the implementation of your restaurant software). It might not always be possible for them to run the code locally on their own computer remotely. If you prefer to not test participants in person due to Covid, keep the following alternatives in mind. Developing code that is easily deployed and shipped to others (e.g., in an .exe file) is too much work for this course and should not be your focus.<br><br>You can think of these alternatives:</div> 
+ <ul> 
+  <li>Can the code be used remotely? </li> 
+  <li>Can you as a participant leader be a human proxy for the interaction with the code? For example, in a video chat (for example using Microsoft Teams) the participant can perhaps see the output from the software, they can verbally say what they would like to give as input, and the experiment leader types it on their behalf (Note: make sure to not bias the participant in their actions). </li> 
+  <li>For some experimental set-ups, perhaps a "Turing test" like set-up is interesting, where participants see the input and output on a chat screen, but do not know whether this comes from a human or the software. </li> 
+  <li>If your software does not work: can you perhaps use it in a so-called "Wizard of Oz set-up" where the human experimenter simulates the system’s response instead of having them interact with the software directly (perhaps do this via text chat, so the human user does not know that there is a "wizard" that fakes the system’s response) </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><br><strong>Interim progress update</strong><br>This week, write a 1-page update that addresses the following questions:</div> 
+ <ul> 
+  <li>One paragraph summarizing your research question and how you wanted to tackle this </li> 
+  <li>One paragraph on your progress in terms of data collection: how many participants have you collected data on? How many more do you plan to do? Is this realistic within the limited scope? Note that we want to have realistic expectations and are not going for the "ideal"/"perfect" experiment. </li> 
+  <li>One paragraph in terms of data analysis: Have you already made progress on pre-processing the data such that you can quickly do the main analysis next week? If you have not done that yet, what are you planning to do? </li> 
+  <li>How is the distribution of labor within the team? Is everyone contributing an equal share? </li> 
+  <li>Do you have any concrete questions that your peers or the lecturer can help you with? </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><br>This interim report will again be evaluated using peer feedback. Tentative questions are in appendix D2. The time line for the interim report is as follows:</div> 
+ <ul> 
+  <li>Thursdat 21st October at 22:00 (Dutch time) the latest: one version of your interim report is shared on Microsoft teams with your peer group and with your lab lecturer (share it within your own channel). The expected content of the interim report is below. </li> 
+  <li>Sunday 24 October at 22:00 (Dutch time) the latest: each student provides peer-feedback to assigned groups individually, using the form in Appendix D2. The feedback is then shared on the page of the group that you reviewed. Each student reviews individually. For groups that form a peer-group with 3 groups, the groups decide among themselves who is peer-reviewing which group. </li> 
+ </ul> 
+</div>
+  </div>
+
+ <div id="_3937106_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+
+
+
+<li id="contentListItem:_3937109_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937109_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Part 2c: Statistical Analysis</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div style="overflow: visible;" class="details"> 
+  <div class="vtbegenerated"> 
+   <div class="vtbegenerated_div"><br></div> 
+   <div class="vtbegenerated_div"><span style="font-family: Times New Roman , serif;"><span style="font-family: Calibri , serif;">In this week of the lab you should focus on data analysis and writing up, in particular the results and your general discussion.</span></span></div> 
+   <div class="vtbegenerated_div">Based on your experimental design and with the data that you collected, you should now analyze your data and provide a statistical analysis. What you do will depend on the type of data you collected. In<a href="https://uu.blackboard.com/webapps/blackboard/content/listContentEditable.jsp?content_id=_3939478_1&amp;course_id=_134418_1"> Appendix A</a> some general resources are provided that can help you with conducting statistical tests. For example, the “stats flowchart” can be used to discover what test is appropriate for you, and the “statistics hell-p” page has detailed information on how specific tests work.<br><br>Note that there are many ways to do statistical tests. In the examples below I use conventional (frequentist) hypothesis testing. Alternatives for such test, such as Bayesian analyses are also becoming increasingly popular a useful (for example, see JASP: <a onclick="this.href='/webapps/blackboard/content/contentWrapper.jsp?content_id=_3937109_1&amp;displayName=Linked+File&amp;navItem=content&amp;attachment=true&amp;course_id=_134418_1&amp;tab_group=courses&amp;href=https%3A%2F%2Fjasp-stats.org%2F';" href="https://jasp-stats.org/">https://jasp-stats.org/</a> ). These are not discussed here, but you are free to use those approaches if you are more familiar with those and if you can report on them appropriately.<br><br>More often than not, you follow the following steps when conducting a statistical test:</div> 
+   <ol style="list-style-type: upper-roman;"> 
+    <li>Forming a hypothesis: based on your previous work (design, step 2A) you should already have a hypothesis that you want to test with a statistical test. 
+     <ol style="list-style-type: upper-alpha;"> 
+      <li>Remind yourself of <em>what</em> your hypothesis is and <em>why</em> that is your hypothesis. </li> 
+      <li>For example, a hypothesis might be: “Eating 1 bar of dark chocolate will increase happiness, compared to eating a bowl of yogurt.” Note how this hypothesis can be answered with “yes” or “no” and how there is an intervention (eating dark chocolate) that is compared to a control condition (eating yogurt) on a specific measure (score of happiness). </li> 
+     </ol> </li> 
+    <li>Preprocessing of data: you preprocess your data such that you have some “clean” data on which you can conduct your statistics. 
+     <ol style="list-style-type: upper-alpha;"> 
+      <li>For example, if you want to test how fast someone presses a button after a sound is played (i.e., their “reaction time”), you need to subtract the (standardized/absolute) time at which the button was pressed from the (standardized/absolute) time at which the sound was played to get the interval. </li> 
+      <li>You should ensure that after preprocessing, for each dependent variable (e.g., “reaction time”) you have 1 measurement per trial, per participant, and per condition (independent variable). </li> 
+     </ol> </li> 
+    <li>Visual inspection of the data &amp; assumption checking. Students (and researchers) often quickly move ahead and run a statistical test. It is often good to first look at your data to understand it, and to also check whether the assumptions that underlie your statistical test hold. If you made a mistake during data preprocessing (or data collection), your later statistical results are not meaningful. 
+     <ol style="list-style-type: upper-alpha;"> 
+      <li>For example, is your data truly normally distributed (if you expect this), are the values that you measured all within an expected range and is there no missing data? For example, if you run a reaction time in which you expect reaction times between 0.5 and 3 seconds, it would be really strange if you find a negative value, or a very high value (say, 15 seconds). In this case, preprocessing might have gone wrong. </li> 
+      <li>What type of visualization is best for your experiment depends on your research question and your data. But you can for example consider a box-and-whisker plot (to understand the distribution of the data), or a barplot with error bars. Sometimes, merely plotting the raw data also helps. </li> 
+     </ol> </li> 
+    <li>Visualizations for your report. Although the preceding focused on visualization to help testing assumptions, you often also want some visualization of your data in your paper for critical readers. 
+     <ol style="list-style-type: upper-alpha;"> 
+      <li>For many experiments, researchers typically first calculate 1 average score value per participant per condition. That is, for each participant they calculate what the average performance was over all observations/trials, knowing that responses on individual trials might have been influenced by many aspects (e.g., compensating for noise in the measurement, see also section on design). </li> 
+      <li>So, imagine an experiment in which 40 participants each participated in two conditions (“difficult” and “easy”) and where we measured a reaction time on 30 trials per condition and per participant. You will then have 40 x 2 x 30 = 2400 datapoints. You first bring this down to the averages per condition per participant, so 40 x 2 = 80 data points. </li> 
+      <li>In your visualization you want to show what the mean is of the conditions (so, the mean for “difficult” and mean for “easy”) and also some measure of how the values are distributed across participants. For example, using an error bar that reflects a standard deviation, standardized error of the mean, or 95% confidence interval (each of these is calculated in different ways, and has different pro’s and cons for interpretation purposes; more information can be found in statistics resources, see Appendix B). </li> 
+      <li>For example, below is an example graph in which the mean and 95% Confidence Interval of participants’ reaction time are plotted in an “easy” and a “difficult” condition based on a fictitious experiment with 40 participants. Note that the means and the 95% CIs&nbsp; are calculated using 40 datapoints (the averages of each participant per condition), not over the “raw” trial data.<br><img alt="Graph showing means and confidence interval" src="https://uu.blackboard.com/bbcswebdav/courses/BETA-2019-1-GS-INFOMAIR-V/cigraph.jpg" width="500" height="500"> <span style="display: inline;" class="contextMenuContainer"> <a title="Click for more options" href="https://uu.blackboard.com/webapps/blackboard/content/listContentEditable.jsp?content_id=_3274644_1&amp;course_id=_122545_1#contextMenu" class="cmimg editmode jsInit"> <img alt="Click for more options" src="https://uu.blackboard.com/images/ci/icons/cmlink_generic.gif"></a> </span> </li> 
+      <li>The nice thing about a graph like the one above (with means and 95% CIs) is that it can already provide you with an intuition about the outcome of your statistical test. In this case, the means are apart and the 95% CI intervals of the two conditions do not overlap, which suggests that the two underlying distributions are probably significantly different (if the “alpha” level is .05)&nbsp; from each other and that the reaction time is probably significantly higher in the difficult condition compared to the easy condition. So, if your actual statistical test gives a very different outcome, you probably made some error and you should check your analysis code. </li> 
+     </ol> </li> 
+    <li>Determining descriptive statistics. In your report you often also include some descriptive statistics about your experimental conditions, for example the means and standard deviations. These should again be consistent with what you found in your visual inspection. </li> 
+    <li>Conducting an inferential statistical test. The next step is then to use statistics to test whether there is truly a difference. As said before, within the context of this course a paired t-test is most likely appropriate. </li> 
+    <li>Reporting your result. You should now write up your result. Often this can be done very briefly. Note the use of italics and specific symbols below, which each have a meaning and reason (see also the APA publication manual if you are unfamiliar, see Appendix A). Note also that a unit is reported (seconds in s) for each measurement and that units are rounded to 2 decimals. For your data you should also think about&nbsp; what an appropriate number of decimals is - don't simply “copy paste” of an outcome from your statistics program. 
+     <ol style="list-style-type: upper-alpha;"> 
+      <li>This is an example of writing up the result associated with the graph you saw above and an example of a significant effect: “A paired t-test found a significant effect of difficulty on reaction time, <em>t</em>(39) = 4.032, <em>p</em> &lt; .001. Reaction times were higher in the difficult condition (<em>M</em> = 6.43 s, <em>SD</em> = 1.76 s, 95% CI = [5.89, 6.98 s]) compared to the easy condition (<em>M</em> = 4.53 s, <em>SD</em> = 2.17 s, 95% CI = [3.86, 5.20 s]). </li> 
+      <li>This is an example of writing up a null result for a paired t-test with 20 participants: “A paired t-test found no significant effect of difficulty on motivation score, <em>t</em>(19) = 1.09, <em>p</em> = .29.” Make sure to not overinterpret a null-effect (for example first saying something is not significantly different statistically and then saying that the means differ. This is contradictory; hence means and standard deviations are not reported here). </li> 
+      <li>This is an example of writing up a “marginal effect” (an effect that just did not reach significance, conventionally when the p-value lies between .05 and .10): "A paired t-test found a marginal effect of difficulty on point score, <em>t</em>(19) = 1.99, <em>p</em>&nbsp; = .056. The trend in the data was that point score was slightly higher in the easy condition (<em>M</em> = 8.0 points, <em>SD</em> = 1.5 points, 95% CI = [ 7.5, 8.6 points]) compared to the difficult condition (<em>M</em> = 7.3 points, <em>SD</em> = 1.3 points, 95% CI = [6.8, 7.8 points])." Side-note: do you see how the 95% CIs of the two conditions slightly overlap? That’s a sign that there might not be a statistically significant difference. Again, be cautious to not overinterpret a marginal effect. </li> 
+     </ol> </li> 
+    <li>Interpreting your results and conducting additional analysis. If you have just 1 dependent variable and only a simple t-test, then a result is often easy to interpret. However, sometimes you have multiple dependent variables (for example, speed, accuracy, and subjective experience) and it is worthwhile to think about how these results “fit together”. For example, are faster participants less accurate? Such discussion of the general pattern is often done in an explicit section “discussion of results” of your report, or in the general discussion (see also how some example papers handle this, as referenced in Appendix C). </li> 
+   </ol> 
+   <div class="vtbegenerated_div"><br><span style="text-decoration: underline;">Please know that you will not be graded on whether you find a significant result or not.</span> However, we will assess how you report such a result and how you discuss it. For example, do you not misinterpret a null-result?</div> 
+   <div class="vtbegenerated_div"><strong>Interim progress update</strong><br>his week, write a 1-page update that addresses the following aspects:<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; One paragraph summarising your research question and how you wanted to tackle this <br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; One paragraph on your general progress in tackling the question: what have you done so far? What is still coming up? Is all data collected? How far are you with analysis? How will you ensure that you finish?<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; One paragraph on your progress on more general writing: what report sections have you written in first draft? What sections still need to be written?<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; One graph that visualises the data. See also point “IV” in the analysis step plan of the assignment<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; A caption with the graph<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; One statistical analysis that is reported in a way that you would report it in the paper. See also point VII for examples<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; How is the distribution of labor within the team? Is everyone contributing an equal share? <br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; Do you have any concrete questions that your peers or the lecturer can help you with?</div> 
+   <div class="vtbegenerated_div"><br> This interim report will again be evaluated using peer feedback, using the form that are provided in appendix D3. The time line for the interim report is as follows:<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; Thursday 28 October at 22:00 (Dutch time) the latest: one version of your interim report is shared on Microsoft teams with your peer group and with your lab lecturer (share it within your own channel). The expected content of the interim report is described above.<br>&nbsp;&nbsp; &nbsp;•&nbsp;&nbsp;&nbsp; Sunday 31st October at 22:00 (Dutch time) the latest: each student provides peer-feedback to assigned groups individually, using the form in Appendix D3. The feedback is then shared on the page of the group that you reviewed. Each student reviews individually. For groups that form a peer-group with 3 groups, the groups decide among themselves who is peer-reviewing which group.</div> 
+  </div> 
+ </div> 
+</div>
+  </div>
+
+ <div id="_3937109_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+
+
+
+<li id="contentListItem:_3937110_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937110_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Part 2D: Finalizing</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div class="vtbegenerated_div">This last week, you will work on finalizing your experiment and report. For each group it will differ what tasks you work on. Make sure to spend sufficient time on writing, rewriting and make a plan as a group about how you will work towards finalizing the entire assignment.</div> 
+ <div class="vtbegenerated_div">This week, you do not need to hand in an interim report.</div> 
+</div>
+  </div>
+
+ <div id="_3937110_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+
+
+
+<li id="contentListItem:_3937112_1"	class="clearfix liItem read">
+
+<img alt="Item" src="/images/ci/sets/set01/document_on.gif" class="item_icon"/>
+
+<div class="item clearfix" ID="_3937112_1">
+
+ <h3>
+  <span class="reorder editmode hideme"><span><img src="/images/ci/icons/generic_updown.gif" alt="" /></span></span>
+
+
+
+     <span style="color:#000000;">Report</span>
+ </h3>
+   
+ </div>
+
+
+
+<div class="details" >
+    <div class="vtbegenerated"> 
+ <div class="vtbegenerated_div">The <strong>final deadline for the report is on Thursday, 11th November, 22:00 </strong>Dutch time.</div> 
+ <div class="vtbegenerated_div"><br></div> 
+ <div class="vtbegenerated_div">Already during the assignment, you should work on the write-up of your work. Your writing is a chance to explain what you did, but also <em>why</em> you did this (why should we care about this work and the result?). In that respect, we expect you to follow conventions on reporting (for example for experimental methods and results), but also to have an introduction in which you motivate your work based on your larger understanding of the field and the domain and literature that was for example discussed in class. In other words, we don't just assess your practical work, but we assess your writing and your positioning.</div> 
+ <h5>Report requirements</h5> 
+ <div class="vtbegenerated_div">Your report for assignment part 2 should be a maximum of 8 pages (excluding the space needed for references and the appendix). The document needs to be formatted in the specific template on which information is given in Appendix B. The paper needs to contain the following explicit sections:</div> 
+ <ul> 
+  <li>Title </li> 
+  <li>Abstract </li> 
+  <li>Introduction &amp; theoretical background (it is your choice whether you have 1 introduction or an introduction followed by a theoretical background. You can also label specific parts of the theory that you discuss, see also example papers in Appendix C) </li> 
+  <li>Methods (with appropriate subsections) </li> 
+  <li>Results (with appropriate subsections in case you analyze multiple dependent variables) </li> 
+  <li>General discussion </li> 
+  <li>References (not counting towards the page limit) </li> 
+  <li>Appendix: An overview of the contributions of individual group members to the project, preferably as a table containing tasks, the person that performed the task, and the amount of time spent on this task. Include a reflection on the planning of the project and the individual contributions. This appendix does not count towards the page limit. </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><strong>Detailed information per section of some of the expectations</strong><br>For various sections the descriptions below indicate a rough number of maximum pages to give you some impression of the page count. If you go over or under the number of pages for a specific section, that is not a problem as long as your total paper is within the page limit. Note that if you deviate a lot, you might worry whether you are too detailed or not detailed enough.</div> 
+ <div class="vtbegenerated_div">In general, we expect a minimum number of typos and grammatical errors (as this is a group project, we expect that you benefit from each other’s ability to proofread). Writing should be concise and argumentation flow should be correct in general.</div> 
+ <div class="vtbegenerated_div"><strong>Grading levels</strong><br>For each element you will be graded on the indicated grading criteria. Assessment is based on a 5-point scale, as follows:</div> 
+ <ol> 
+  <li>Insufficient. This would lead to a fail. </li> 
+  <li>Barely sufficient </li> 
+  <li>Sufficient. We would expect the typical student to achieve this level. </li> 
+  <li>Above standard </li> 
+  <li>Outstanding. Meant for work that exceeds expectations by far. We expect to rarely award this. </li> 
+ </ol> 
+ <div class="vtbegenerated_div">Your final score will be based on a weighted average of the scores across all criteria, and translated to a 10 point scale (not necessarily in a linear fashion).<br>The lecturers will have a personal discretion to slightly round your grade up or down to better reflect the scores -- in particular for cases where there are scores on the extreme ends (outstanding or insufficient).</div> 
+ <div class="vtbegenerated_div">The specific grading criteria per section are indicated in the text below. In addition, we will also assess your general writing. Specifically:</div> 
+ <ul> 
+  <li>Is the number of typing and grammatical errors minimal? </li> 
+  <li>Is the writing concise? </li> 
+  <li>Is the general argumentation flow correct in general? </li> 
+ </ul> 
+ <div class="vtbegenerated_div">Note that we do not expect Noble prize winning work. Whether a statistical test provides a “significant difference” is not a criterium. We do expect well-written documents of well-executed projects (within the constraints of the course). Make sure to be critical, take sufficient time for the writing, and proofread the work of your teammates.</div> 
+ <div class="vtbegenerated_div"><br><span style="text-decoration: underline;">Title</span><br>Give a title that is about the content (e.g., "A Computational Model of the Wason Selection Task"). The title should reflect the content/topic/research question of the report. Do not give a title that only reports what it is (i.e., do not use something like "Final Report of Methods in AI Research").<br><br><span style="text-decoration: underline;">Abstract (aim: 150 words)</span><br>The abstract should be a summary of the entire project. It should not be just an introduction. The abstract should be around 150 to 200 words. It should address: what are you researching (research question), why are you doing this (theoretical/practical context, motivation, introduction), how are you doing this (method), what did you find (result), and what does this mean (discussion/implications). The abstract should be a concise and accurate representation of all aspects of the report, and not just an introduction.</div> 
+ <div class="vtbegenerated_div">We recommend that you start writing your abstract early on, even before you have collected data. You should consider this as writing a 'fantasy abstract': what would your abstract look like if all results turned out perfect? Writing you abstract early has the advantage that it will give you focus: the core of each component of the article has been stated here explicitly (e.g.: what data do you analyze? why is this important? how are you doing this?).</div> 
+ <div class="vtbegenerated_div">Grading considerations for title &amp; abstract:</div> 
+ <ul> 
+  <li>Is the title an actual title that reflects the content/topic/research question </li> 
+  <li>Does the abstract follow conventions? </li> 
+  <li>Is the abstract a concise and accurate representation of all aspects of the report (and not just an introduction)? </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><span style="text-decoration: underline;">Introduction and theoretical background (~1.5-2 pages) </span><br>For the introduction, you should give an overview of: (1) what is the broader context or problem that you try to address, (2) what is a smaller, concrete problem or issue that you are addressing in your work, (3) why is this of theoretical or practical importance, and optional (4) a brief overview of how you are going to address the problem in the remainder of the paper. The introduction should form a coherent argument that leads to a clear, theoretically and practically supported motivation for the research approach (although some of the deeper theoretical motivation might follow in the theory section).</div> 
+ <div class="vtbegenerated_div">After this general introduction, you should delve deeper into theory that is relevant, and do this in a structured manner. The theory section should place your project within the broader context of AI as discussed during the lectures and in the literature of the lectures (e.g., in the entry on AI in the Stanford Encyclopedia of Philosophy and Chapters 1, 2, and 16 from Brachman &amp; Levesque). <br><br>Comment on the relevance of your project for AI and address issues such as (A) its connection with other dialog systems, (B) its value for practical applications and/or (C) its merit for the understanding of human intelligence.<br><br>Try to make a narrative around your project as part of the field of AI and don’t be afraid to express an opinion. For example, on the topic of human intelligence, and the question whether certain branches of AI research are relevant for modeling and understanding it, there is no universal agreement, and you are welcome to try formulate an interesting opinion on that matter. In the introduction the work should be embedded appropriately in a wider set of literature on relevant topics such as discussed in class (and potentially beyond that), for example the embedding of this research within the area of reasoning systems. Note however that not every area is equally relevant, i.e., not every topic that was covered in class should be covered in your report.<br><br>See also how other papers tackle the theory section by reading examples (see Appendix C).</div> 
+ <div class="vtbegenerated_div">Grading considerations for introduction and theoretical background:</div> 
+ <ul> 
+  <li>Does the introduction form a coherent argument? </li> 
+  <li>Does this argument lead to a clear, theoretically and/or practically supported motivation for the research approach? </li> 
+  <li>Embedding in context: is the work embodied appropriately in a wider set of literature on relevant topics? </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><br><span style="text-decoration: underline;">Method (max ~2.5 pages)</span><br>You need to follow the format and conventions of the APA publication manual and have explicit subsections on:</div> 
+ <ul> 
+  <li>Participants </li> 
+  <li>Materials </li> 
+  <li>Design </li> 
+  <li>Procedure </li> 
+  <li>Measurements </li> 
+ </ul> 
+ <div class="vtbegenerated_div">The APA publication manual (see Appendix A) provides very clear pointers on what type of information is required in each subsection. You can also take a look at example papers to understand the level of detail that is required (see Appendix C). The goal of this section is to enable readers to understand the method easily and to be able to replicate the experiment.</div> 
+ <div class="vtbegenerated_div">The grading for this section takes the appropriateness of the chosen method to address the research question into account, and the correct execution of the experiment. Furthermore the amount of effort and (appropriate forms of) creativity in the design are used to determine the grade.</div> 
+ <div class="vtbegenerated_div">Grading considerations for methods section</div> 
+ <ul> 
+  <li>Conventions: Are appropriate conventions followed for (each element of) the methods section? For example, is each subsection written down explicitly, concisely and correctly up to a level that readers can understand the method easily and are able to replicate the experiment if they desired to do so. </li> 
+  <li>Set-up of study: Overall, was an appropriate method chosen to address the research question? </li> 
+  <li>Set-up of study: Was care taken in execution of the project? Note that this grading criterion (set-up) therefore takes into account effort &amp; (appropriate forms of) creativity in the design of the study. </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><br><span style="text-decoration: underline;">Result (0.5-1 page)</span><br>A results section should clearly yet concisely report what your results are. This includes:</div> 
+ <ul> 
+  <li>Appropriate descriptive statistics, e.g., mean and standard deviation or other relevant statistics </li> 
+  <li>A statistical test to support your inference, e.g., 95% CIs or other relevant and appropriate metrics </li> 
+  <li>Appropriate use of figures and/or tables </li> 
+ </ul> 
+ <div class="vtbegenerated_div">This section should provide appropriate inferential statistics, reported according to conventions, and interpreted correctly. The results need to be visialuzed in a clear way, for example, a barplot with error bars, clear use of labels, and appropriate sized fonts.</div> 
+ <div class="vtbegenerated_div">Grading considerations for results:</div> 
+ <ul> 
+  <li>Descriptive statistics: Are appropriate descriptive statistics provided (e.g., mean, standard deviation, 95% CI or other relevant and appropriate metrics) </li> 
+  <li>Inferential statistics: Are appropriate inferential statistics provided? </li> 
+  <li>Inferential statistics: Are these reported according to conventions (i.e., no “dump of software output”) </li> 
+  <li>Inferential statistics: Are these interpreted correctly? </li> 
+  <li>Visualization: Is an appropriate visualization of results used? (e.g.: a bar plot with error bars) </li> 
+  <li>Visualization: Is this clear? (e.g., clear use of labels and captions, appropriate sized fonts) </li> 
+ </ul> 
+ <div class="vtbegenerated_div"><span style="text-decoration: underline;">General discussion (2 pages)</span><br>The general discussion should address: (1) what was your research question and how did you address it, (2) if known, what are the implications of these findings for theory and/or practice (i.e. relate it back to the literature you reviewed in the introduction), (3) what are the limitations of your study and possibly how would you do this different if you had more time and/or resources (i.e., future work), and (4) what is your conclusion. The general discussion needs to be coherent with the introduction and results need to be related back to the literature in an appropriate and correct way. This discussion is the section where you can demonstrate that you have thought about the content of your project and results deeply. Try to make a narrative around your project as part of the field of AI and don’t be afraid to express an opinion (in fact: this is one way to demonstrate that you've thought deeply about the topic). The discussion should identify the limitations of the experimental set-up. Think about whether the identified limitations are indeed the most important.</div> 
+ <div class="vtbegenerated_div">At the end of this section a concise conclusion should be presented that answers the research question. Note that in the context of this course it can also be the case that you can not answer the research question yet - for example due to null results or an inconsistent pattern of results - in which case your conclusion should reflect that there is no definitive answer. In that case you should clearly identify the following steps necessary to reach a more definitive conclusion.</div> 
+ <div class="vtbegenerated_div">Grading considerations for general discussion:</div> 
+ <ul> 
+  <li>Coherence, theory, implications: is the general discussion coherent with the introduction? </li> 
+  <li>Coherence, theory, implications: are results related back to the literature in an appropriate and correct way? </li> 
+  <li>Limitations: are limitations of the experimental set-up reported clearly? </li> 
+  <li>Limitations: are these indeed the most important limitations? </li> 
+  <li>Conclusion: Is there a concise conclusion that answers the research question? Note: in the context of this course it can also be that you cannot answer the research question yet&nbsp; (e.g., due to null results or an inconsistent pattern of results) in which case your conclusion should reflect that no definitive answer is there yet </li> 
+ </ul> 
+ <div class="vtbegenerated_div">Use explicit headings to ensure you capture all the required elements, which are graded separately (see also example papers in Appendix C). <br><br><span style="text-decoration: underline;">References</span><br>Your text should use a formatted reference list following the ACM SIGCHI style (see template).</div> 
+ <div class="vtbegenerated_div"><span style="text-decoration: underline;">Appendix</span><br>Your appendix should briefly report how work was distributed between the team members, and how much time each person put into the project. We expect that everyone does a good effort and makes a significant, proportional contribution. If there are deviations, these should be flagged with the lecturing staff *early*, while the project is still going.</div> 
+ <div class="vtbegenerated_div"><span style="font-size: medium;"><strong>Deliverable</strong></span></div> 
+ <div class="vtbegenerated_div">For Part 2 of the project the only deliverable is the report as described above. Submit the report as a single PDF file using Blackboard. Only one student per group should submit the report.</div> 
+ <hr> 
+ <div class="vtbegenerated_div"><br><strong>Grading Procedure</strong></div> 
+ <div class="vtbegenerated_div"><br></div> 
+ <ul> 
+  <li>Specific sections will be marked individually by the lecturers. Based on your score across different sections, a final grade will be determined. </li> 
+  <li>We will only communicate your final grade, no detailed content feedback. Such detailed feedback is (unfortunately) not possible given the large number of students and our ambition to get your grades in as fast as possible. If possible under COVID-19 regulations, an “assignment inspection hour” will be organized where you can get information on grades for specific subsections. Note that we will not keep track of very detailed notes on each paper. </li> 
+  <li>If you fail to meet formal requirements of the assignment - for example, if you do not use the template, or if required sections are missing - your assignment will be “desk rejected”. This means that you fail the assignment and that the conditions for a redo take immediate effect (i.e., the deadline for improvement is from the time of desk reject and the maximum grade rule takes effect). </li> 
+  <li>If you do not hand in your assignment by the deadline, 1.5 point will be subtracted from your grade per day that you are late. </li> 
+  <li>If you score lower than a 5.5 on the final report of assignment part 2, you will need to submit an improved version of your report within 3 weeks after the grade has been announced. This improved version will be judged as a pass (score: 5.5) or fail (retain original score). No higher scores than 5.5 can be obtained at this stage. </li> 
+  <li>In the grading we will assume that each student contributed a (within reason) fair and equal share to the project and the write-up. You should therefore strive to make such a fair contribution yourself. If for some reason there is an unequal distribution of labor (e.g., one student does not show up during meetings, or did not do any writing) this should be flagged early with the lecturers. “Hind-sight complaints” or “last minute complaints” will not be taken into consideration. </li> 
+ </ul> 
+ <hr> 
+ <div class="vtbegenerated_div"><strong>General writing tips</strong><br>All general guidelines for scientific reports apply. For example:</div> 
+ <ul> 
+  <li>Always use your own words. Reports will be automatically checked for plagiarism. Plagiarism will be reported to the board of examiners and has serious consequences. </li> 
+  <li>Make your message very explicit. Clear writing helps the reader understand your content better and faster. </li> 
+  <li>Make use of a “writing plan”: Make a plan of what you want to write for each section before you start writing the actual sentences (e.g., which core arguments, what references/arguments/examples do you use?). The benefit of this approach is that your writing will contain more structure. </li> 
+  <li>Start writing early on: writing a first sentence is often hard. So don't try to get every aspect of it perfect right away. Write what comes to mind. It is our experience that rewriting a text is a lot easier. So, make sure you start early, so you can get to the rewrite quickly. </li> 
+  <li>Rewrite: academic papers always require some rewriting after the first draft. Leave sufficient time for rewriting of your text. </li> 
+  <li>Make use of your team: If you get writer's block, pass a task on to a team member, or consult with them. Make sure everyone checks every section of the paper to get the message across clearly and to avoid unnecessary spelling or grammar mistakes. </li> 
+  <li>Learn how to write by “meta-reading” other papers. See Appendix C. </li> 
+ </ul> 
+</div>
+  </div>
+
+ <div id="_3937112_1previewModule" class="moduleSample">
+ </div>
+</li>
+
+</ul>
+
+
+
+
+<!-- Begin bottom list action bar. -->
+<!-- End bottom list action bar. -->
+
+
+<!-- begin edit paging (bottom) -->
+  <!-- end edit paging (bottom) -->
+
+   </div>
+   
+     </div>
+   </div> 
+   </div>
+   </div>  
+</div></div>
+
+
+
+
+  <script type="text/javascript">page.bundle.addKey('inlineconfirmation.close','Close');page.bundle.addKey('inlineconfirmation.refresh','Refresh');page.bundle.addKey('hidden.link.close.menu','End of menu. Click to return to associated item.');page.bundle.addKey('hidden.link.close.form','End of form. Click to return to associated item.');page.bundle.addKey('lightbox.loading','Loading...');page.bundle.addKey('yt.stopped','Stopped:');page.bundle.addKey('yt.playing','Playing:');page.bundle.addKey('yt.cued','Cued:');page.bundle.addKey('yt.buffering','Buffering:');page.bundle.addKey('yt.paused','Paused:');page.bundle.addKey('yt.ended','Ended:');page.bundle.addKey('yt.play','Play');page.bundle.addKey('yt.pause','Pause');page.bundle.addKey('yt.mute','Mute');page.bundle.addKey('yt.unmute','Unmute');page.bundle.addKey('lightbox.overlay','{0} has been opened as a lightbox overlaying the current page.');page.bundle.addKey('display.playerControls','Player Controls');page.bundle.addKey('display.videoPlayerControls','Video Player Controls');page.bundle.addKey('display.play','Play');page.bundle.addKey('display.stop','Stop');page.bundle.addKey('display.volumeUp','Volume Up');page.bundle.addKey('display.volumeDown','Volume Down');page.bundle.addKey('display.mute','Mute');page.bundle.addKey('display.videoStatus','Video Status');page.bundle.addKey('display.closePlayerControls','Close Player Controls');page.bundle.addKey('display.embeddedVideoPlayer','Embedded Video Player');page.bundle.addKey('display.of','of');page.bundle.addKey('display.view.on.flickr','View Photo on Flickr');page.bundle.addKey('mashups.content.data.msg','We are unable to display the mashup content. This happens if the system detects an invalid URL. Remove the mashup item and try again to resolve this issue.');page.bundle.addKey('contextmenu.frame.title','Menu frame');page.bundle.addKey('frameset.contentframe.title','Content');page.bundle.addKey('common.pair.paren','{0} ({1})');page.bundle.addKey('coursemenu.show','Show Course Menu');page.bundle.addKey('coursemenu.hide','Hide Course Menu');page.bundle.addKey('dynamictree.expand','Expand');page.bundle.addKey('dynamictree.collapse','Collapse');page.bundle.addKey('dynamictree.expand.folder','Expand {0} tree folder');page.bundle.addKey('dynamictree.collapse.folder','Collapse {0} tree folder');page.bundle.addKey('dragdrop.accessible.error.chooseOption','Select an item first.');page.bundle.addKey('dragdrop.accessible.empty','No items available to reposition.');page.bundle.addKey('dragdrop.accessible.complete','Items have been reordered.');page.bundle.addKey('dragdrop.accessible.complete.nochange','No ordering changes made.');page.bundle.addKey('closeStr','Close');page.bundle.addKey('moreOptionsStr','Click to see options');page.bundle.addKey('hiddenStr','This link is hidden from students');page.bundle.addKey('emptyStr','This link has no content');page.bundle.addKey('entryPointChangeConfirmStr','The entry point will changed to the next available Content');page.bundle.addKey('subheaderColonStr','Subheader: {0}');page.bundle.addKey('confirmQuickEnrollStr','You will be given the role: {0}. Proceed?');page.bundle.addKey('enterSearchKeyStr','Enter Search Criteria.');page.bundle.addKey('courseWelcomePageLbTitle','Quick Setup Guide');page.bundle.addKey('expandCollapse.expand.section.nocolon','Expand');page.bundle.addKey('expandCollapse.collapse.section.nocolon','Collapse');page.bundle.addKey('expandCollapse.expand.section.param','Expand {0}');page.bundle.addKey('expandCollapse.collapse.section.param','Collapse {0}');page.bundle.addKey('tool.activity.description','activity updates');page.bundle.addKey('breadcrumbs.expand','Click to expand the breadcrumbs');</script>
+  <script type="text/javascript">
+      Event.observe(window, 'load', function() {
+        displayMathImgInline( document.getElementById('content_listContainer').getElementsByTagName('img') );
+      });
+    </script>
+  
+  <script type="text/javascript">
+    function markReviewed(itemId)
+    {
+      document.contentForm.rstatus.value = "review";
+      document.contentForm.reviewed_content_id.value = itemId;
+      document.contentForm.submit();
+    }
+
+    function markUnreviewed(itemId)
+    {
+      if ( confirm("This will mark the item as unreviewed. Continue?") )
+      {
+        document.contentForm.rstatus.value = "unreview";
+        document.contentForm.reviewed_content_id.value = itemId;
+        document.contentForm.submit();
+      }
+    }
+    </script>
+  
+  <script type="text/javascript">
+   var course_id = "_134418_1";
+   var courseTitle = "2021-2022 1-GS Methods in AI research (INFOMAIR)";
+   var confirmDeleteMenuItemMsg = "Are you sure you want to delete this item?";
+   var confirmQuickUnenrollMsg = "Any user data created while quick enrolled in this course will be deleted. Proceed?";
+   var confirmQuickEnrollMsg = "You will be given the role: instructor. Proceed?";
+   var inNewWindow = false;
+   var theCourseMenu;
+ </script>
+ 
+  <script type='text/javascript'>globalNavigation.init(); Event.observe(window, 'resize', globalNavigation.onResize);</script>
+  <script type="application/javascript">
+
+      function showTooltip() {
+				var tooltipBtn = '<input class="submit tooltipButton" type="submit" role="button"' +
+												 'value="Got\x20it" id="tooltipButton" onclick="removeTooltip()" } />';
+				if ( $j( "#ftueTooltip" ) ) {
+					if ( $j( "#tooltipButton" ) ) $j( "#tooltipButton" ).remove();
+					$j( "#ftueTooltip" ).append( tooltipBtn );
+				}
+
+      	if ( $j( ".global-nav-bar-wrap-mobile-nav" ).css('visibility') === 'visible' ) {
+					$j( ".global-nav-bar-wrap-mobile-nav" ).prepend( $j( "#ftueTooltip" ) );
+				} else {
+					$j( "#global-nav" ).append( $j( "#ftueTooltip" ) );
+				}
+        $j( "#ftueTooltip" ).css('visibility', 'visible');
+      }
+
+			function removeTooltip() {
+				if ( $j( '#ftueTooltip' ) ) {
+					$j( '#ftueTooltip' ).remove();
+				}
+			}
+
+			function openFtue(title, bodyText, buttonText, redirectUrl) {
+				if ( redirectUrl ) {
+					var contents = '<div id="ftueLightboxWrapper">' +
+												 '<span class="ftueTitle" >' + title + '</span>' +
+												 '<img class="ftueImage" src="/images/ci/ftue/AssistPromoModal.png"/>' +
+												 '<span class="ftueText" >' + bodyText + '</span>' +
+												 '</div>' +
+												 '<div id="ftueFooter">' +
+												 '<input class="submit ftueButton" type="submit" role="button" ' +
+												 'value="' + buttonText + '" onclick=\'window.location="' + redirectUrl + '"\' />' +
+												 '</div>';
+
+					var lb = new lightbox.Lightbox(
+						{
+							lightboxId: 'ftueLightbox',
+							contents: contents,
+							closeOnBodyClick: false,
+							onClose: 'showTooltip()'
+						} );
+					lb.open();
+				}
+			}
+
+			
+			if ( false )
+			{
+				var redirect = "/webapps/bb-social-learning-bb_bb60/execute/mybb?cmd=display&toolId=LTI_LAUNCH_PLUGIN_____bbAssist--B";
+				openFtue('Introducing\x20Assist', 'Assist\x20is\x20the\x20student\x20success\x20hub\x20for\x20campus\x20and\x20online\x20resources\x20available\x20on\x20the\x20desktop\x20or\x20on\x20the\x20go\x20with\x20the\x20Blackboard\x20mobile\x20app.',
+					'Explore\x20Assist', redirect)
+			}
+
+		</script>
+	
+  <script type="text/javascript">
+    page.bundle.addKey('globalnav.menu.expand','Expand\x20Global\x20Nav');
+    page.bundle.addKey('globalnav.menu.collapse','Collapse\x20Global\x20Nav');
+
+    function insertSkipLinkAfterBodyStart(referenceNode, newNode, linkContent)
+    {
+      if( top === self )
+      {
+        /* Evaluates if the page is not been loaded inside Iframe,
+        only attach skip-link in original view, not Ultra, because ultra has his own skip link. */
+        referenceNode.parentNode.insertBefore( newNode, referenceNode );
+        newNode.innerHTML = linkContent;
+      }
+    }
+
+    var skipLink = new Element('a',{id:'skip-to-content', href: '#content', tabIndex: '1'});
+    var learnBody = document.body.firstChild;
+    var linkContent = 'Skip\x20To\x20Content';
+    this.insertSkipLinkAfterBodyStart(learnBody, skipLink, linkContent);
+  </script>
+  
+  <script type="text/javascript">
+    page.bundle.addKey('quick_links.link.title','Navigate\x20to\x20element\x20\x7B1\x7D\x20of\x20type\x20\x7B2\x7D\x20in\x20\x7B0\x7D\x20frame');
+    page.bundle.addKey('quick_links.lightbox_title','Quick\x20Links');
+    page.bundle.addKey('quick_links.link_title','Open\x20Quick\x20Links');
+    page.bundle.addKey('quick_links.hotkey.shift','Shift');
+    page.bundle.addKey('quick_links.hotkey.control','Ctrl');
+    page.bundle.addKey('quick_links.hotkey.alt','Alt');
+    page.bundle.addKey('quick_links.hotkey.combination_divider','\x2B');
+  </script>
+  
+  <script type="text/javascript">quickLinks.initialize( [ 'null' ] );</script>
+  <script type="text/javascript">
+  		            globalNavMenu.init( true );
+  		          </script>
+  		        
+ 
+   <script type="text/javascript">
+   FastInit.addOnLoad( function()
+   {
+            if ( window.DWREngine )
+       {
+        try {DWREngine.beginBatch();} catch(ignore) {}
+       } 
+                page.decoratePageBanner();
+                                                             new genericList.CheckboxRadioController("content_listContainer");
+                                                             page.ContextMenu.hideMenuDiv('35cbe2de6610450abc1f1b37c12ac67e');
+                                                             new page.PageHelpToggler(true, 'Help is On: Click to hide page help.', 'Help is Off: Click to show page help.', false );
+                                                             breadcrumbs.rightMostNavItem = 'content';
+                                                             breadcrumbs.rightMostParentURL = '/webapps/blackboard/content/listContent.jsp?course_id=_134418_1&content_id=_3930870_1&mode=reset';
+                                                             new page.PageMenuToggler(true,'courseMenuToggle_134418_1', true);
+                                                             courseMenu.nonceKey = 'blackboard.platform.security.NonceUtil.nonce.ajax';
+                                                             courseMenu.nonceValue = 'fbac8489-3222-4495-bafc-0f216211bd3e';
+                                                             new page.PaletteController('courseMenuPalette', 'courseMenu_link', false, false);
+                                                             new page.ItemExpander('mygroups._323561_1_groupExpanderLink', 'mygroups._323561_1_groupContents', 'Expand', 'Collapse', true, '/webapps/bb-group-mgmt-LEARN/execute/group/getGroupMenuItems', 'course_id=_134418_1&group_id=_323561_1&newWindow=false&openInParentWindow=false', 'Expand Team 30','Collapse Team 30');
+                                                             new page.PaletteController('myGroups', 'myGroups_link', false, false);
+                                                             theCourseMenu = new courseMenu.CourseMenu('/webapps/blackboard/execute/doCourseMenuAction', '/webapps/blackboard/execute/getCourseMenuContextMenu');
+                                                             tool_service.init ('300000', 'Suppress-Session-Timestamp-Update' );
+                                                             if (typeof(initEditors) == 'function') { initEditors(); }; 
+                                                             if (window['org'] && window['org']['owasp']) { org.owasp.esapi.ESAPI.initialize(); }; 
+                                                             quickLinks.createHelper();
+                                                                  if ( window.DWREngine )
+       {
+         try {DWREngine.endBatch();} catch(ignore) {}
+       }
+                          BrowserSpecific.registerListeners();
+               });
+   </script>
+       
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"errorBeacon":"bam-cell.nr-data.net","licenseKey":"e99ceaa32b","agent":"","beacon":"bam-cell.nr-data.net","applicationTime":60,"applicationID":"9670169","transactionName":"YlUEYhdYCkUAWhdfX1sfNUIXTBBFIFoXX19bHwRaBFoPVA5YEVIeQlUEVxVJFxgRVhFCUVkeFUIXTBBFT20CVHdHXxNGJFoQXw5X","queueTime":0}</script>
+</body>
+</html>
