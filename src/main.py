@@ -26,7 +26,7 @@ def main():
         if word == "EXIT":
             break
 
-        switch.get(command)(word)
+        switch.get(command)(word.lower())
 
 
 def classify_base(word):
