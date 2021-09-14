@@ -1,23 +1,52 @@
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
+from sklearn import tree
+
+""" Entry point to the application
+"""
 
 
 def main():
-    print('Hello World')
+    print('INFOMAIR - Group 30 - 2021')
 
-    f = open("../data/dialog_acts.dat", "r")
-    data = list(map(lambda x: x.split(" ", 1), f.readlines()))
-    dataset = tf.data.Dataset.from_tensor_slices(data)
+    command = ''
 
-    list(dataset.as_numpy_iterator())
+    while True:
+        command = input('Please choose a classifier: ("base", "rule-based", "ml1", "ml2")')
+        if command in ["base", "rule-based", "ml1", "ml2"]:
+            break
 
-    model = keras.Sequential(
-        [
-            layers.Dense(1, activation="relu", name="layer1")
-        ])
+    switch = {
+        "base": classify_base,
+        "rule-based": classify_rule_based,
+        "ml1": classify_ml_1,
+        "ml2": classify_ml_2
+    }
 
-    #model.fit(dataset)
+    while True:
+        word = input("Give a word to classify (Use EXIT to exit):")
+        if word == "EXIT":
+            break
+
+        switch.get(command)(word)
+
+
+def classify_base(word):
+    print('chose base classifier')
+    raise NotImplementedError()
+
+
+def classify_rule_based(word):
+    print('chose rule based classifier')
+    raise NotImplementedError()
+
+
+def classify_ml_1(word):
+    print('chose ml1 classifier')
+    raise NotImplementedError()
+
+
+def classify_ml_2(word):
+    print('chose ml2 classifier')
+    raise NotImplementedError()
 
 
 if __name__ == "__main__":
