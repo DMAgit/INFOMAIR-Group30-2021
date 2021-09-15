@@ -1,0 +1,125 @@
+from joblib import dump
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.naive_bayes import MultinomialNB, ComplementNB
+from sklearn.dummy import DummyClassifier
+from sklearn.metrics import classification_report
+
+
+def load_dataset():
+    """
+    Loads the dataset, performs basic line cleanup ("\n" removal) and then returns the set of features and labels for
+    both training and testing
+
+    :return: X_train, X_test: array - contains the features for the training and test sets
+                y_train, y_test: array - contains the labels for the training and test sets
+    """
+    raw_data = dict()
+    with open("../data/dialog_acts.dat", "r") as f:
+        for line in f:
+            lines = line.split(" ")
+            key = lines[0]
+            value = " ".join(lines[1:]).strip("\n")
+            if key not in raw_data:
+                raw_data[key] = [value]
+            else:  # to avoid duplicates
+                if value not in raw_data[key]:
+                    raw_data[key].append(value)
+
+    # Prepare X and y variables
+    X = []
+    y = []
+    for key in raw_data:
+        for statement in raw_data[key]:
+            X.append(statement)
+            y.append(key)
+
+    # Split train/test 85/15
+    _X_train, _X_test, _y_train, _y_test = train_test_split(X, y, test_size=0.15, random_state=8)
+
+    return _X_train, _X_test, _y_train, _y_test
+
+
+def apply_bow(features_train, features_test):
+    """
+    Applies Bag of Words to the inputs and returns the corresponding matrices
+
+    :param features_train: str - list of text features to transform (training)
+    :param features_test: str - list of text features to transform (testing)
+    :return: train, test: array - matrices associated to each vectorization
+                bow: CountVectorizer - the vectorization model used (for further reuse)
+    """
+    bow = CountVectorizer()
+    train = bow.fit_transform(features_train)
+    test = bow.transform(features_test)
+    return train, test, bow
+
+
+def get_report(truth, predicted):
+    """
+    Returns the corresponding scores according to several metrics (such as accuracy, recall or precision) for each
+    class, it also includes support and weighted/macro averages
+
+    :param truth: array - vector containing the expect labels for each class
+    :param predicted: array - vector containing the predicted labels for each class
+    :return: dict/str - the classification report containing all the information and metrics
+    """
+    return classification_report(truth, predicted)
+
+
+def get_classifiers():
+    """
+    Returns the classifiers declared as follows:
+        [[model instance, *dict* with params to be tested], ...]
+        - if the params dict is empty it will just perform a normal fit without cross-validation and default params
+
+    :return: models: list - all the models with the different configurations
+    """
+    models = [
+        # Baseline (majority class)
+        [DummyClassifier(strategy="most_frequent"), {}],
+        # Baseline (rule-based)
+        # [],
+        # Other two different models
+        [ComplementNB(),
+            {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
+        [SGDClassifier(n_jobs=-1, max_iter=1000),
+            {"alpha": 10.0 ** -np.arange(1, 7)}],
+    ]
+    return models
+
+
+def execute_ml_pipeline(enable_save):
+    """
+    Executes the whole ML pipeline:
+        - loading the dataset
+        - applies bag of words
+        - executes several models defined in the 'get_classifiers' function
+        - print the results report
+        - saves (if 'enable_save' == True) the models to future use
+
+    :param enable_save: bool - True to save the models for future use, False for testing purposes
+    """
+    X_train, X_test, y_train, y_test = load_dataset()
+    X_train, X_test, bow = apply_bow(X_train, X_test)
+
+    for i, classifier in enumerate(get_classifiers()):
+        print("Training {}...".format(type(classifier[0]).__name__))
+        if classifier[1]:
+            grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1)
+            grid.fit(X_train, y_train)
+            clf = grid.best_estimator_
+        else:
+            clf = classifier[0].fit(X_train, y_train)
+
+        y_pred = clf.predict(X_test)
+        print(get_report(y_test, y_pred))
+
+        if enable_save:
+            # dump(clf, "../models/{}.joblib".format(type(clf).__name__).lower())  # to save according to models' name
+            dump(clf, "../models/ml{}.joblib".format(i))
+
+    if enable_save:
+        dump(bow, "../models/bow.joblib")
