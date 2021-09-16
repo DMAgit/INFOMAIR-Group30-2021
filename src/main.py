@@ -1,5 +1,5 @@
 from joblib import load
-from models import execute_ml_pipeline
+from models import execute_ml_pipeline, get_classifier_names
 import argparse
 
 """ Entry point to the application
@@ -27,7 +27,12 @@ def main():
     print('INFOMAIR - Group 30 - 2021')
 
     while True:
-        command = input('Please choose a classifier: ("base", "rule-based", "ml1", "ml2")')
+        clf_names = get_classifier_names()
+        print("Classifiers available: {} (base), {} (rule-based), {} (ml1), {} (ml2)".format(clf_names[0],
+                                                                                             clf_names[1],
+                                                                                             clf_names[2],
+                                                                                             clf_names[3]))
+        command = input('Please choose a classifier: ("base", "rule-based", "ml1", "ml2"): ')
         if command in ["base", "rule-based", "ml1", "ml2"]:
             break
 
@@ -39,7 +44,7 @@ def main():
     }
 
     while True:
-        sentence = input("Give a word to classify (Use EXIT to exit):")
+        sentence = input("Give a sentence to classify (Use EXIT to exit): ")
         if sentence == "EXIT":
             break
 

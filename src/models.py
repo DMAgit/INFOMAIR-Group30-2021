@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.naive_bayes import ComplementNB
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
-from rule_based import CustomClassifier
+from rule_based import RuleBasedClassifier
 
 
 def load_dataset():
@@ -81,7 +81,7 @@ def get_classifiers():
         # Baseline (majority class)
         [DummyClassifier(strategy="most_frequent"), {}],
         # Baseline (rule-based)
-        [CustomClassifier(), {}],
+        [RuleBasedClassifier(), {}],
         # Other two different models
         [ComplementNB(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
@@ -89,6 +89,18 @@ def get_classifiers():
             {"alpha": 10.0 ** -np.arange(1, 7)}],
     ]
     return models
+
+
+def get_classifier_names():
+    """
+    Returns the names of all the classifiers defined
+
+    :return: names: list<str> - an string array with all the names
+    """
+    names = []
+    for classifier in get_classifiers():
+        names.append(type(classifier[0]).__name__)
+    return names
 
 
 def execute_ml_pipeline(enable_save):
@@ -103,7 +115,10 @@ def execute_ml_pipeline(enable_save):
     :param enable_save: bool - True to save the models for future use, False for testing purposes
     """
     x_train, x_test, y_train, y_test = load_dataset()
+    raw_train, raw_test = x_train, x_test  # for the rule-based clf
     x_train, x_test, bow = apply_bow(x_train, x_test)
+
+    clf = None
 
     for i, classifier in enumerate(get_classifiers()):
         print("Training {}...".format(type(classifier[0]).__name__))
@@ -112,9 +127,15 @@ def execute_ml_pipeline(enable_save):
             grid.fit(x_train, y_train)
             clf = grid.best_estimator_
         else:
-            clf = classifier[0].fit(x_train, y_train)
+            if type(classifier[0]).__name__ == "RuleBasedClassifier":  # No need for training
+                pass
+            else:
+                clf = classifier[0].fit(x_train, y_train)
 
-        y_pred = clf.predict(x_test)
+        if type(classifier[0]).__name__ == "RuleBasedClassifier":  # Test with the raw texts
+            y_pred = classifier[0].predict(raw_test)
+        else:
+            y_pred = clf.predict(x_test)
         print(get_report(y_test, y_pred))
 
         if enable_save:
