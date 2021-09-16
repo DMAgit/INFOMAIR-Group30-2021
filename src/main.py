@@ -1,4 +1,6 @@
 from joblib import load
+from models import execute_ml_pipeline
+import argparse
 
 """ Entry point to the application
 """
@@ -8,6 +10,20 @@ def main():
     """
     Entry point of application, writes instructions and takes input.
     """
+    # Add parser for flags
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--development', action='store_true')
+
+    isDeveloper = parser.parse_args().development
+
+    if isDeveloper:
+        while True:
+            command = input('Would you like to train the classifiers? (y/n)')
+            if command in ["y", "n"]:
+                break
+        if command == "y":
+            execute_ml_pipeline(True)
+
     print('INFOMAIR - Group 30 - 2021')
 
     while True:

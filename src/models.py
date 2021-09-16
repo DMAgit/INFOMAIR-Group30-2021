@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.naive_bayes import ComplementNB
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
+from rule_based import CustomClassifier
 
 
 def load_dataset():
@@ -80,7 +81,7 @@ def get_classifiers():
         # Baseline (majority class)
         [DummyClassifier(strategy="most_frequent"), {}],
         # Baseline (rule-based)
-        # [],
+        [CustomClassifier(), {}],
         # Other two different models
         [ComplementNB(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
