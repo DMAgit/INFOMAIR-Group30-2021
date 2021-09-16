@@ -5,9 +5,10 @@ from joblib import load
 
 
 def main():
+    """
+    Entry point of application, writes instructions and takes input.
+    """
     print('INFOMAIR - Group 30 - 2021')
-
-    command = ''
 
     while True:
         command = input('Please choose a classifier: ("base", "rule-based", "ml1", "ml2")')
@@ -15,10 +16,10 @@ def main():
             break
 
     switch = {
-        "base": classify_base,
-        "rule-based": classify_rule_based,
-        "ml1": classify_ml_1,
-        "ml2": classify_ml_2
+        "base": "../models/ml0.joblib",
+        "rule-based": "../models/ml1.joblib",
+        "ml1": "../models/ml2.joblib",
+        "ml2": "../models/ml3.joblib"
     }
 
     while True:
@@ -26,29 +27,16 @@ def main():
         if sentence == "EXIT":
             break
 
-        switch.get(command)(sentence.lower())
+        predict_with_bow(sentence.lower(), switch.get(command))
 
 
-def classify_base(sentence):
-    clf = load("../models/ml0.joblib")
-    bow = load("../models/bow.joblib")
-    print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
+def predict_with_bow(sentence, model_path):
+    """ Use a given model and bag of words to predict to which class the given sentence belongs.
 
-
-def classify_rule_based(sentence):
-    clf = load("../models/ml1.joblib")
-    bow = load("../models/bow.joblib")
-    print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
-
-
-def classify_ml_1(sentence):
-    clf = load("../models/ml2.joblib")
-    bow = load("../models/bow.joblib")
-    print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
-
-
-def classify_ml_2(sentence):
-    clf = load("../models/ml3.joblib")
+    :param sentence: Sentence to classify
+    :param model_path: Path to the joblib file containing the requested model.
+    """
+    clf = load(model_path)
     bow = load("../models/bow.joblib")
     print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
 

@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.naive_bayes import MultinomialNB, ComplementNB
+from sklearn.naive_bayes import ComplementNB
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
 
@@ -13,15 +13,14 @@ def load_dataset():
     Loads the dataset, performs basic line cleanup ("\n" removal) and then returns the set of features and labels for
     both training and testing
 
-    :return: X_train, X_test: array - contains the features for the training and test sets
+    :return: x_train, x_test: array - contains the features for the training and test sets
                 y_train, y_test: array - contains the labels for the training and test sets
     """
     raw_data = dict()
     with open("../data/dialog_acts.dat", "r") as f:
         for line in f:
-            lines = line.split(" ")
-            key = lines[0]
-            value = " ".join(lines[1:]).strip("\n")
+            [key, value] = line.split(" ", 1)
+            value = value.strip("\n")
             if key not in raw_data:
                 raw_data[key] = [value]
             else:  # to avoid duplicates
@@ -29,17 +28,17 @@ def load_dataset():
                     raw_data[key].append(value)
 
     # Prepare X and y variables
-    X = []
+    x = []
     y = []
     for key in raw_data:
         for statement in raw_data[key]:
-            X.append(statement)
+            x.append(statement)
             y.append(key)
 
     # Split train/test 85/15
-    _X_train, _X_test, _y_train, _y_test = train_test_split(X, y, test_size=0.15, random_state=8)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.15, random_state=8)
 
-    return _X_train, _X_test, _y_train, _y_test
+    return x_train, x_test, y_train, y_test
 
 
 def apply_bow(features_train, features_test):
@@ -102,19 +101,19 @@ def execute_ml_pipeline(enable_save):
 
     :param enable_save: bool - True to save the models for future use, False for testing purposes
     """
-    X_train, X_test, y_train, y_test = load_dataset()
-    X_train, X_test, bow = apply_bow(X_train, X_test)
+    x_train, x_test, y_train, y_test = load_dataset()
+    x_train, x_test, bow = apply_bow(x_train, x_test)
 
     for i, classifier in enumerate(get_classifiers()):
         print("Training {}...".format(type(classifier[0]).__name__))
         if classifier[1]:
             grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1)
-            grid.fit(X_train, y_train)
+            grid.fit(x_train, y_train)
             clf = grid.best_estimator_
         else:
-            clf = classifier[0].fit(X_train, y_train)
+            clf = classifier[0].fit(x_train, y_train)
 
-        y_pred = clf.predict(X_test)
+        y_pred = clf.predict(x_test)
         print(get_report(y_test, y_pred))
 
         if enable_save:
