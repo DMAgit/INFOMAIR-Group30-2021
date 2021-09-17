@@ -123,7 +123,7 @@ def execute_ml_pipeline(enable_save):
     for i, classifier in enumerate(get_classifiers()):
         print("Training {}...".format(type(classifier[0]).__name__))
         if classifier[1]:
-            grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1)
+            grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1, scoring="f1_macro")
             grid.fit(x_train, y_train)
             clf = grid.best_estimator_
         else:
