@@ -80,7 +80,7 @@ def predict_with_bow(sentence, model_path):
     """ Use a given model and bag of words to predict to which class the given sentence belongs.
 
     :param sentence: Sentence to classify
-    :param model_path: Path to the joblib file containing the requested model.
+    :param model_path: Path to the joblib/H5 file containing the requested model.
     """
     if "joblib" in glob.glob(model_path + ".*")[0]:
         clf = load(model_path + ".joblib")

@@ -90,9 +90,9 @@ def get_classifiers(input_dimension=0):
         [SGDClassifier(n_jobs=-1, max_iter=1000),
             {"alpha": 10.0 ** -np.arange(1, 7)}],
         [get_model(input_dimension),  # Keras model
-         {"epochs": [50, 100]}]
+         {"epochs": [50, 100], "batch_size": [32, 64, 128]}]
     ]
-    # "batch_size": [32, 64, 128]
+
     return models
 
 
