@@ -7,6 +7,7 @@ from sklearn.naive_bayes import ComplementNB
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
 from rule_based import RuleBasedClassifier
+from nn_model import get_model
 
 
 def load_dataset():
@@ -69,12 +70,13 @@ def get_report(truth, predicted):
     return classification_report(truth, predicted)
 
 
-def get_classifiers():
+def get_classifiers(input_dimension=0):
     """
     Returns the classifiers declared as follows:
         [[model instance, *dict* with params to be tested], ...]
         - if the params dict is empty it will just perform a normal fit without cross-validation and default params
 
+    :param input_dimension: int - the size of the training set (used to setup nn-models)
     :return: models: list - all the models with the different configurations
     """
     models = [
@@ -82,12 +84,15 @@ def get_classifiers():
         [DummyClassifier(strategy="most_frequent"), {}],
         # Baseline (rule-based)
         [RuleBasedClassifier(), {}],
-        # Other two different models
+        # Other models
         [ComplementNB(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
         [SGDClassifier(n_jobs=-1, max_iter=1000),
             {"alpha": 10.0 ** -np.arange(1, 7)}],
+        [get_model(input_dimension),  # Keras model
+         {"epochs": [50, 100]}]
     ]
+    # "batch_size": [32, 64, 128]
     return models
 
 
@@ -120,7 +125,7 @@ def execute_ml_pipeline(enable_save):
 
     clf = None
 
-    for i, classifier in enumerate(get_classifiers()):
+    for i, classifier in enumerate(get_classifiers(x_train.shape[1])):  # used for defining nn-models (input_dim)
         print("Training {}...".format(type(classifier[0]).__name__))
         if classifier[1]:
             grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1, scoring="f1_macro")
@@ -138,9 +143,10 @@ def execute_ml_pipeline(enable_save):
             y_pred = clf.predict(x_test)
         print(get_report(y_test, y_pred))
 
-        if enable_save:
-            # dump(clf, "../models/{}.joblib".format(type(clf).__name__).lower())  # to save according to models' name
+        if enable_save and type(classifier[0]).__name__ != "KerasClassifier":
             dump(clf, "../models/ml{}.joblib".format(i))
+        else:
+            clf.model.save("../models/ml{}.h5".format(i))
 
     if enable_save:
         dump(bow, "../models/bow.joblib")

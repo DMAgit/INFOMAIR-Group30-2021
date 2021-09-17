@@ -1,6 +1,8 @@
 from joblib import load
+from tensorflow import keras
 from models import execute_ml_pipeline, get_classifier_names
 import argparse
+import glob
 
 """ Entry point to the application
 """
@@ -59,13 +61,13 @@ def setup_description():
     clf_str_input = "Please choose a classifier: ('base', 'rule-based', "
     clf_shortcuts = ["base", "rule-based"]
 
-    switch = {"base": "../models/ml0.joblib", "rule-based": "../models/ml1.joblib"}
+    switch = {"base": "../models/ml0", "rule-based": "../models/ml1"}
 
     for i, name in enumerate(clf_names[2:]):
         clf_str_available += "{} (ml{}), ".format(name, i + 1)
         clf_str_input += "'ml{}', ".format(i + 1)
         clf_shortcuts.append("ml{}".format(i + 1))
-        switch["ml{}".format(i + 1)] = "../models/ml{}.joblib".format(i + 1)
+        switch["ml{}".format(i + 1)] = "../models/ml{}".format(i + 1)
 
     clf_str_available = clf_str_available[:-2]
     clf_str_input = clf_str_input[:-2]
@@ -80,7 +82,10 @@ def predict_with_bow(sentence, model_path):
     :param sentence: Sentence to classify
     :param model_path: Path to the joblib file containing the requested model.
     """
-    clf = load(model_path)
+    if "joblib" in glob.glob(model_path + ".*")[0]:
+        clf = load(model_path + ".joblib")
+    else:
+        clf = keras.models.load_model(model_path + ".h5")
     bow = load("../models/bow.joblib")
     print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
 

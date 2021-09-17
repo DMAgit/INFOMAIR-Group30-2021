@@ -6,17 +6,18 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
     def __init__(self):
         pass
 
-    def fit(self, X, y=None):
+    def fit(self, x, y=None):
         # No fitting needed, rule implementation is done semi-manually
         return self
 
-    def predict(self, X, y=None):
-        return list(map(self.predict_most_likely, X))
+    def predict(self, x, y=None):
+        return list(map(self.predict_most_likely, x))
 
-    def predict_proba(self, X, y=None):
-        return list(map(self.predict_most_likely, X))
+    def predict_proba(self, x, y=None):
+        return list(map(self.predict_most_likely, x))
 
-    def predict_most_likely(self, sentence):
+    @staticmethod
+    def predict_most_likely(sentence):
         for word in sentence.split():
             if word in rule_dict.keys():
                 if rule_dict[word]:
