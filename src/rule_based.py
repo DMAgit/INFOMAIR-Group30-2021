@@ -21,9 +21,6 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
             if word in rule_dict.keys():  # if it is a keyword
                 c_d_temp[rule_dict.get(word)] += 1  # add one to that keyword
         if max(c_d_temp.values()) != 0:  # if any keyword was found
-            print(c_d_temp)
-            print(max(c_d_temp, key=c_d_temp.get))
             return max(c_d_temp, key=c_d_temp.get)  # return the most common one
         else:
-            print("None")
             return "inform"  # the most common class
