@@ -145,7 +145,7 @@ def execute_ml_pipeline(enable_save):
 
         if enable_save and type(classifier[0]).__name__ != "KerasClassifier":
             dump(clf, "../models/ml{}.joblib".format(i))
-        else:
+        elif enable_save:
             clf.model.save("../models/ml{}.h5".format(i))
 
     if enable_save:
