@@ -16,8 +16,12 @@ def main():
 
     isDeveloper = parser.parse_args().development
 
+    clf_str_available, clf_str_input, clf_shortcuts, switch = setup_description()
+
     if isDeveloper:
         while True:
+            print("Classifiers' definitions declared in 'models.py'")
+            print(clf_str_available)
             command = input('Would you like to train the classifiers? (y/n)')
             if command in ["y", "n"]:
                 break
@@ -27,21 +31,10 @@ def main():
     print('INFOMAIR - Group 30 - 2021')
 
     while True:
-        clf_names = get_classifier_names()
-        print("Classifiers available: {} (base), {} (rule-based), {} (ml1), {} (ml2)".format(clf_names[0],
-                                                                                             clf_names[1],
-                                                                                             clf_names[2],
-                                                                                             clf_names[3]))
-        command = input('Please choose a classifier: ("base", "rule-based", "ml1", "ml2"): ')
-        if command in ["base", "rule-based", "ml1", "ml2"]:
+        print(clf_str_available)
+        command = input(clf_str_input)
+        if command in clf_shortcuts:
             break
-
-    switch = {
-        "base": "../models/ml0.joblib",
-        "rule-based": "../models/ml1.joblib",
-        "ml1": "../models/ml2.joblib",
-        "ml2": "../models/ml3.joblib"
-    }
 
     while True:
         sentence = input("Give a sentence to classify (Use EXIT to exit): ")
@@ -49,6 +42,36 @@ def main():
             break
 
         predict_with_bow(sentence.lower(), switch.get(command))
+
+
+def setup_description():
+    """
+    Function that prepares all the statements to be shown throw the CLI and also some internal functionalities in order
+    to be generic (no classifier count limit)
+
+    :return: clf_str_available, clf_str_input: str - string to show through the console
+                clf_shortcuts: list<str> - array containing the shortcuts for each classifier
+                switch: map - dictionary that contains all the paths to each saved model
+    """
+    clf_names = get_classifier_names()
+
+    clf_str_available = "Classifiers available: {} (base), {} (rule-based), ".format(clf_names[0], clf_names[1])
+    clf_str_input = "Please choose a classifier: ('base', 'rule-based', "
+    clf_shortcuts = ["base", "rule-based"]
+
+    switch = {"base": "../models/ml0.joblib", "rule-based": "../models/ml1.joblib"}
+
+    for i, name in enumerate(clf_names[2:]):
+        clf_str_available += "{} (ml{}), ".format(name, i + 1)
+        clf_str_input += "'ml{}', ".format(i + 1)
+        clf_shortcuts.append("ml{}".format(i + 1))
+        switch["ml{}".format(i + 1)] = "../models/ml{}.joblib".format(i + 1)
+
+    clf_str_available = clf_str_available[:-2]
+    clf_str_input = clf_str_input[:-2]
+    clf_str_input += "): "
+
+    return clf_str_available, clf_str_input, clf_shortcuts, switch
 
 
 def predict_with_bow(sentence, model_path):
