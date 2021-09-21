@@ -123,8 +123,6 @@ def execute_ml_pipeline(enable_save):
     raw_train, raw_test = x_train, x_test  # for the rule-based clf
     x_train, x_test, bow = apply_bow(x_train, x_test)
 
-    clf = None
-
     for i, classifier in enumerate(get_classifiers(x_train.shape[1])):  # used for defining nn-models (input_dim)
         print("Training {}...".format(type(classifier[0]).__name__))
         if classifier[1]:
@@ -132,10 +130,7 @@ def execute_ml_pipeline(enable_save):
             grid.fit(x_train, y_train)
             clf = grid.best_estimator_
         else:
-            if type(classifier[0]).__name__ == "RuleBasedClassifier":  # No need for training
-                pass
-            else:
-                clf = classifier[0].fit(x_train, y_train)
+            clf = classifier[0].fit(x_train, y_train)
 
         if type(classifier[0]).__name__ == "RuleBasedClassifier":  # Test with the raw texts
             y_pred = classifier[0].predict(raw_test)

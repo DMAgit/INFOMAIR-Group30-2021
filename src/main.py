@@ -87,7 +87,7 @@ def predict_with_bow(sentence, model_path):
     else:
         clf = keras.models.load_model(model_path + ".h5")
     bow = load("../models/bow.joblib")
-    prediction = "".join(clf.predict(bow.transform([sentence])))
+    prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
     print(f"Predicted class: {prediction}")
 
 
