@@ -1,9 +1,11 @@
+from joblib import dump, load
 from sklearn.base import BaseEstimator, ClassifierMixin
 from rule_dict import rule_dict
 from rule_dict import count_dict
+from classifier import Classifier
 
 
-class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
+class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):
     def __init__(self):
         pass
 
@@ -13,6 +15,18 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin):
 
     def predict(self, x, y=None):
         return list(map(self.predict_most_likely, x))
+
+    def save_to_file(self):
+        dump(self, self.get_file_name())
+
+    def get_file_name(self):
+        return "../models/ruleBased.joblib"
+
+    def load_from_file(self):
+        return load(self.get_file_name())
+
+    def get_name(self):
+        return "rule-based"
 
     @staticmethod
     def predict_most_likely(sentence):

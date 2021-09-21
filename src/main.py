@@ -1,6 +1,6 @@
 from joblib import load
 from tensorflow import keras
-from models import execute_ml_pipeline, get_classifier_names
+from models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
 import glob
 
@@ -55,39 +55,36 @@ def setup_description():
                 clf_shortcuts: list<str> - array containing the shortcuts for each classifier
                 switch: map - dictionary that contains all the paths to each saved model
     """
+    classifiers = get_classifiers()
     clf_names = get_classifier_names()
 
-    clf_str_available = f"Classifiers available: {clf_names[0]} (base), {clf_names[1]} (rule-based), "
-    clf_str_input = "Please choose a classifier: ('base', 'rule-based', "
-    clf_shortcuts = ["base", "rule-based"]
+    combined_names = "', '".join(clf_names)
+    combined_names = f"'{combined_names}'"
+    clf_str_available = f"Classifiers available: {combined_names}"
+    clf_str_input = f"Please choose a classifier: ({combined_names})"
+    clf_shortcuts = clf_names
 
-    switch = {"base": "../models/ml0", "rule-based": "../models/ml1"}
+    switch = {}
 
-    for i, name in enumerate(clf_names[2:]):
-        clf_str_available += f"{name} (ml{i + 1}), "
-        clf_str_input += f"'ml{i + 1}', "
-        clf_shortcuts.append(f"ml{i + 1}")
-        switch[f"ml{i + 1}"] = f"../models/ml{i + 2}"
-
-    clf_str_available = clf_str_available[:-2]
-    clf_str_input = clf_str_input[:-2]
-    clf_str_input += "): "
+    for i, classifier in enumerate(classifiers):
+        switch[classifier[0].get_name()] = classifier[0]
 
     return clf_str_available, clf_str_input, clf_shortcuts, switch
 
 
-def predict_with_bow(sentence, model_path):
+def predict_with_bow(sentence, classifier):
     """ Use a given model and bag of words to predict to which class the given sentence belongs.
 
     :param sentence: Sentence to classify
-    :param model_path: Path to the joblib/H5 file containing the requested model.
+    :param classifier: Classifier to use
     """
-    if "joblib" in glob.glob(model_path + ".*")[0]:
-        clf = load(model_path + ".joblib")
-    else:
-        clf = keras.models.load_model(model_path + ".h5")
+
+    clf = classifier.load_from_file()
+
     bow = load("../models/bow.joblib")
+
     prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+
     print(f"Predicted class: {prediction}")
 
 

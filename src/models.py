@@ -1,13 +1,13 @@
 from joblib import dump
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.naive_bayes import ComplementNB
-from sklearn.dummy import DummyClassifier
 from sklearn.metrics import classification_report
 from rule_based import RuleBasedClassifier
-from nn_model import get_model
+from neural_network import BasicKerasClassifier
+from src.base import BaseClassifier
+from src.complement_nb import ComplementNBClassifier
+from src.sgdc_classifier import MySGDClassifier
 
 
 def load_dataset():
@@ -81,15 +81,15 @@ def get_classifiers(input_dimension=0):
     """
     models = [
         # Baseline (majority class)
-        [DummyClassifier(strategy="most_frequent"), {}],
+        [BaseClassifier(), {}],
         # Baseline (rule-based)
         [RuleBasedClassifier(), {}],
         # Other models
-        [ComplementNB(),
+        [ComplementNBClassifier(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
-        [SGDClassifier(n_jobs=-1, max_iter=1000),
+        [MySGDClassifier(),
             {"alpha": 10.0 ** -np.arange(1, 7)}],
-        [get_model(input_dimension),  # Keras model
+        [BasicKerasClassifier(input_dimension),  # Keras model
          {"epochs": [50, 100], "batch_size": [32, 64, 128]}]
     ]
 
@@ -104,7 +104,7 @@ def get_classifier_names():
     """
     names = []
     for classifier in get_classifiers():
-        names.append(type(classifier[0]).__name__)
+        names.append(classifier[0].get_name())
     return names
 
 
@@ -119,16 +119,13 @@ def execute_ml_pipeline(enable_save):
 
     :param enable_save: bool - True to save the models for future use, False for testing purposes
     """
-    x_train, x_test, y_train, y_test = load_dataset()
-    raw_train, raw_test = x_train, x_test  # for the rule-based clf
-    x_train, x_test, bow = apply_bow(x_train, x_test)
+    raw_train, raw_test, y_train, y_test = load_dataset()
+    x_train, x_test, bow = apply_bow(raw_train, raw_test)
 
     for i, classifier in enumerate(get_classifiers(x_train.shape[1])):  # used for defining nn-models (input_dim)
-        print("Training {}...".format(type(classifier[0]).__name__))
+        print(f"Training {classifier[0].get_name()}...")
         if classifier[1]:
-            grid = GridSearchCV(estimator=classifier[0], param_grid=classifier[1], cv=10, n_jobs=-1, scoring="f1_macro")
-            grid.fit(x_train, y_train)
-            clf = grid.best_estimator_
+            clf = classifier[0].set_grid_search_cv(classifier[1], x_train, y_train)
         else:
             clf = classifier[0].fit(x_train, y_train)
 
@@ -138,10 +135,10 @@ def execute_ml_pipeline(enable_save):
             y_pred = clf.predict(x_test)
         print(get_report(y_test, y_pred))
 
-        if enable_save and type(classifier[0]).__name__ != "KerasClassifier":
-            dump(clf, "../models/ml{}.joblib".format(i))
-        elif enable_save:
-            clf.model.save("../models/ml{}.h5".format(i))
+        clf.save_to_file()
+
+        if enable_save:
+            classifier[0].save_to_file()
 
     if enable_save:
         dump(bow, "../models/bow.joblib")
