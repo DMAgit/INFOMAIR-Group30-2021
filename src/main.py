@@ -57,17 +57,17 @@ def setup_description():
     """
     clf_names = get_classifier_names()
 
-    clf_str_available = "Classifiers available: {} (base), {} (rule-based), ".format(clf_names[0], clf_names[1])
+    clf_str_available = f"Classifiers available: {clf_names[0]} (base), {clf_names[1]} (rule-based), "
     clf_str_input = "Please choose a classifier: ('base', 'rule-based', "
     clf_shortcuts = ["base", "rule-based"]
 
     switch = {"base": "../models/ml0", "rule-based": "../models/ml1"}
 
     for i, name in enumerate(clf_names[2:]):
-        clf_str_available += "{} (ml{}), ".format(name, i + 1)
-        clf_str_input += "'ml{}', ".format(i + 1)
-        clf_shortcuts.append("ml{}".format(i + 1))
-        switch["ml{}".format(i + 1)] = "../models/ml{}".format(i + 1)
+        clf_str_available += f"{name} (ml{i + 1}), "
+        clf_str_input += f"'ml{i + 1}', "
+        clf_shortcuts.append(f"ml{i + 1}")
+    switch[f"ml{i + 1}"] = f"../models/ml{i + 1}"
 
     clf_str_available = clf_str_available[:-2]
     clf_str_input = clf_str_input[:-2]
@@ -87,7 +87,8 @@ def predict_with_bow(sentence, model_path):
     else:
         clf = keras.models.load_model(model_path + ".h5")
     bow = load("../models/bow.joblib")
-    print("Predicted class: {}".format("".join(clf.predict(bow.transform([sentence])))))
+    prediction = "".join(clf.predict(bow.transform([sentence])))
+    print(f"Predicted class: {prediction}")
 
 
 if __name__ == "__main__":
