@@ -67,7 +67,7 @@ def setup_description():
         clf_str_available += f"{name} (ml{i + 1}), "
         clf_str_input += f"'ml{i + 1}', "
         clf_shortcuts.append(f"ml{i + 1}")
-    switch[f"ml{i + 1}"] = f"../models/ml{i + 1}"
+        switch[f"ml{i + 1}"] = f"../models/ml{i + 2}"
 
     clf_str_available = clf_str_available[:-2]
     clf_str_input = clf_str_input[:-2]
