@@ -90,7 +90,8 @@ def get_classifiers(input_dimension=0):
         [MySGDClassifier(),
             {"alpha": 10.0 ** -np.arange(1, 7)}],
         [BasicKerasClassifier(input_dimension),  # Keras model
-         {"epochs": [50, 100], "batch_size": [32, 64, 128]}]
+            {"epochs": [10, 20], "dropout": [0.0, 0.1, 0.3, 0.6, 0.9],
+             "batch_size": [10, 50, 100], "lr": [0.001, 0.01, 0.1, 0.2, 0.3]}]
     ]
 
     return models
@@ -126,19 +127,17 @@ def execute_ml_pipeline(enable_save):
         print(f"Training {classifier[0].get_name()}...")
         if classifier[1]:
             clf = classifier[0].set_grid_search_cv(classifier[1], x_train, y_train)
-        else:
+        else:  # no params defined (default training)
             clf = classifier[0].fit(x_train, y_train)
 
-        if type(classifier[0]).__name__ == "RuleBasedClassifier":  # Test with the raw texts
-            y_pred = classifier[0].predict(raw_test)
+        if type(classifier[0]).__name__ == "RuleBasedClassifier":  # test with the raw texts
+            y_pred = clf.predict(raw_test)
         else:
             y_pred = clf.predict(x_test)
         print(get_report(y_test, y_pred))
 
-        clf.save_to_file()
-
         if enable_save:
-            classifier[0].save_to_file()
+            clf.save_to_file()
 
     if enable_save:
         dump(bow, "../models/bow.joblib")

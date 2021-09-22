@@ -27,7 +27,7 @@ class MySGDClassifier(Classifier):
         return load(self.get_file_name())
 
     def get_name(self):
-        return "complementNB"
+        return "sgd"
 
     def set_grid_search_cv(self, params, x_train, y_train):
         grid = GridSearchCV(estimator=self.model, param_grid=params, cv=10, n_jobs=-1,
