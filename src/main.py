@@ -1,8 +1,6 @@
 from joblib import load
-from tensorflow import keras
 from models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
-import glob
 
 """ Entry point to the application
 """
@@ -61,7 +59,7 @@ def setup_description():
     combined_names = "', '".join(clf_names)
     combined_names = f"'{combined_names}'"
     clf_str_available = f"Classifiers available: {combined_names}"
-    clf_str_input = f"Please choose a classifier: ({combined_names})"
+    clf_str_input = f"Please choose a classifier: ({combined_names}): "
     clf_shortcuts = clf_names
 
     switch = {}
@@ -83,7 +81,15 @@ def predict_with_bow(sentence, classifier):
 
     bow = load("../models/bow.joblib")
 
-    prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+    if type(clf).__name__ == "RuleBasedClassifier":
+        prediction = "".join(clf.predict([sentence]))
+    elif type(clf).__name__ == "BasicKerasClassifier":
+        prediction = clf.predict(bow.transform([sentence])).argmax(axis=-1)
+    else:
+        prediction = "".join(clf.predict(bow.transform([sentence])))
+
+    # prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" \
+    #     else "".join(clf.predict([sentence]))
 
     print(f"Predicted class: {prediction}")
 

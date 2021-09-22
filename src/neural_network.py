@@ -30,7 +30,8 @@ class BasicKerasClassifier(BaseEstimator, ClassifierMixin, Classifier):
         return "../models/neural-network.h5"
 
     def load_from_file(self):
-        return keras.models.load_model(self.get_file_name())
+        self.model = keras.models.load_model(self.get_file_name())
+        return self
 
     def get_name(self):
         return "neural-network"
@@ -39,7 +40,8 @@ class BasicKerasClassifier(BaseEstimator, ClassifierMixin, Classifier):
         """
         Returns a compiled model with the characteristics defined in the function
 
-        :param input_dimension: int - the input dimension for the first NN-layer
+        :param lr: float - TODO
+        :param dropout: float - TODO
         :return: model: Sequential - the compiled model
         """
         # Define
@@ -55,6 +57,6 @@ class BasicKerasClassifier(BaseEstimator, ClassifierMixin, Classifier):
     def set_grid_search_cv(self, params, x_train, y_train):
         grid = RandomizedSearchCV(estimator=self.model, param_distributions=params, cv=10, n_jobs=-1,
                                   scoring="f1_macro")
-        grid_result = grid.fit(x_train.sorted_indices(), y_train)
+        grid.fit(x_train.sorted_indices(), y_train)
         self.model = grid.best_estimator_
         return self
