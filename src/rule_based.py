@@ -1,4 +1,3 @@
-from joblib import dump, load
 from sklearn.base import BaseEstimator, ClassifierMixin
 from rule_dict import rule_dict
 from rule_dict import count_dict
@@ -7,9 +6,10 @@ from classifier import Classifier
 
 class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):
     def __init__(self):
-        pass
+        super().__init__()
+        self.model = self
 
-    def fit(self, x, y=None):
+    def fit(self, _):
         # No fitting needed, rule implementation is done semi-manually
         return self
 

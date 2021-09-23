@@ -88,8 +88,8 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             return
         # If a request is made, the state should be updated to give details in the next iteration
         if response_type is "request":
-            type = determine_post_or_phone_question(sentence)
-            if type is "post":
+            request_type = determine_post_or_phone_question(sentence)
+            if request_type is "post":
                 state.state_number = 6
             else:
                 state.state_number = 7

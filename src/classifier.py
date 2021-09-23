@@ -4,6 +4,9 @@ from sklearn.model_selection import GridSearchCV
 
 
 class Classifier:
+    def __init__(self):
+        self.model = None
+        pass
 
     def save_to_file(self):
         dump(self, self.get_file_name())
@@ -18,14 +21,18 @@ class Classifier:
     def load_from_file(self):
         return load(self.get_file_name())
 
-    def set_grid_search_cv(self, params, x_train, y_train):
-        pass
-
     def predict(self, sentence):
         return []
 
     def transform_and_predict(self, sentence, bow):
         return "".join(self.predict(bow.transform([sentence])))
+
+    def set_grid_search_cv(self, params, x_train, y_train):
+        grid = GridSearchCV(estimator=self.model, param_grid=params, cv=10, n_jobs=-1,
+                            scoring="f1_macro")
+        grid.fit(x_train, y_train)
+        self.model = grid.best_estimator_
+        return self
 
     @staticmethod
     def apply_bow(features_train, features_test):

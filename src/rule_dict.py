@@ -1,4 +1,5 @@
 rule_dict = {
+    "kay": "ack",
     "correct": "affirm",
     "right": "affirm",
     "ye": "affirm",
@@ -63,8 +64,13 @@ rule_dict = {
     "knocking": "null",
     "noise": "null",
     "music": "null",
+    "sigh": "null",
+    "system": "null",
+    "tv_noise": "null",
+    "static": "null",
     "sil": "null",
     "um": "null",
+    "uh": "null",
     "unintelligible": "null",
     "back": "repeat",
     "again": "repeat",
@@ -94,7 +100,8 @@ rule_dict = {
     "over": "restart",
     "thank": "thankyou",
     "thanks": "thankyou",
-    "great": "thankyou"
+    "great": "thankyou",
+    "you": "thankyou"
 }
 
 count_dict = {
