@@ -55,7 +55,8 @@ class State:
         # the following two are the same as what happened above but w/ the other features
         if self.price is not None:
             if self.price in self.suggestions['pricerange']:
-                self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
+                self.suggestions = self.suggestions[
+                    self.suggestions['pricerange'].str.contains(self.price)]
             else:
                 for i in self.suggestions.loc[:, 'pricerange']:
                     if distance(self.price, i) >= 2:
@@ -63,7 +64,8 @@ class State:
 
         if self.area is not None:
             if self.area in self.suggestions['area']:
-                self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
+                self.suggestions = self.suggestions[
+                    self.suggestions['area'].str.contains(self.area)]
             else:
                 for i in self.suggestions.loc[:, 'area']:
                     if distance(self.area, i) >= 2:
