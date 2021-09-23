@@ -81,8 +81,7 @@ def update_state(state: State, classifier: Classifier, sentence: str):
     else:
         bow = load("../models/bow.joblib")
         clf = classifier.load_from_file()
-        response_type = "".join(clf.predict(bow.transform([sentence]))) if type(
-            clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+        response_type = clf.transform_and_predict(sentence, bow)
 
         # If an alternative is requested, no state update is needed
         if state.state_number is 5 and response_type is "reqalts":

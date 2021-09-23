@@ -16,6 +16,9 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):
     def predict(self, x, y=None):
         return list(map(self.predict_most_likely, x))
 
+    def transform_and_predict(self, sentence, bow):
+        return "".join(self.predict([sentence]))
+
     def get_name(self):
         return "rule-based"
 

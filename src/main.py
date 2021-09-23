@@ -46,6 +46,7 @@ def main():
             sentence = input(state.get_question())
             update_state(state, switch.get(command), sentence)
         print(state.get_question())
+        break
 
         # Old
         # sentence = input("Give a sentence to classify (Use EXIT to exit): ")
@@ -92,7 +93,7 @@ def predict_with_bow(sentence, classifier):
 
     bow = load("../models/bow.joblib")
 
-    prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+    prediction = clf.transform_and_predict(sentence, bow)
 
     print(f"Predicted class: {prediction}")
 

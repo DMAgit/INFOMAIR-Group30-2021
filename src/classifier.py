@@ -21,6 +21,12 @@ class Classifier:
     def set_grid_search_cv(self, params, x_train, y_train):
         pass
 
+    def predict(self, sentence):
+        return []
+
+    def transform_and_predict(self, sentence, bow):
+        return "".join(self.predict(bow.transform([sentence])))
+
     @staticmethod
     def apply_bow(features_train, features_test):
         """
