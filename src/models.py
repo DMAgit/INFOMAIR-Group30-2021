@@ -4,7 +4,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import classification_report
 from rule_based import RuleBasedClassifier
-from neural_network import BasicKerasClassifier
 from src.base import BaseClassifier
 from src.complement_nb import ComplementNBClassifier
 from src.sgdc_classifier import MySGDClassifier
@@ -88,10 +87,7 @@ def get_classifiers(input_dimension=0):
         [ComplementNBClassifier(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
         [MySGDClassifier(),
-            {"alpha": 10.0 ** -np.arange(1, 7)}],
-        [BasicKerasClassifier(input_dimension),  # Keras model
-            {"epochs": [10, 20], "dropout": [0.0, 0.1, 0.3, 0.6, 0.9],
-             "batch_size": [10, 50, 100], "lr": [0.001, 0.01, 0.1, 0.2, 0.3]}]
+            {"alpha": 10.0 ** -np.arange(1, 7)}]
     ]
 
     return models

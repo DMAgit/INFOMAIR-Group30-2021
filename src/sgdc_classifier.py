@@ -17,15 +17,6 @@ class MySGDClassifier(Classifier):
     def predict(self, x):
         return self.model.predict(x)
 
-    def save_to_file(self):
-        dump(self, self.get_file_name())
-
-    def get_file_name(self):
-        return "../models/sgd.joblib"
-
-    def load_from_file(self):
-        return load(self.get_file_name())
-
     def get_name(self):
         return "sgd"
 

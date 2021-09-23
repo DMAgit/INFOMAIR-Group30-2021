@@ -1,3 +1,4 @@
+from joblib import load, dump
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import GridSearchCV
 
@@ -5,18 +6,17 @@ from sklearn.model_selection import GridSearchCV
 class Classifier:
 
     def save_to_file(self):
-        pass
+        dump(self, self.get_file_name())
 
     @staticmethod
     def get_name():
         return "base-name"
 
-    @staticmethod
-    def get_file_name():
-        return "base-name"
+    def get_file_name(self):
+        return f"../models/{self.get_name()}.joblib"
 
     def load_from_file(self):
-        return self
+        return load(self.get_file_name())
 
     def set_grid_search_cv(self, params, x_train, y_train):
         pass

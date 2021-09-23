@@ -16,15 +16,6 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):
     def predict(self, x, y=None):
         return list(map(self.predict_most_likely, x))
 
-    def save_to_file(self):
-        dump(self, self.get_file_name())
-
-    def get_file_name(self):
-        return "../models/ruleBased.joblib"
-
-    def load_from_file(self):
-        return load(self.get_file_name())
-
     def get_name(self):
         return "rule-based"
 
