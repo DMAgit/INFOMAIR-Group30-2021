@@ -1,6 +1,9 @@
 from joblib import load
-
+import pandas as pd
 from src.classifier import Classifier
+from Levenshtein import distance
+
+restaurants = pd.read_csv(r'../data/restaurant_info.csv')
 
 
 class State:
@@ -31,8 +34,40 @@ class State:
             return "Goodbye"
 
     def generate_suggestions(self):
-        # TODO Get the suggestions and set them in the array, make sure name, postcode and phone are set as properties
-        print("todo")
+        self.suggestions = restaurants.copy()  # at the start all restaurants are matches
+
+        if self.food_type is not None:  # check if the user has specified a food type
+            if self.food_type in self.suggestions['food']:  # check if there is an exact match
+                self.suggestions = self.suggestions[
+                    self.suggestions['food'].str.contains(self.food_type)]  # filter to only that food type
+            else:  # if not we want to iterate all of the food types and compute the Levenshtein distance
+                for i in self.suggestions.loc[:, 'food']:
+                    if distance(self.food_type, i) >= 2:
+                        # >= 2 is an arbitrary cut-off point, we could do sth fancy instead
+                        self.suggestions = self.suggestions[self.suggestions['food'] != i]
+
+        # the following two are the same as what happened above but w/ the other features
+        if self.price is not None:
+            if self.price in self.suggestions['pricerange']:
+                self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
+            else:
+                for i in self.suggestions.loc[:, 'pricerange']:
+                    if distance(self.price, i) >= 2:
+                        self.suggestions = self.suggestions[self.suggestions['pricerange'] != i]
+
+        if self.area is not None:
+            if self.area in self.suggestions['area']:
+                self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
+            else:
+                for i in self.suggestions.loc[:, 'area']:
+                    if distance(self.area, i) >= 2:
+                        self.suggestions = self.suggestions[self.suggestions['area'] != i]
+
+        # !! please someone make sure we don't need these
+        # remove the features we don't need
+        self.suggestions.drop(labels=['pricerange', 'area', 'food', 'addr'], axis=1, inplace=True)
+        self.suggestions = self.suggestions.to_numpy()  # convert from dataframe to an array
+        return self.suggestions
 
     def get_suggestion(self):
         if self.suggestions is None:
