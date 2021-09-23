@@ -27,9 +27,15 @@ class State:
         elif self.state_number is 5:
             return f"I would suggest {self.get_suggestion().name}"
         elif self.state_number is 6:
-            return f"It is located at {self.suggestions[self.current_suggestion].post_code}"
+            post_code = self.suggestions[self.current_suggestion].post_code
+            if post_code is None:
+                return "I'm sorry, i don't have the postcode for this restaurant."
+            return f"It is located at {post_code}"
         elif self.state_number is 7:
-            return f"The phone number is {self.suggestions[self.current_suggestion].phone_number}"
+            phone_number = self.suggestions[self.current_suggestion].phone_number
+            if phone_number is None:
+                return "I'm sorry, i don't have the phone number for this restaurant."
+            return f"The phone number is {phone_number}"
         else:
             return "Goodbye"
 
@@ -110,16 +116,15 @@ def update_state(state: State, classifier: Classifier, sentence: str):
     else:
         bow = load("../models/bow.joblib")
         clf = classifier.load_from_file()
-        response_type = "".join(clf.predict(bow.transform([sentence]))) if type(
-            clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+        response_type = clf.transform_and_predict(sentence, bow)
 
         # If an alternative is requested, no state update is needed
         if state.state_number is 5 and response_type is "reqalts":
             return
         # If a request is made, the state should be updated to give details in the next iteration
         if response_type is "request":
-            type = determine_post_or_phone_question(sentence)
-            if type is "post":
+            request_type = determine_post_or_phone_question(sentence)
+            if request_type is "post":
                 state.state_number = 6
             else:
                 state.state_number = 7

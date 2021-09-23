@@ -1,8 +1,6 @@
 from joblib import load
-from tensorflow import keras
 from models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
-import glob
 
 from src.state_manager import initialize_state, update_state
 
@@ -18,11 +16,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--development', action='store_true')
 
-    isDeveloper = parser.parse_args().development
+    is_developer = parser.parse_args().development
 
     clf_str_available, clf_str_input, clf_shortcuts, switch = setup_description()
 
-    if isDeveloper:
+    if is_developer:
         while True:
             print("Classifiers' definitions declared in 'models.py'")
             print(clf_str_available)
@@ -46,6 +44,7 @@ def main():
             sentence = input(state.get_question())
             update_state(state, switch.get(command), sentence)
         print(state.get_question())
+        break
 
         # Old
         # sentence = input("Give a sentence to classify (Use EXIT to exit): ")
@@ -92,7 +91,7 @@ def predict_with_bow(sentence, classifier):
 
     bow = load("../models/bow.joblib")
 
-    prediction = "".join(clf.predict(bow.transform([sentence]))) if type(clf).__name__ != "RuleBasedClassifier" else "".join(clf.predict([sentence]))
+    prediction = clf.transform_and_predict(sentence, bow)
 
     print(f"Predicted class: {prediction}")
 

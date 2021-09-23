@@ -1,10 +1,10 @@
-from joblib import dump
 import numpy as np
+from joblib import dump
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+
 from rule_based import RuleBasedClassifier
-from neural_network import BasicKerasClassifier
 from src.base import BaseClassifier
 from src.complement_nb import ComplementNBClassifier
 from src.sgdc_classifier import MySGDClassifier
@@ -70,13 +70,12 @@ def get_report(truth, predicted):
     return classification_report(truth, predicted)
 
 
-def get_classifiers(input_dimension=0):
+def get_classifiers():
     """
     Returns the classifiers declared as follows:
         [[model instance, *dict* with params to be tested], ...]
         - if the params dict is empty it will just perform a normal fit without cross-validation and default params
 
-    :param input_dimension: int - the size of the training set (used to setup nn-models)
     :return: models: list - all the models with the different configurations
     """
     models = [
@@ -88,10 +87,7 @@ def get_classifiers(input_dimension=0):
         [ComplementNBClassifier(),
             {"alpha": [0.1, 0.2, 0.4, 0.6, 0.8, 1]}],
         [MySGDClassifier(),
-            {"alpha": 10.0 ** -np.arange(1, 7)}],
-        [BasicKerasClassifier(input_dimension),  # Keras model
-            {"epochs": [10, 20], "dropout": [0.0, 0.1, 0.3, 0.6, 0.9],
-             "batch_size": [10, 50, 100], "lr": [0.001, 0.01, 0.1, 0.2, 0.3]}]
+            {"alpha": 10.0 ** -np.arange(1, 7)}]
     ]
 
     return models
@@ -123,7 +119,7 @@ def execute_ml_pipeline(enable_save):
     raw_train, raw_test, y_train, y_test = load_dataset()
     x_train, x_test, bow = apply_bow(raw_train, raw_test)
 
-    for i, classifier in enumerate(get_classifiers(x_train.shape[1])):  # used for defining nn-models (input_dim)
+    for i, classifier in enumerate(get_classifiers()):  # used for defining nn-models (input_dim)
         print(f"Training {classifier[0].get_name()}...")
         if classifier[1]:
             clf = classifier[0].set_grid_search_cv(classifier[1], x_train, y_train)
