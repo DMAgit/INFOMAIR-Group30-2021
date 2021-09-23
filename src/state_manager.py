@@ -71,10 +71,6 @@ class State:
                     if distance(self.area, i) >= 2:
                         self.suggestions = self.suggestions[self.suggestions['area'] != i]
 
-        # !! please someone make sure we don't need these
-        # remove the features we don't need
-        self.suggestions.drop(labels=['pricerange', 'area', 'food', 'addr'], axis=1, inplace=True)
-        self.suggestions = self.suggestions.to_numpy()  # convert from dataframe to an array
         return self.suggestions
 
     def get_suggestion(self):
