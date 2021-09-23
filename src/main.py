@@ -4,6 +4,8 @@ from models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
 import glob
 
+from src.state_manager import initialize_state, update_state
+
 """ Entry point to the application
 """
 
@@ -39,11 +41,18 @@ def main():
             break
 
     while True:
-        sentence = input("Give a sentence to classify (Use EXIT to exit): ")
-        if sentence == "EXIT":
-            break
+        state = initialize_state()
+        while state.state_number < 8:
+            sentence = input(state.get_question())
+            update_state(state, switch.get(command), sentence)
+        print(state.get_question())
 
-        predict_with_bow(sentence.lower(), switch.get(command))
+        # Old
+        # sentence = input("Give a sentence to classify (Use EXIT to exit): ")
+        # if sentence == "EXIT":
+        #     break
+        #
+        # predict_with_bow(sentence.lower(), switch.get(command))
 
 
 def setup_description():
