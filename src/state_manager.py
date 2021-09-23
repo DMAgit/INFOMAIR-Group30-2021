@@ -24,9 +24,15 @@ class State:
         elif self.state_number is 5:
             return f"I would suggest {self.get_suggestion().name}"
         elif self.state_number is 6:
-            return f"It is located at {self.suggestions[self.current_suggestion].post_code}"
+            post_code = self.suggestions[self.current_suggestion].post_code
+            if post_code is None:
+                return "I'm sorry, i don't have the postcode for this restaurant."
+            return f"It is located at {post_code}"
         elif self.state_number is 7:
-            return f"The phone number is {self.suggestions[self.current_suggestion].phone_number}"
+            phone_number = self.suggestions[self.current_suggestion].phone_number
+            if phone_number is None:
+                return "I'm sorry, i don't have the phone number for this restaurant."
+            return f"The phone number is {phone_number}"
         else:
             return "Goodbye"
 
