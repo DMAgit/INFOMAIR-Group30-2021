@@ -1,6 +1,7 @@
 from joblib import load
 import pandas as pd
 from src.classifier import Classifier
+from src.preference_extractor import extract_preferences_from_sentence
 from Levenshtein import distance
 
 restaurants = pd.read_csv(r'../data/restaurant_info.csv')
@@ -131,8 +132,7 @@ def update_state(state: State, classifier: Classifier, sentence: str):
 
 
 def extract_from_sentence(sentence):
-    # TODO
-    return None, None, None
+    return extract_preferences_from_sentence(sentence)
 
 
 def determine_post_or_phone_question(sentence):
