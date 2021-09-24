@@ -48,8 +48,8 @@ def get_closest_levenshtein(word, possible_words, threshold):
     return result, min_distance
 
 
-def process_preference_type(preference, possible_preferences):
-    candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, 3)
+def process_preference_type(preference, possible_preferences, threshold):
+    candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, threshold)
     if preference in possible_preferences:
         return preference
     elif candidate in possible_preferences:
@@ -83,7 +83,7 @@ def extract_preferences_from_sentence(sentence):
             # Preprocess: change 'world' for 'international'
             food_matched = list(map(lambda f: "international" if f == "world" else f, food_matched))
             # Look for the most possible restaurant
-            food_matched = list(map(lambda f: process_preference_type(f, possible_foods), food_matched))
+            food_matched = list(map(lambda f: process_preference_type(f, possible_foods, 3), food_matched))
             food = food_matched[0] if food_matched else None
 
     # Area processing
@@ -95,7 +95,7 @@ def extract_preferences_from_sentence(sentence):
             area = "dontcare"
         else:
             # Look for the most possible area
-            area_matched = list(map(lambda a: process_preference_type(a, possible_areas), area_matched))
+            area_matched = list(map(lambda a: process_preference_type(a, possible_areas, 3), area_matched))
             area = area_matched[0] if area_matched else None
 
     # Price processing
@@ -107,7 +107,24 @@ def extract_preferences_from_sentence(sentence):
             price_range = "dontcare"
         else:
             # Look for the most possible area
-            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges), price_matched))
+            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges, 3), price_matched))
             price_range = price_matched[0] if price_matched else None
 
     return food, area, price_range
+
+
+def extract_post_or_phone(sentence):
+    post_pattern = re.compile(r"(postal\s*|post\s*)(?:code)?")
+    phone_pattern = re.compile(r"(telephone\s*|phone\s*)(?:number)?")
+    post_matched = post_pattern.findall(sentence)
+    phone_matched = phone_pattern.findall(sentence)
+
+    if not post_matched and not phone_matched:  # No match at all
+        result = None
+    else:
+        post_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), post_matched))
+        phone_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), phone_matched))
+        result = post_matched[0] if post_matched is not None \
+            else phone_matched[0] if phone_matched is not None else None
+
+    return result

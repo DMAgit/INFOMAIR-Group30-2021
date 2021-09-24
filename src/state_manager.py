@@ -1,7 +1,9 @@
 from joblib import load
 import pandas as pd
+import random
+import re
 from src.classifier import Classifier
-from src.preference_extractor import extract_preferences_from_sentence
+from src.preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
 from Levenshtein import distance
 
 restaurants = pd.read_csv(r'../data/restaurant_info.csv')
@@ -17,28 +19,40 @@ class State:
         self.state_number = 1
 
     def get_question(self):
-        if self.state_number is 1:
-            return "Hello, how may I help you today?"
-        elif self.state_number is 2:
-            return "What kind of food should the restaurant serve?"
-        elif self.state_number is 3:
-            return "How expensive should the restaurant be?"
-        elif self.state_number is 4:
-            return "Where should the restaurant be located?"
-        elif self.state_number is 5:
-            return f"I would suggest {self.get_suggestion().name}"
-        elif self.state_number is 6:
-            post_code = self.suggestions[self.current_suggestion].post_code
+        if self.state_number == 1:
+            return "Hello, how may I help you today? "
+        elif self.state_number == 2:
+            return "What kind of food should the restaurant serve? "
+        elif self.state_number == 3:
+            return "How expensive should the restaurant be? "
+        elif self.state_number == 4:
+            return "Where should the restaurant be located? "
+        elif self.state_number == 5:
+            suggestion = self.get_suggestion()
+            return self.generate_random_text_suggestion(
+                suggestion) + "\nDo you want any information about it, such as the phone or post code? "
+        elif self.state_number == 6:
+            post_code = self.suggestions.iloc[self.current_suggestion].postcode
             if post_code is None:
                 return "I'm sorry, i don't have the postcode for this restaurant."
             return f"It is located at {post_code}"
-        elif self.state_number is 7:
-            phone_number = self.suggestions[self.current_suggestion].phone_number
+        elif self.state_number == 7:
+            phone_number = self.suggestions.iloc[self.current_suggestion].phonenumber
             if phone_number is None:
                 return "I'm sorry, i don't have the phone number for this restaurant."
             return f"The phone number is {phone_number}"
         else:
             return "Goodbye"
+
+    @staticmethod
+    def generate_random_text_suggestion(suggestion):
+        responses = [f"I would suggest {suggestion.restaurantname} that serves {suggestion.food} food at "
+                     f"{suggestion.pricerange} price. The address is {suggestion.addr}",
+                     f"{suggestion.restaurantname} is a nice restaurant in {suggestion.addr} that has "
+                     f"{suggestion.food}, and has {suggestion.pricerange} price",
+                     f"Located in {suggestion.addr} and with a {suggestion.pricerange} price, "
+                     f"{suggestion.restaurantname} is a good choice"]
+        return random.choice(responses)
 
     def generate_suggestions(self):
         self.suggestions = restaurants.copy()  # at the start all restaurants are matches
@@ -56,8 +70,7 @@ class State:
         # the following two are the same as what happened above but w/ the other features
         if self.price is not None:
             if self.price in self.suggestions['pricerange']:
-                self.suggestions = self.suggestions[
-                    self.suggestions['pricerange'].str.contains(self.price)]
+                self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
             else:
                 for i in self.suggestions.loc[:, 'pricerange']:
                     if distance(self.price, i) >= 2:
@@ -65,8 +78,7 @@ class State:
 
         if self.area is not None:
             if self.area in self.suggestions['area']:
-                self.suggestions = self.suggestions[
-                    self.suggestions['area'].str.contains(self.area)]
+                self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
             else:
                 for i in self.suggestions.loc[:, 'area']:
                     if distance(self.area, i) >= 2:
@@ -79,7 +91,7 @@ class State:
             self.generate_suggestions()
 
         # Create suggestion
-        suggestion = self.suggestions(self.current_suggestion)
+        suggestion = self.suggestions.iloc[self.current_suggestion]
 
         # Update current pointer to 1 higher, or the first suggestion if the suggestions are exhausted
         self.current_suggestion = (self.current_suggestion + 1) % len(self.suggestions)
@@ -87,17 +99,19 @@ class State:
         return suggestion
 
 
-def initialize_state():
-    initial_sentence = input("Hello, how may I help you today?")
+def initialize_state(classifier: Classifier):
+    initial_sentence = input("Hello, how may I help you today? ")
 
-    food_type, price, area = extract_from_sentence(initial_sentence)
-    return State(food_type=food_type, price=price, area=area)
+    state = State(food_type=None, price=None, area=None)
+    update_state(state, classifier, initial_sentence)
+
+    return state
 
 
 def update_state(state: State, classifier: Classifier, sentence: str):
     # Ask for more info if it is required
     if state.food_type is None or state.price is None or state.area is None:
-        new_food_type, new_price, new_area = extract_from_sentence(sentence)
+        new_food_type, new_area, new_price = extract_from_sentence(sentence)
         if new_food_type is not None:
             state.food_type = new_food_type
         if new_price is not None:
@@ -106,9 +120,9 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             state.area = new_area
         if state.state_number <= 2 and state.food_type is not None:
             state.state_number = 3
-        if state.state_number is 3 and state.price is not None:
+        if state.state_number == 3 and state.price is not None:
             state.state_number = 4
-        if state.state_number is 4 and state.area is not None:
+        if state.state_number == 4 and state.area is not None:
             state.state_number = 5
 
     # Otherwise, check if a request needs to be made
@@ -118,12 +132,12 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         response_type = clf.transform_and_predict(sentence, bow)
 
         # If an alternative is requested, no state update is needed
-        if state.state_number is 5 and response_type is "reqalts":
+        if state.state_number == 5 and response_type == "reqalts":
             return
         # If a request is made, the state should be updated to give details in the next iteration
-        if response_type is "request":
+        if response_type == "request":
             request_type = determine_post_or_phone_question(sentence)
-            if request_type is "post":
+            if request_type == "post":
                 state.state_number = 6
             else:
                 state.state_number = 7
@@ -136,5 +150,4 @@ def extract_from_sentence(sentence):
 
 
 def determine_post_or_phone_question(sentence):
-    # TODO
-    return "post"
+    return extract_post_or_phone(sentence)

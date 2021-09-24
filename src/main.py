@@ -24,7 +24,7 @@ def main():
         while True:
             print("Classifiers' definitions declared in 'models.py'")
             print(clf_str_available)
-            command = input('Would you like to train the classifiers? (y/n)')
+            command = input('Would you like to train the classifiers? (y/n): ')
             if command in ["y", "n"]:
                 break
         if command == "y":
@@ -39,7 +39,7 @@ def main():
             break
 
     while True:
-        state = initialize_state()
+        state = initialize_state(switch.get(command))
         while state.state_number < 8:
             sentence = input(state.get_question())
             update_state(state, switch.get(command), sentence)
@@ -69,7 +69,7 @@ def setup_description():
     combined_names = "', '".join(clf_names)
     combined_names = f"'{combined_names}'"
     clf_str_available = f"Classifiers available: {combined_names}"
-    clf_str_input = f"Please choose a classifier: ({combined_names})"
+    clf_str_input = f"Please choose a classifier: ({combined_names}): "
     clf_shortcuts = clf_names
 
     switch = {}
