@@ -118,13 +118,12 @@ def extract_post_or_phone(sentence):
     phone_pattern = re.compile(r"(telephone\s*|phone\s*)(?:number)?")
     post_matched = post_pattern.findall(sentence)
     phone_matched = phone_pattern.findall(sentence)
-
     if not post_matched and not phone_matched:  # No match at all
         result = None
     else:
         post_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), post_matched))
         phone_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), phone_matched))
-        result = post_matched[0] if post_matched is not None \
-            else phone_matched[0] if phone_matched is not None else None
+        result = post_matched[0] if len(post_matched) is not 0 \
+            else phone_matched[0] if len(phone_matched) is not 0 else None
 
     return result

@@ -37,7 +37,7 @@ class State:
                 return "I'm sorry, i don't have the postcode for this restaurant."
             return f"It is located at {post_code}"
         elif self.state_number == 7:
-            phone_number = self.suggestions.iloc[self.current_suggestion].phonenumber
+            phone_number = self.suggestions.iloc[self.current_suggestion].phone
             if phone_number is None:
                 return "I'm sorry, i don't have the phone number for this restaurant."
             return f"The phone number is {phone_number}"
@@ -118,11 +118,14 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             state.price = new_price
         if new_area is not None:
             state.area = new_area
-        if state.state_number <= 2 and state.food_type is not None:
+
+        if state.food_type is None:
+            state.state_number = 2
+        elif state.price is None:
             state.state_number = 3
-        if state.state_number == 3 and state.price is not None:
+        elif state.area is None:
             state.state_number = 4
-        if state.state_number == 4 and state.area is not None:
+        else:
             state.state_number = 5
 
     # Otherwise, check if a request needs to be made
@@ -130,19 +133,19 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         bow = load("../models/bow.joblib")
         clf = classifier.load_from_file()
         response_type = clf.transform_and_predict(sentence, bow)
-
         # If an alternative is requested, no state update is needed
         if state.state_number == 5 and response_type == "reqalts":
             return
         # If a request is made, the state should be updated to give details in the next iteration
-        if response_type == "request":
-            request_type = determine_post_or_phone_question(sentence)
-            if request_type == "post":
-                state.state_number = 6
-            else:
-                state.state_number = 7
-            return
-        state.state_number = 8
+        #if response_type == "request":
+        request_type = determine_post_or_phone_question(sentence)
+
+        if request_type == "post":
+            state.state_number = 6
+        elif request_type == "phone":
+            state.state_number = 7
+        else:
+            state.state_number = 8
 
 
 def extract_from_sentence(sentence):
