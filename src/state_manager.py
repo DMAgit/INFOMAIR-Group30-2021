@@ -34,13 +34,13 @@ class State:
         elif self.state_number == 6:
             post_code = self.suggestions.iloc[self.current_suggestion].postcode
             if post_code is None:
-                return "I'm sorry, i don't have the postcode for this restaurant."
-            return f"It is located at {post_code}"
+                return "I'm sorry, i don't have the postcode for this restaurant. Any other information request? "
+            return f"It is located at {post_code}. Any other information request? "
         elif self.state_number == 7:
             phone_number = self.suggestions.iloc[self.current_suggestion].phone
             if phone_number is None:
-                return "I'm sorry, i don't have the phone number for this restaurant."
-            return f"The phone number is {phone_number}"
+                return "I'm sorry, i don't have the phone number for this restaurant. Any other information request? "
+            return f"The phone number is {phone_number}. Any other information request? "
         else:
             return "Goodbye"
 
@@ -136,10 +136,10 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         # If an alternative is requested, no state update is needed
         if state.state_number == 5 and response_type == "reqalts":
             return
-        # If a request is made, the state should be updated to give details in the next iteration
-        #if response_type == "request":
-        request_type = determine_post_or_phone_question(sentence)
 
+        # If a request is made, the state should be updated to give details in the next iteration
+        # if response_type == "request":
+        request_type = determine_post_or_phone_question(sentence)
         if request_type == "post":
             state.state_number = 6
         elif request_type == "phone":

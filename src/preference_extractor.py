@@ -123,7 +123,7 @@ def extract_post_or_phone(sentence):
     else:
         post_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), post_matched))
         phone_matched = list(map(lambda p: process_preference_type(p, {"post", "phone"}, 4), phone_matched))
-        result = post_matched[0] if len(post_matched) is not 0 \
-            else phone_matched[0] if len(phone_matched) is not 0 else None
+        result = post_matched[0] if len(post_matched) != 0 \
+            else phone_matched[0] if len(phone_matched) != 0 else None
 
     return result
