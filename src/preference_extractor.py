@@ -52,8 +52,10 @@ def get_closest_levenshtein(word, possible_words, threshold):
 
 def process_preference_type(preference, possible_preferences):
     candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, 3)
-    if preference in possible_preferences or candidate in possible_preferences:
+    if preference in possible_preferences:
         return preference
+    elif candidate in possible_preferences:
+        return candidate
     return None
 
 
@@ -83,7 +85,7 @@ def extract_preferences_from_sentence(sentence):
             # Preprocess: change 'world' for 'international'
             food_matched = list(map(lambda f: "international" if f == "world" else f, food_matched))
             # Look for the most possible restaurant
-            food_matched = list(filter(lambda f: process_preference_type(f, possible_foods), food_matched))
+            food_matched = list(map(lambda f: process_preference_type(f, possible_foods), food_matched))
             food = food_matched[0] if food_matched else None
 
     # Area processing
@@ -95,7 +97,7 @@ def extract_preferences_from_sentence(sentence):
             area = "dontcare"
         else:
             # Look for the most possible area
-            area_matched = list(filter(lambda a: process_preference_type(a, possible_areas), area_matched))
+            area_matched = list(map(lambda a: process_preference_type(a, possible_areas), area_matched))
             area = area_matched[0] if area_matched else None
 
     # Price processing
@@ -107,7 +109,7 @@ def extract_preferences_from_sentence(sentence):
             price_range = "dontcare"
         else:
             # Look for the most possible area
-            price_matched = list(filter(lambda p: process_preference_type(p, possible_price_ranges), price_matched))
+            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges), price_matched))
             price_range = price_matched[0] if price_matched else None
 
     return food, area, price_range
