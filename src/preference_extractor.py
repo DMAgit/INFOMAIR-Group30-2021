@@ -4,19 +4,17 @@ from Levenshtein import distance
 
 
 def get_test_utterances():
-    test_utterances = ["I'm looking for world food", "I want a restaurant that serves world food",
-                       "I want a restaurant serving Swedish food", "I'm looking for a restaurant in the center",
-                       "I would like a cheap restaurant in the west part of town",
-                       "I'm looking for a moderately priced restaurant in the west part of town",
-                       "I'm looking for a restaurant in any area that serves Tuscan food",
-                       "Can I have an expensive restaurant",
-                       "I'm looking for an expensive restaurant and it should serve international food",
-                       "I need a Cuban restaurant that is moderately priced",
-                       "I'm looking for a moderately priced restaurant with Catalan food",
-                       "What is a cheap restaurant in the south part of town", "What about Chinese food",
-                       "I wanna find a cheap restaurant", "I'm looking for Persian food please",
-                       "Find a Cuban restaurant in the center", "I want any kind of food in the north part of the city"]
-    return test_utterances
+    return ["I'm looking for world food", "I want a restaurant that serves world food",
+            "I want a restaurant serving Swedish food", "I'm looking for a restaurant in the center",
+            "I would like a cheap restaurant in the west part of town",
+            "I'm looking for a moderately priced restaurant in the west part of town",
+            "I'm looking for a restaurant in any area that serves Tuscan food", "Can I have an expensive restaurant",
+            "I'm looking for an expensive restaurant and it should serve international food",
+            "I need a Cuban restaurant that is moderately priced",
+            "I'm looking for a moderately priced restaurant with Catalan food",
+            "What is a cheap restaurant in the south part of town", "What about Chinese food",
+            "I wanna find a cheap restaurant", "I'm looking for Persian food please",
+            "Find a Cuban restaurant in the center"]
 
 
 def get_possible_preferences():
@@ -113,9 +111,3 @@ def extract_preferences_from_sentence(sentence):
             price_range = price_matched[0] if price_matched else None
 
     return food, area, price_range
-
-
-for utterance in get_test_utterances():
-    fo, ar, pr = extract_preferences_from_sentence(utterance)
-    print(utterance)
-    print(f"\tFood: {fo}, area: {ar}, price: {pr}")
