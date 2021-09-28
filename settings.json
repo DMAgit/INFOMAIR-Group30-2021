@@ -1,0 +1,7 @@
+{
+  "chooseClassifier": true,
+  "levenshteinDistance": 3,
+  "informal": false,
+  "addDelay": 0.5,
+  "useCaps": true
+}

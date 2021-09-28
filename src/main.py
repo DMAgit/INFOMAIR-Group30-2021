@@ -1,3 +1,5 @@
+import json
+
 from joblib import load
 from models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
@@ -7,6 +9,8 @@ from src.state_manager import initialize_state, update_state
 """ Entry point to the application
 """
 
+default_settings_path = '../settings.json'
+
 
 def main():
     """
@@ -15,8 +19,10 @@ def main():
     # Add parser for flags
     parser = argparse.ArgumentParser()
     parser.add_argument('--development', action='store_true')
+    parser.add_argument('--settings')
 
     is_developer = parser.parse_args().development
+    settings_path = parser.parse_args().settings
 
     clf_str_available, clf_str_input, clf_shortcuts, switch = setup_description()
 
@@ -32,18 +38,35 @@ def main():
 
     print('INFOMAIR - Group 30 - 2021')
 
-    while True:
-        print(clf_str_available)
-        command = input(clf_str_input)
-        if command in clf_shortcuts:
-            break
+    if settings_path is None:
+        settings_path = input('Give the path to the settings file (leave empty to use default repository file.)')
+        if settings_path == '':
+            settings_path = default_settings_path
+
+    settings = get_settings(settings_path)
+
+    if settings['chooseClassifier']:
+        while True:
+            print(clf_str_available)
+            command = input(clf_str_input)
+            if command in clf_shortcuts:
+                break
+    else:
+        # Default classifier, as it performs best
+        command = 'sgd'
 
     while True:
-        state = initialize_state(switch.get(command))
+        state = initialize_state(switch.get(command), settings)
         while state.state_number < 8:
-            sentence = input(state.get_question())
+            output = state.get_question()
+            if settings['useCaps']:
+                output = output.upper()
+            sentence = input(output)
             update_state(state, switch.get(command), sentence)
-        print(state.get_question())
+        output = state.get_question()
+        if settings['useCaps']:
+            output = output.upper()
+        print(output)
         break
 
         # Old
@@ -94,6 +117,25 @@ def predict_with_bow(sentence, classifier):
     prediction = clf.transform_and_predict(sentence, bow)
 
     print(f"Predicted class: {prediction}")
+
+
+def get_settings(path):
+    """
+    Read the settings file and parse it as an object
+    :param path: Path to the settings json
+    :return: The settings as an object
+    """
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("can't find given file, using default settings instead")
+        try:
+            with open(default_settings_path) as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print("can't find default settings either, exiting")
+            exit()
 
 
 if __name__ == "__main__":

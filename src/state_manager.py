@@ -24,7 +24,7 @@ class State:
         elif self.state_number == 2:
             return "What kind of food should the restaurant serve? "
         elif self.state_number == 3:
-            return "How expensive should the restaurant be? "
+            return "Should the restaurant be expensive, moderate or cheap? "
         elif self.state_number == 4:
             return "Where should the restaurant be located? "
         elif self.state_number == 5:
@@ -58,9 +58,9 @@ class State:
         return random.choice(responses)
 
     def generate_random_text_suggestion_negative(self):
-        responses = [f"No restaurants meet the specified requirements",
-                     f"I'm sorry, no fitting restaurant has been found",
-                     f"A restaurant with such requirements does not exist"]
+        responses = [f"No restaurants meet the specified requirements. Please give different specifications",
+                     f"I'm sorry, no fitting restaurant has been found. Please give different specifications",
+                     f"A restaurant with such requirements does not exist, please give different specifications"]
         return random.choice(responses)
 
     def generate_suggestions(self):
@@ -109,8 +109,11 @@ class State:
         return suggestion
 
 
-def initialize_state(classifier: Classifier):
-    initial_sentence = input("Hello, how may I help you today? ")
+def initialize_state(classifier: Classifier, settings: dict):
+    welcome_message = "Hello, how may I help you today?"
+    if settings['useCaps']:
+        welcome_message = welcome_message.upper()
+    initial_sentence = input(welcome_message)
 
     state = State(food_type=None, price=None, area=None)
     update_state(state, classifier, initial_sentence)
