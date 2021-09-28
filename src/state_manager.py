@@ -29,8 +29,11 @@ class State:
             return "Where should the restaurant be located? "
         elif self.state_number == 5:
             suggestion = self.get_suggestion()
-            return self.generate_random_text_suggestion(
-                suggestion) + "\nDo you want any information about it, such as the phone or post code? "
+            if suggestion is not None:
+                return self.generate_random_text_suggestion(
+                    suggestion) + "\nDo you want any information about it, such as the phone or post code? "
+            else:
+                return self.generate_random_text_suggestion_negative()
         elif self.state_number == 6:
             post_code = self.suggestions.iloc[self.current_suggestion].postcode
             if post_code is None:
@@ -52,6 +55,12 @@ class State:
                      f"{suggestion.food}, and has {suggestion.pricerange} price",
                      f"Located in {suggestion.addr} and with a {suggestion.pricerange} price, "
                      f"{suggestion.restaurantname} is a good choice"]
+        return random.choice(responses)
+
+    def generate_random_text_suggestion_negative(self):
+        responses = [f"No restaurants meet the specified requirements",
+                     f"I'm sorry, no fitting restaurant has been found",
+                     f"A restaurant with such requirements does not exist"]
         return random.choice(responses)
 
     def generate_suggestions(self):
@@ -89,7 +98,8 @@ class State:
     def get_suggestion(self):
         if self.suggestions is None:
             self.generate_suggestions()
-
+        if self.suggestions.empty:
+            return None
         # Create suggestion
         suggestion = self.suggestions.iloc[self.current_suggestion]
 
