@@ -1,4 +1,5 @@
 import json
+import time
 
 from joblib import load
 from models import execute_ml_pipeline, get_classifier_names, get_classifiers
@@ -58,6 +59,9 @@ def main():
     while True:
         state = initialize_state(switch.get(command), settings)
         while state.state_number < 8:
+            if settings['addDelay'] > 0:
+                print('Processing...')
+                time.sleep(settings['addDelay'])
             output = state.get_question()
             if settings['useCaps']:
                 output = output.upper()

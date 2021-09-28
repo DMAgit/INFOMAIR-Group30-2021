@@ -2,6 +2,6 @@
   "chooseClassifier": true,
   "levenshteinDistance": 3,
   "informal": false,
-  "addDelay": 0.5,
-  "useCaps": true
+  "addDelay": 0,
+  "useCaps": false
 }
