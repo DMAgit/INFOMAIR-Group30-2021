@@ -10,57 +10,94 @@ restaurants = pd.read_csv(r'../data/restaurant_info.csv')
 
 
 class State:
-    def __init__(self, food_type, price, area):
+    def __init__(self, food_type, price, area, settings):
         self.food_type = food_type
         self.price = price
         self.area = area
         self.suggestions = None
         self.current_suggestion = 0
         self.state_number = 1
+        self.settings = settings
+        self.state_responses = {
+            "1": "Hello, how may I help you today? ",
+            "2": "What kind of food should the restaurant serve? ",
+            "3": "Should the restaurant be expensive, moderate or cheap? ",
+            "4": "Where should the restaurant be located? ",
+            "5": "\nDo you want any information about it, such as the phone or post code? ",
+            "6_no_postcode":
+                "I'm sorry, i don't have the postcode for this restaurant. Any other information request? ",
+            "6_give_postcode": lambda post_code: f"It is located at {post_code}. Any other information request? ",
+            "7_no_phone":
+                "I'm sorry, i don't have the phone number for this restaurant. Any other information request? ",
+            "7_give_phone": lambda phone_number: f"The phone number is {phone_number}. Any other information request? ",
+            "goodbye": "Goodbye"
+        } if not self.settings["informal"] else \
+            {
+                "1": "What's up, need anything? ",
+                "2": "What kind of food do you want? ",
+                "3": "How much money do you have? Do you want a cheap restaurant, or a moderate or expensive one? ",
+                "4": "Where do you want the place to be at?",
+                "5": "\nWant to hear about it? I might have the phone number or post code. ",
+                "6_no_postcode": "Oh my bad, I don't have the postcode. Need anything else? ",
+                "6_give_postcode": lambda post_code: f"Go to {post_code}. Need anything else? ",
+                "7_no_phone":
+                    "Oh my bad, I don't have the phone number. Need anything else? ",
+                "7_give_phone": lambda phone_number: f"Just call {phone_number}. Need anything else? ",
+                "goodbye": "See ya"
+            }
 
     def get_question(self):
         if self.state_number == 1:
-            return "Hello, how may I help you today? "
+            return self.state_responses["1"]
         elif self.state_number == 2:
-            return "What kind of food should the restaurant serve? "
+            return self.state_responses["2"]
         elif self.state_number == 3:
-            return "Should the restaurant be expensive, moderate or cheap? "
+            return self.state_responses["3"]
         elif self.state_number == 4:
-            return "Where should the restaurant be located? "
+            return self.state_responses["4"]
         elif self.state_number == 5:
             suggestion = self.get_suggestion()
             if suggestion is not None:
                 return self.generate_random_text_suggestion(
-                    suggestion) + "\nDo you want any information about it, such as the phone or post code? "
+                    suggestion) + self.state_responses["5"]
             else:
                 return self.generate_random_text_suggestion_negative()
         elif self.state_number == 6:
             post_code = self.suggestions.iloc[self.current_suggestion].postcode
             if post_code is None:
-                return "I'm sorry, i don't have the postcode for this restaurant. Any other information request? "
-            return f"It is located at {post_code}. Any other information request? "
+                return self.state_responses["6_no_postcode"]
+            return self.state_responses["6_give_postcode"](post_code)
         elif self.state_number == 7:
             phone_number = self.suggestions.iloc[self.current_suggestion].phone
             if phone_number is None:
-                return "I'm sorry, i don't have the phone number for this restaurant. Any other information request? "
-            return f"The phone number is {phone_number}. Any other information request? "
+                return self.state_responses["7_no_phone"]
+            return self.state_responses["7_give_phone"](phone_number)
         else:
-            return "Goodbye"
+            return self.state_responses["goodbye"]
 
-    @staticmethod
-    def generate_random_text_suggestion(suggestion):
+    def generate_random_text_suggestion(self, suggestion):
         responses = [f"I would suggest {suggestion.restaurantname} that serves {suggestion.food} food at "
                      f"{suggestion.pricerange} price. The address is {suggestion.addr}",
                      f"{suggestion.restaurantname} is a nice restaurant in {suggestion.addr} that has "
                      f"{suggestion.food}, and has {suggestion.pricerange} price",
                      f"Located in {suggestion.addr} and with a {suggestion.pricerange} price, "
-                     f"{suggestion.restaurantname} is a good choice"]
+                     f"{suggestion.restaurantname} is a good choice"] if not self.settings["informal"] else \
+            [f"You might want to check out {suggestion.restaurantname}, they got {suggestion.food} food at "
+             f"{suggestion.pricerange} price. You can find it at {suggestion.addr}",
+             f"{suggestion.restaurantname} is a awesome, it's in {suggestion.addr} amd has "
+             f"{suggestion.food}, for a {suggestion.pricerange} price",
+             f"There's this place near {suggestion.addr}, with {suggestion.pricerange} price, "
+             f"it's called {suggestion.restaurantname}, pretty good stuff in my opinion."]
         return random.choice(responses)
 
     def generate_random_text_suggestion_negative(self):
         responses = [f"No restaurants meet the specified requirements. Please give different specifications",
                      f"I'm sorry, no fitting restaurant has been found. Please give different specifications",
-                     f"A restaurant with such requirements does not exist, please give different specifications"]
+                     f"A restaurant with such requirements does not exist, please give different specifications"] \
+            if not self.settings["informal"] else \
+            [f"You need to try something else, I don't know anything like that.",
+             f"Nope, sorry, can't seem to find anything like that.",
+             f"Maybe there's something like that, but I definitively don't know it."]
         return random.choice(responses)
 
     def generate_suggestions(self):
@@ -110,12 +147,13 @@ class State:
 
 
 def initialize_state(classifier: Classifier, settings: dict):
-    welcome_message = "Hello, how may I help you today?"
+    welcome_message = "Hello, how may I help you today?" if not settings['informal'] else \
+        "Hey how are you doing, need some help?"
     if settings['useCaps']:
         welcome_message = welcome_message.upper()
     initial_sentence = input(welcome_message)
 
-    state = State(food_type=None, price=None, area=None)
+    state = State(food_type=None, price=None, area=None, settings=settings)
     update_state(state, classifier, initial_sentence)
 
     return state
