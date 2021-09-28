@@ -109,8 +109,11 @@ class State:
         return suggestion
 
 
-def initialize_state(classifier: Classifier):
-    initial_sentence = input("Hello, how may I help you today? ")
+def initialize_state(classifier: Classifier, settings: dict):
+    welcome_message = "Hello, how may I help you today?"
+    if settings['useCaps']:
+        welcome_message = welcome_message.upper()
+    initial_sentence = input(welcome_message)
 
     state = State(food_type=None, price=None, area=None)
     update_state(state, classifier, initial_sentence)

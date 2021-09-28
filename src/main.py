@@ -52,14 +52,21 @@ def main():
             if command in clf_shortcuts:
                 break
     else:
+        # Default classifier, as it performs best
         command = 'sgd'
 
     while True:
-        state = initialize_state(switch.get(command))
+        state = initialize_state(switch.get(command), settings)
         while state.state_number < 8:
-            sentence = input(state.get_question())
+            output = state.get_question()
+            if settings['useCaps']:
+                output = output.upper()
+            sentence = input(output)
             update_state(state, switch.get(command), sentence)
-        print(state.get_question())
+        output = state.get_question()
+        if settings['useCaps']:
+            output = output.upper()
+        print(output)
         break
 
         # Old
