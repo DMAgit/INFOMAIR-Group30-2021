@@ -48,6 +48,21 @@ def get_closest_levenshtein(word, possible_words, threshold):
     return result, min_distance
 
 
+def is_food_in_set(sentence, possible_foods):
+    for token in sentence.split(" "):
+        if token in possible_foods:
+            return token
+    return None
+
+
+def check_dontcare(matches, possible_keywords):
+    for keyword in possible_keywords:
+        for match in matches:
+            if keyword in match.split(" "):
+                return True
+    return False
+
+
 def process_preference_type(preference, possible_preferences, threshold):
     candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, threshold)
     if preference in possible_preferences:
@@ -57,13 +72,14 @@ def process_preference_type(preference, possible_preferences, threshold):
     return None
 
 
-def extract_preferences_from_sentence(sentence):
+def extract_preferences_from_sentence(sentence, state):
+    print(state)
     # Matches <type> food and <type> restaurant
-    food_pattern = re.compile(r"(any kind of\s*|any\s*|\w+)\s*(?:food|restaurant)")
+    food_pattern = re.compile(r"\b(dont care\s*|any kind of\s*|any\s*|\w+)\s*(?:food|restaurant)\b")
     # Matches any mention of cardinality
-    area_pattern = re.compile(r"\b(any area|center|north|east|south|west)\b")
+    area_pattern = re.compile(r"\b(dont care\s*|any area\s*|center|north|east|south|west)\b")
     # Matches any mention of the price ranges (also adverbs, just in case)
-    price_pattern = re.compile(r"\b(any price|cheap\w*|moderat\w*|expensiv\w*)\b")
+    price_pattern = re.compile(r"\b(dont care\s*|any price|cheap\w*|moderat\w*|expensiv\w*)\b")
 
     sentence = sentence.lower()
     food_matched = food_pattern.findall(sentence)
@@ -77,7 +93,7 @@ def extract_preferences_from_sentence(sentence):
         food = None
     else:
         # Return the 'dontcare' token if the user doesn't have preference about the cuisine
-        if any("any" in s for s in food_matched):
+        if check_dontcare(food_matched, ["any", "care"]) and state == 2:
             food = "dontcare"
         else:
             # Preprocess: change 'world' for 'international'
@@ -91,7 +107,7 @@ def extract_preferences_from_sentence(sentence):
         area = None
     else:
         # Return the 'dontcare' token if the user doesn't have preference about the area
-        if "any" in area_matched[0]:
+        if check_dontcare([area_matched[0]], ["any", "care"]) and state == 4:
             area = "dontcare"
         else:
             # Look for the most possible area
@@ -103,7 +119,7 @@ def extract_preferences_from_sentence(sentence):
         price_range = None
     else:
         # Return the 'dontcare' token if the user doesn't have preference about the price_range
-        if "any" in price_matched[0]:
+        if check_dontcare([price_matched[0]], ["any", "care"]) and state == 3:
             price_range = "dontcare"
         else:
             # Look for the most possible area

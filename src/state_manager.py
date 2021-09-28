@@ -70,28 +70,21 @@ class State:
             if self.food_type in self.suggestions['food']:  # check if there is an exact match
                 self.suggestions = self.suggestions[
                     self.suggestions['food'].str.contains(self.food_type)]  # filter to only that food type
-            else:  # if not we want to iterate all of the food types and compute the Levenshtein distance
-                for i in self.suggestions.loc[:, 'food']:
-                    if distance(self.food_type, i) >= 2:
-                        # >= 2 is an arbitrary cut-off point, we could do sth fancy instead
-                        self.suggestions = self.suggestions[self.suggestions['food'] != i]
+            elif self.food_type == "dontcare":
+                self.suggestions = self.suggestions
 
         # the following two are the same as what happened above but w/ the other features
         if self.price is not None:
             if self.price in self.suggestions['pricerange']:
                 self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
-            else:
-                for i in self.suggestions.loc[:, 'pricerange']:
-                    if distance(self.price, i) >= 2:
-                        self.suggestions = self.suggestions[self.suggestions['pricerange'] != i]
+            elif self.price == "dontcare":
+                self.suggestions = self.suggestions
 
         if self.area is not None:
             if self.area in self.suggestions['area']:
                 self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
-            else:
-                for i in self.suggestions.loc[:, 'area']:
-                    if distance(self.area, i) >= 2:
-                        self.suggestions = self.suggestions[self.suggestions['area'] != i]
+            elif self.area == "dontcare":
+                self.suggestions = self.suggestions
 
         return self.suggestions
 
@@ -124,7 +117,7 @@ def initialize_state(classifier: Classifier, settings: dict):
 def update_state(state: State, classifier: Classifier, sentence: str):
     # Ask for more info if it is required
     if state.food_type is None or state.price is None or state.area is None:
-        new_food_type, new_area, new_price = extract_from_sentence(sentence)
+        new_food_type, new_area, new_price = extract_from_sentence(sentence, state.state_number)
         if new_food_type is not None:
             state.food_type = new_food_type
         if new_price is not None:
@@ -161,8 +154,8 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             state.state_number = 8
 
 
-def extract_from_sentence(sentence):
-    return extract_preferences_from_sentence(sentence)
+def extract_from_sentence(sentence, state):
+    return extract_preferences_from_sentence(sentence, state)
 
 
 def determine_post_or_phone_question(sentence):
