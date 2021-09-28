@@ -48,6 +48,13 @@ def get_closest_levenshtein(word, possible_words, threshold):
     return result, min_distance
 
 
+def is_food_in_set(sentence, possible_foods):
+    for token in sentence.split(" "):
+        if token in possible_foods:
+            return token
+    return None
+
+
 def process_preference_type(preference, possible_preferences, threshold):
     candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, threshold)
     if preference in possible_preferences:
@@ -74,7 +81,7 @@ def extract_preferences_from_sentence(sentence):
 
     # Food processing
     if not food_matched:  # No match at all
-        food = None
+        food = is_food_in_set(sentence, possible_foods)  # Look directly for cuisine name
     else:
         # Return the 'dontcare' token if the user doesn't have preference about the cuisine
         if any("any" in s for s in food_matched):

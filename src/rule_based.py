@@ -9,7 +9,7 @@ class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):
         super().__init__()
         self.model = self
 
-    def fit(self, _):
+    def fit(self, x=None, y=None):
         # No fitting needed, rule implementation is done semi-manually
         return self
 
