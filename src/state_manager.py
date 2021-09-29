@@ -1,10 +1,8 @@
 from joblib import load
 import pandas as pd
 import random
-import re
-from src.classifier import Classifier
+from src.ml.classifiers.classifier import Classifier
 from src.preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
-from Levenshtein import distance
 
 restaurants = pd.read_csv(r'../data/restaurant_info.csv')
 

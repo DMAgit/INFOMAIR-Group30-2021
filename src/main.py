@@ -2,7 +2,7 @@ import json
 import time
 
 from joblib import load
-from models import execute_ml_pipeline, get_classifier_names, get_classifiers
+from src.ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
 
 from src.state_manager import initialize_state, update_state
@@ -107,8 +107,8 @@ def setup_description():
     return clf_str_available, clf_str_input, clf_shortcuts, switch
 
 
-def predict_with_bow(sentence, classifier):
-    """ Use a given model and bag of words to predict to which class the given sentence belongs.
+def predict_with_tfidf(sentence, classifier):
+    """ Use a given model and tfidf to predict to which class the given sentence belongs.
 
     :param sentence: Sentence to classify
     :param classifier: Classifier to use
@@ -116,9 +116,9 @@ def predict_with_bow(sentence, classifier):
 
     clf = classifier.load_from_file()
 
-    bow = load("../models/bow.joblib")
+    tfidf = load("../models/tfidf.joblib")
 
-    prediction = clf.transform_and_predict(sentence, bow)
+    prediction = clf.transform_and_predict(sentence, tfidf)
 
     print(f"Predicted class: {prediction}")
 
