@@ -1,3 +1,4 @@
+from Levenshtein import distance
 from joblib import load
 import pandas as pd
 import random
@@ -82,7 +83,7 @@ class State:
                      f"{suggestion.restaurantname} is a good choice"] if not self.settings["informal"] else \
             [f"You might want to check out {suggestion.restaurantname}, they got {suggestion.food} food at "
              f"{suggestion.pricerange} price. You can find it at {suggestion.addr}",
-             f"{suggestion.restaurantname} is a awesome, it's in {suggestion.addr} amd has "
+             f"{suggestion.restaurantname} is a awesome, it's in {suggestion.addr} and has "
              f"{suggestion.food}, for a {suggestion.pricerange} price",
              f"There's this place near {suggestion.addr}, with {suggestion.pricerange} price, "
              f"it's called {suggestion.restaurantname}, pretty good stuff in my opinion."]
@@ -179,9 +180,9 @@ def update_state(state: State, classifier: Classifier, sentence: str):
 
     # Otherwise, check if a request needs to be made
     else:
-        bow = load("../models/bow.joblib")
+        tfidf = load("../models/tfidf.joblib")
         clf = classifier.load_from_file()
-        response_type = clf.transform_and_predict(sentence, bow)
+        response_type = clf.transform_and_predict(sentence, tfidf)
         # If an alternative is requested, no state update is needed
         if state.state_number == 5 and response_type == "reqalts":
             return
