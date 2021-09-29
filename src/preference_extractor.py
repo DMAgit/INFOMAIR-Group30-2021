@@ -26,6 +26,13 @@ def get_possible_preferences():
     return foods, areas, price_ranges
 
 
+def is_food_in_set(sentence, possible_foods):
+    for token in sentence.split(" "):
+        if token in possible_foods:
+            return token
+    return None
+
+
 def get_closest_levenshtein(word, possible_words, threshold):
     """
     Returns the closest word from a corpus of possible words given the other word to check. It also applies a
@@ -73,8 +80,8 @@ def extract_preferences_from_sentence(sentence):
     possible_foods, possible_areas, possible_price_ranges = get_possible_preferences()
 
     # Food processing
-    if not food_matched:  # No match at all
-        food = None
+    if not food_matched:  # No match at all (try to look for the name directly)
+        food = is_food_in_set(sentence, possible_foods)
     else:
         # Return the 'dontcare' token if the user doesn't have preference about the cuisine
         if any("any" in s for s in food_matched):
