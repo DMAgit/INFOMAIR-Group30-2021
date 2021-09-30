@@ -182,6 +182,14 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         else:
             state.state_number = 5
 
+    # If the state can't generate a suggestion, try again
+    elif state.state_number == 5 and len(state.suggestions) == 0:
+        state.area = None
+        state.food_type = None
+        state.price = None
+        state.state_number = 2
+        return
+
     # Otherwise, check if a request needs to be made
     else:
         tfidf = load("../models/tfidf.joblib")
