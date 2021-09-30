@@ -1,5 +1,6 @@
 import json
 import time
+from tts import TTS
 
 from joblib import load
 from src.ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
@@ -40,7 +41,7 @@ def main():
     print('INFOMAIR - Group 30 - 2021')
 
     if settings_path is None:
-        settings_path = input('Give the path to the settings file (leave empty to use default repository file.)')
+        settings_path = input('Give the path to the settings file (leave empty to use default repository file) ')
         if settings_path == '':
             settings_path = default_settings_path
 
@@ -56,6 +57,9 @@ def main():
         # Default classifier, as it performs best
         command = 'sgd'
 
+    if settings["tts"]:
+        tts = TTS()
+
     while True:
         state = initialize_state(switch.get(command), settings)
         while state.state_number < 8:
@@ -65,12 +69,17 @@ def main():
             output = state.get_question()
             if settings['useCaps']:
                 output = output.upper()
+            if settings["tts"]:
+                tts.speak(output)
             sentence = input(output)
             update_state(state, switch.get(command), sentence)
         output = state.get_question()
         if settings['useCaps']:
             output = output.upper()
-        print(output)
+        if settings["tts"]:
+            tts.speak(output)
+        else:
+            print(output)
         break
 
         # Old
@@ -133,12 +142,12 @@ def get_settings(path):
         with open(path) as f:
             return json.load(f)
     except FileNotFoundError:
-        print("can't find given file, using default settings instead")
+        print("Can't find given file, using default settings instead")
         try:
             with open(default_settings_path) as f:
                 return json.load(f)
         except FileNotFoundError:
-            print("can't find default settings either, exiting")
+            print("Can't find default settings either, exiting")
             exit()
 
 

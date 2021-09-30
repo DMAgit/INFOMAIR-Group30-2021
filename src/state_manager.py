@@ -1,5 +1,6 @@
 from Levenshtein import distance
 from joblib import load
+from tts import TTS
 import pandas as pd
 import random
 from src.ml.classifiers.classifier import Classifier
@@ -146,10 +147,13 @@ class State:
 
 
 def initialize_state(classifier: Classifier, settings: dict):
-    welcome_message = "Hello, how may I help you today?" if not settings['informal'] else \
-        "Hey how are you doing, need some help?"
+    welcome_message = "Hello, how may I help you today? " if not settings['informal'] else \
+        "Hey how are you doing, need some help? "
     if settings['useCaps']:
         welcome_message = welcome_message.upper()
+    if settings["tts"]:
+        tts = TTS()
+        tts.speak(welcome_message)
     initial_sentence = input(welcome_message)
 
     state = State(food_type=None, price=None, area=None, settings=settings)
@@ -161,7 +165,7 @@ def initialize_state(classifier: Classifier, settings: dict):
 def update_state(state: State, classifier: Classifier, sentence: str):
     # Ask for more info if it is required
     if state.food_type is None or state.price is None or state.area is None:
-        new_food_type, new_area, new_price = extract_from_sentence(sentence)
+        new_food_type, new_area, new_price = extract_from_sentence(sentence, state)
         if new_food_type is not None:
             state.food_type = new_food_type
         if new_price is not None:
@@ -198,8 +202,8 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             state.state_number = 8
 
 
-def extract_from_sentence(sentence):
-    return extract_preferences_from_sentence(sentence)
+def extract_from_sentence(sentence, state):
+    return extract_preferences_from_sentence(sentence, state.settings["levenshteinDistance"])
 
 
 def determine_post_or_phone_question(sentence):

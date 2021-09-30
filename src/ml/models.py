@@ -2,7 +2,7 @@ import cleantext
 import numpy as np
 from joblib import dump
 from nltk import word_tokenize
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report
@@ -89,10 +89,9 @@ def apply_tfidf(features_train, features_test):
     :return: train, test: array - matrices associated to each vectorization
                 tfidf: TfidfTransformer - the vectorization model used (for further reuse)
     """
-    bow = CountVectorizer(ngram_range=(1, 3))
-    tfidf = TfidfTransformer()
-    train = tfidf.fit_transform(bow.fit_transform(features_train))
-    test = tfidf.transform(bow.transform(features_test))
+    tfidf = TfidfVectorizer(ngram_range=(1, 3))
+    train = tfidf.fit_transform(features_train)
+    test = tfidf.transform(features_test)
     return train, test, tfidf
 
 
@@ -191,6 +190,3 @@ def execute_ml_pipeline(enable_save):
 
     if enable_save:
         dump(tfidf, "../models/tfidf.joblib")
-
-
-execute_ml_pipeline(True)

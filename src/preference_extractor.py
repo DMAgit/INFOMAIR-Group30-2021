@@ -64,7 +64,7 @@ def process_preference_type(preference, possible_preferences, threshold):
     return None
 
 
-def extract_preferences_from_sentence(sentence):
+def extract_preferences_from_sentence(sentence, lev_threshold):
     # Matches <type> food and <type> restaurant
     food_pattern = re.compile(r"(any kind of\s*|any\s*|\w+)\s*(?:food|restaurant)")
     # Matches any mention of cardinality
@@ -90,7 +90,7 @@ def extract_preferences_from_sentence(sentence):
             # Preprocess: change 'world' for 'international'
             food_matched = list(map(lambda f: "international" if f == "world" else f, food_matched))
             # Look for the most possible restaurant
-            food_matched = list(map(lambda f: process_preference_type(f, possible_foods, 3), food_matched))
+            food_matched = list(map(lambda f: process_preference_type(f, possible_foods, lev_threshold), food_matched))
             food = food_matched[0] if food_matched else None
 
     # Area processing
@@ -102,7 +102,7 @@ def extract_preferences_from_sentence(sentence):
             area = "dontcare"
         else:
             # Look for the most possible area
-            area_matched = list(map(lambda a: process_preference_type(a, possible_areas, 3), area_matched))
+            area_matched = list(map(lambda a: process_preference_type(a, possible_areas, lev_threshold), area_matched))
             area = area_matched[0] if area_matched else None
 
     # Price processing
@@ -114,7 +114,8 @@ def extract_preferences_from_sentence(sentence):
             price_range = "dontcare"
         else:
             # Look for the most possible area
-            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges, 3), price_matched))
+            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges, lev_threshold),
+                                     price_matched))
             price_range = price_matched[0] if price_matched else None
 
     return food, area, price_range
