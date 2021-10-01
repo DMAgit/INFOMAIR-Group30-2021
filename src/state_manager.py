@@ -1,7 +1,8 @@
+from Levenshtein import distance
 from joblib import load
 import pandas as pd
 import random
-from ml.classifiers.classifier import Classifier
+from src.ml.classifiers.classifier import Classifier
 from preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
 
 restaurants = pd.read_csv(r'../data/restaurant_info.csv')
@@ -34,7 +35,7 @@ class State:
                 "1": "What's up, need anything? ",
                 "2": "What kind of food do you want? ",
                 "3": "How much money do you have? Do you want a cheap restaurant, or a moderate or expensive one? ",
-                "4": "Where do you want the place to be at?",
+                "4": "Where do you want the place to be at? ",
                 "5": "\nWant to hear about it? I might have the phone number or post code. ",
                 "6_no_postcode": "Oh my bad, I don't have the postcode. Need anything else? ",
                 "6_give_postcode": lambda post_code: f"Go to {post_code}. Need anything else? ",
@@ -89,40 +90,47 @@ class State:
         return random.choice(responses)
 
     def generate_random_text_suggestion_negative(self):
-        responses = [f"No restaurants meet the specified requirements. Please give different specifications",
-                     f"I'm sorry, no fitting restaurant has been found. Please give different specifications",
-                     f"A restaurant with such requirements does not exist, please give different specifications"] \
+        responses = [f"No restaurants meet the specified requirements. Please give different specifications. ",
+                     f"I'm sorry, no fitting restaurant has been found. Please give different specifications. ",
+                     f"A restaurant with such requirements does not exist, please give different specifications. "] \
             if not self.settings["informal"] else \
-            [f"You need to try something else, I don't know anything like that.",
-             f"Nope, sorry, can't seem to find anything like that.",
-             f"Maybe there's something like that, but I definitively don't know it."]
+            [f"You need to try something else, I don't know anything like that. ",
+             f"Nope, sorry, can't seem to find anything like that. ",
+             f"Maybe there's something like that, but I definitively don't know it. "]
         return random.choice(responses)
 
     def generate_suggestions(self):
         self.suggestions = restaurants.copy()  # at the start all restaurants are matches
 
+        self.food_type, self.price, self.area = list(map(lambda x: None if x == "dontcare" else x,
+                                                         [self.food_type, self.price, self.area]))
+
         if self.food_type is not None:  # check if the user has specified a food type
             if self.food_type in self.suggestions['food']:  # check if there is an exact match
                 self.suggestions = self.suggestions[
                     self.suggestions['food'].str.contains(self.food_type)]  # filter to only that food type
-            elif self.food_type == "dontcare":
-                # TODO
-                pass
+            else:  # if not we want to iterate all of the food types and compute the Levenshtein distance
+                for i in self.suggestions.loc[:, 'food']:
+                    if distance(self.food_type, i) >= 2:
+                        # >= 2 is an arbitrary cut-off point, we could do sth fancy instead
+                        self.suggestions = self.suggestions[self.suggestions['food'] != i]
 
         # the following two are the same as what happened above but w/ the other features
         if self.price is not None:
             if self.price in self.suggestions['pricerange']:
                 self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
-            elif self.price == "dontcare":
-                # TODO
-                pass
+            else:
+                for i in self.suggestions.loc[:, 'pricerange']:
+                    if distance(self.price, i) >= 2:
+                        self.suggestions = self.suggestions[self.suggestions['pricerange'] != i]
 
         if self.area is not None:
             if self.area in self.suggestions['area']:
                 self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
-            elif self.area == "dontcare":
-                # TODO
-                pass
+            else:
+                for i in self.suggestions.loc[:, 'area']:
+                    if distance(self.area, i) >= 2:
+                        self.suggestions = self.suggestions[self.suggestions['area'] != i]
 
         return self.suggestions
 

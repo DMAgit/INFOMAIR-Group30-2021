@@ -8,13 +8,13 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
-from classifiers.bagging import MyBaggingClassifier
-from classifiers.decision_tree import MyDecisionTreeClassifier
-from classifiers.random_forest import MyRandomForestClassifier
-from classifiers.rule_based import RuleBasedClassifier
-from classifiers.base import BaseClassifier
-from classifiers.complement_nb import MyComplementNBClassifier
-from classifiers.sgd import MySGDClassifier
+from src.ml.classifiers.bagging import MyBaggingClassifier
+from src.ml.classifiers.decision_tree import MyDecisionTreeClassifier
+from src.ml.classifiers.random_forest import MyRandomForestClassifier
+from src.ml.classifiers.rule_based import RuleBasedClassifier
+from src.ml.classifiers.base import BaseClassifier
+from src.ml.classifiers.complement_nb import MyComplementNBClassifier
+from src.ml.classifiers.sgd import MySGDClassifier
 
 from nltk.stem import PorterStemmer
 

@@ -3,7 +3,7 @@ import time
 from tts import TTS
 
 from joblib import load
-from ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
+from src.ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
 
 from src.state_manager import initialize_state, update_state

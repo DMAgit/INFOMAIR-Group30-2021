@@ -1,6 +1,6 @@
 from sklearn.naive_bayes import ComplementNB
 
-from classifier import Classifier
+from src.ml.classifiers.classifier import Classifier
 
 
 class MyComplementNBClassifier(Classifier):

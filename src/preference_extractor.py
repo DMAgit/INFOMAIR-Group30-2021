@@ -72,7 +72,7 @@ def extract_preferences_from_sentence(sentence, lev_threshold, state_number):
     # Matches any mention of the price ranges (also adverbs, just in case)
     price_pattern = re.compile(r"\b(cheap\w*|moderat\w*|expensiv\w*)\b")
     # Don't care pattern
-    dontcare_pattern = re.compile(r"(?:i|it)?\s*(any|any\s*kind\s*(:?of)?|dont\s*care|doesnt\s*matter)")
+    dontcare_pattern = re.compile(r"(?:i|it)?\s*(any\s*(?:kind)?|dont\s*(?:mind|care)|doesnt\s*matter)\b")
 
     sentence = sentence.lower()
     food_matched = food_pattern.findall(sentence)

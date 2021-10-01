@@ -1,6 +1,6 @@
 from sklearn.ensemble import BaggingClassifier
 
-from classifier import Classifier
+from src.ml.classifiers.classifier import Classifier
 
 
 class MyBaggingClassifier(Classifier):
