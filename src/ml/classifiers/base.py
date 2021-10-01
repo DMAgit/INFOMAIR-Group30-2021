@@ -1,6 +1,6 @@
 from sklearn.dummy import DummyClassifier
 
-from src.ml.classifiers.classifier import Classifier
+from classifier import Classifier
 
 
 class BaseClassifier(Classifier):

@@ -1,7 +1,6 @@
 from sklearn.base import BaseEstimator, ClassifierMixin
-from src.ml.classifiers.rule_dict import rule_dict
-from src.ml.classifiers.rule_dict import count_dict
-from src.ml.classifiers.classifier import Classifier
+from rule_dict import rule_dict, count_dict
+from classifier import Classifier
 
 
 class RuleBasedClassifier(BaseEstimator, ClassifierMixin, Classifier):

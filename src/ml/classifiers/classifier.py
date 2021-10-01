@@ -1,5 +1,4 @@
 from joblib import load, dump
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import RandomizedSearchCV
 
 

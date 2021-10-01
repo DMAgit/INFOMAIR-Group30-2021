@@ -1,6 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier
 
-from src.ml.classifiers.classifier import Classifier
+from classifier import Classifier
 
 
 class MyRandomForestClassifier(Classifier):

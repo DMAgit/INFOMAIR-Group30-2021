@@ -1,6 +1,6 @@
 from sklearn.linear_model import SGDClassifier
 
-from src.ml.classifiers.classifier import Classifier
+from classifier import Classifier
 
 
 class MySGDClassifier(Classifier):

@@ -3,7 +3,7 @@ import time
 from tts import TTS
 
 from joblib import load
-from src.ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
+from ml.models import execute_ml_pipeline, get_classifier_names, get_classifiers
 import argparse
 
 from src.state_manager import initialize_state, update_state
@@ -61,7 +61,10 @@ def main():
         tts = TTS()
 
     while True:
-        state = initialize_state(switch.get(command), settings)
+        if settings["tts"]:
+            state = initialize_state(switch.get(command), settings, tts)
+        else:
+            state = initialize_state(switch.get(command), settings)
         while state.state_number < 8:
             if settings['addDelay'] > 0:
                 print('Processing...')
@@ -69,14 +72,14 @@ def main():
             output = state.get_question()
             if settings['useCaps']:
                 output = output.upper()
-            if settings["tts"]:
+            if settings["tts"] and tts.setup:
                 tts.speak(output)
             sentence = input(output)
             update_state(state, switch.get(command), sentence)
         output = state.get_question()
         if settings['useCaps']:
             output = output.upper()
-        if settings["tts"]:
+        if settings["tts"] and tts.setup:
             tts.speak(output)
         else:
             print(output)

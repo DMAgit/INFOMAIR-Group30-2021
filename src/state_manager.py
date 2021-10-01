@@ -1,10 +1,8 @@
-from Levenshtein import distance
 from joblib import load
-from tts import TTS
 import pandas as pd
 import random
-from src.ml.classifiers.classifier import Classifier
-from src.preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
+from ml.classifiers.classifier import Classifier
+from preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
 
 restaurants = pd.read_csv(r'../data/restaurant_info.csv')
 
@@ -142,14 +140,14 @@ class State:
         return suggestion
 
 
-def initialize_state(classifier: Classifier, settings: dict):
+def initialize_state(classifier: Classifier, settings: dict, tts=None):
     welcome_message = "Hello, how may I help you today? " if not settings['informal'] else \
         "Hey how are you doing, need some help? "
     if settings['useCaps']:
         welcome_message = welcome_message.upper()
-    if settings["tts"]:
-        tts = TTS()
-        tts.speak(welcome_message)
+    if tts is not None:
+        if tts.setup:
+            tts.speak(welcome_message)
     initial_sentence = input(welcome_message)
 
     state = State(food_type=None, price=None, area=None, settings=settings)
