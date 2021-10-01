@@ -107,28 +107,24 @@ class State:
             if self.food_type in self.suggestions['food']:  # check if there is an exact match
                 self.suggestions = self.suggestions[
                     self.suggestions['food'].str.contains(self.food_type)]  # filter to only that food type
-            else:  # if not we want to iterate all of the food types and compute the Levenshtein distance
-                for i in self.suggestions.loc[:, 'food']:
-                    if distance(self.food_type, i) >= 2:
-                        # >= 2 is an arbitrary cut-off point, we could do sth fancy instead
-                        self.suggestions = self.suggestions[self.suggestions['food'] != i]
+            elif self.food_type == "dontcare":
+                # TODO
+                pass
 
         # the following two are the same as what happened above but w/ the other features
         if self.price is not None:
             if self.price in self.suggestions['pricerange']:
                 self.suggestions = self.suggestions[self.suggestions['pricerange'].str.contains(self.price)]
-            else:
-                for i in self.suggestions.loc[:, 'pricerange']:
-                    if distance(self.price, i) >= 2:
-                        self.suggestions = self.suggestions[self.suggestions['pricerange'] != i]
+            elif self.price == "dontcare":
+                # TODO
+                pass
 
         if self.area is not None:
             if self.area in self.suggestions['area']:
                 self.suggestions = self.suggestions[self.suggestions['area'].str.contains(self.area)]
-            else:
-                for i in self.suggestions.loc[:, 'area']:
-                    if distance(self.area, i) >= 2:
-                        self.suggestions = self.suggestions[self.suggestions['area'] != i]
+            elif self.area == "dontcare":
+                # TODO
+                pass
 
         return self.suggestions
 
@@ -211,7 +207,7 @@ def update_state(state: State, classifier: Classifier, sentence: str):
 
 
 def extract_from_sentence(sentence, state):
-    return extract_preferences_from_sentence(sentence, state.settings["levenshteinDistance"])
+    return extract_preferences_from_sentence(sentence, state.settings["levenshteinDistance"], state.state_number)
 
 
 def determine_post_or_phone_question(sentence):

@@ -64,59 +64,59 @@ def process_preference_type(preference, possible_preferences, threshold):
     return None
 
 
-def extract_preferences_from_sentence(sentence, lev_threshold):
+def extract_preferences_from_sentence(sentence, lev_threshold, state_number):
     # Matches <type> food and <type> restaurant
-    food_pattern = re.compile(r"(any kind of\s*|any\s*|\w+)\s*(?:food|restaurant)")
+    food_pattern = re.compile(r"(\w+)\s*(?:food|restaurant)")
     # Matches any mention of cardinality
-    area_pattern = re.compile(r"\b(any area|center|north|east|south|west)\b")
+    area_pattern = re.compile(r"\b(center|north|east|south|west)\b")
     # Matches any mention of the price ranges (also adverbs, just in case)
-    price_pattern = re.compile(r"\b(any price|cheap\w*|moderat\w*|expensiv\w*)\b")
+    price_pattern = re.compile(r"\b(cheap\w*|moderat\w*|expensiv\w*)\b")
+    # Don't care pattern
+    dontcare_pattern = re.compile(r"(?:i|it)?\s*(any|any\s*kind\s*(:?of)?|dont\s*care|doesnt\s*matter)")
 
     sentence = sentence.lower()
     food_matched = food_pattern.findall(sentence)
     area_matched = area_pattern.findall(sentence)
     price_matched = price_pattern.findall(sentence)
+    dontcare_matched = dontcare_pattern.findall(sentence)
 
     possible_foods, possible_areas, possible_price_ranges = get_possible_preferences()
 
     # Food processing
     if not food_matched:  # No match at all (try to look for the name directly)
         food = is_food_in_set(sentence, possible_foods)
+        # Return the 'dontcare' token if the user doesn't have preference about the food
+        if food is None and state_number <= 2:
+            food = "dontcare" if dontcare_matched else None
     else:
-        # Return the 'dontcare' token if the user doesn't have preference about the cuisine
-        if any("any" in s for s in food_matched):
-            food = "dontcare"
-        else:
-            # Preprocess: change 'world' for 'international'
-            food_matched = list(map(lambda f: "international" if f == "world" else f, food_matched))
-            # Look for the most possible restaurant
-            food_matched = list(map(lambda f: process_preference_type(f, possible_foods, lev_threshold), food_matched))
-            food = food_matched[0] if food_matched else None
+        # Preprocess: change 'world' for 'international'
+        food_matched = list(map(lambda f: "international" if f == "world" else f, food_matched))
+        # Look for the most possible restaurant
+        food_matched = list(map(lambda f: process_preference_type(f, possible_foods, lev_threshold), food_matched))
+        food = food_matched[0] if food_matched else None
 
     # Area processing
     if not area_matched:  # No match at all
         area = None
-    else:
         # Return the 'dontcare' token if the user doesn't have preference about the area
-        if "any" in area_matched[0]:
-            area = "dontcare"
-        else:
-            # Look for the most possible area
-            area_matched = list(map(lambda a: process_preference_type(a, possible_areas, lev_threshold), area_matched))
-            area = area_matched[0] if area_matched else None
+        if state_number == 4:
+            area = "dontcare" if dontcare_matched else None
+    else:
+        # Look for the most possible area
+        area_matched = list(map(lambda a: process_preference_type(a, possible_areas, lev_threshold), area_matched))
+        area = area_matched[0] if area_matched else None
 
     # Price processing
     if not price_matched:  # No match at all
         price_range = None
-    else:
         # Return the 'dontcare' token if the user doesn't have preference about the price_range
-        if "any" in price_matched[0]:
-            price_range = "dontcare"
-        else:
-            # Look for the most possible area
-            price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges, lev_threshold),
-                                     price_matched))
-            price_range = price_matched[0] if price_matched else None
+        if state_number == 3:
+            price_range = "dontcare" if dontcare_matched else None
+    else:
+        # Look for the most possible area
+        price_matched = list(map(lambda p: process_preference_type(p, possible_price_ranges, lev_threshold),
+                                 price_matched))
+        price_range = price_matched[0] if price_matched else None
 
     return food, area, price_range
 
