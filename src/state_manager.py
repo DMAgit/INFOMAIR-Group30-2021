@@ -3,9 +3,10 @@ from joblib import load
 import pandas as pd
 import random
 from src.ml.classifiers.classifier import Classifier
-from preference_extractor import extract_preferences_from_sentence, extract_post_or_phone
+from preference_extractor import extract_preferences_from_sentence, extract_post_or_phone, extract_additional
+from implication_rules import is_busy, is_long, is_romantic, children_advised, reasoning
 
-restaurants = pd.read_csv(r'../data/restaurant_info.csv')
+restaurants = pd.read_csv(r'../data/restaurant_info_properties.csv')
 
 
 class State:
@@ -13,6 +14,10 @@ class State:
         self.food_type = food_type
         self.price = price
         self.area = area
+        self.wants_romantic = None
+        self.wants_busy = None
+        self.wants_long = None
+        self.wants_child = None
         self.suggestions = None
         self.current_suggestion = 0
         self.state_number = 1
@@ -22,13 +27,14 @@ class State:
             "2": "What kind of food should the restaurant serve? ",
             "3": "Should the restaurant be expensive, moderate or cheap? ",
             "4": "Where should the restaurant be located? ",
-            "5": "\nDo you want any information about it, such as the phone or post code? ",
-            "6_no_postcode":
+            "5": "Are there any additional requirements for the restaurant?",
+            "6": "\nDo you want any information about it, such as the phone or post code? ",
+            "7_no_postcode":
                 "I'm sorry, i don't have the postcode for this restaurant. Any other information request? ",
-            "6_give_postcode": lambda post_code: f"It is located at {post_code}. Any other information request? ",
-            "7_no_phone":
+            "7_give_postcode": lambda post_code: f"It is located at {post_code}. Any other information request? ",
+            "8_no_phone":
                 "I'm sorry, i don't have the phone number for this restaurant. Any other information request? ",
-            "7_give_phone": lambda phone_number: f"The phone number is {phone_number}. Any other information request? ",
+            "8_give_phone": lambda phone_number: f"The phone number is {phone_number}. Any other information request? ",
             "goodbye": "Goodbye"
         } if not self.settings["informal"] else \
             {
@@ -36,12 +42,13 @@ class State:
                 "2": "What kind of food do you want? ",
                 "3": "How much money do you have? Do you want a cheap restaurant, or a moderate or expensive one? ",
                 "4": "Where do you want the place to be at? ",
-                "5": "\nWant to hear about it? I might have the phone number or post code. ",
-                "6_no_postcode": "Oh my bad, I don't have the postcode. Need anything else? ",
-                "6_give_postcode": lambda post_code: f"Go to {post_code}. Need anything else? ",
-                "7_no_phone":
+                "5": "Did you have any other wants from the restaurant?",
+                "6": "\nWant to hear about it? I might have the phone number or post code. ",
+                "7_no_postcode": "Oh my bad, I don't have the postcode. Need anything else? ",
+                "7_give_postcode": lambda post_code: f"Go to {post_code}. Need anything else? ",
+                "8_no_phone":
                     "Oh my bad, I don't have the phone number. Need anything else? ",
-                "7_give_phone": lambda phone_number: f"Just call {phone_number}. Need anything else? ",
+                "8_give_phone": lambda phone_number: f"Just call {phone_number}. Need anything else? ",
                 "goodbye": "See ya"
             }
 
@@ -55,22 +62,25 @@ class State:
         elif self.state_number == 4:
             return self.state_responses["4"]
         elif self.state_number == 5:
+            self.generate_suggestions()
+            return self.state_responses["5"]
+        elif self.state_number == 6:
             suggestion = self.get_suggestion()
             if suggestion is not None:
                 return self.generate_random_text_suggestion(
-                    suggestion) + self.state_responses["5"]
+                    suggestion) + ". " + reasoning(self, suggestion) + self.state_responses["6"]
             else:
                 return self.generate_random_text_suggestion_negative()
-        elif self.state_number == 6:
+        elif self.state_number == 7:
             post_code = self.suggestions.iloc[self.current_suggestion].postcode
             if post_code is None:
-                return self.state_responses["6_no_postcode"]
-            return self.state_responses["6_give_postcode"](post_code)
-        elif self.state_number == 7:
+                return self.state_responses["7_no_postcode"]
+            return self.state_responses["7_give_postcode"](post_code)
+        elif self.state_number == 8:
             phone_number = self.suggestions.iloc[self.current_suggestion].phone
             if phone_number is None:
-                return self.state_responses["7_no_phone"]
-            return self.state_responses["7_give_phone"](phone_number)
+                return self.state_responses["8_no_phone"]
+            return self.state_responses["8_give_phone"](phone_number)
         else:
             return self.state_responses["goodbye"]
 
@@ -184,8 +194,48 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         else:
             state.state_number = 5
 
+    elif state.state_number == 5:
+        state.generate_suggestions()
+        tfidf = load("../models/tfidf.joblib")
+        clf = classifier.load_from_file()
+        response_type = clf.transform_and_predict(sentence, tfidf)
+        if response_type == "deny":
+            state.state_number = 5
+            return
+        else:
+            busy, length, children, romantic = extract_additional(sentence)
+            reqs = [busy, length, children, romantic]
+            state.wants_busy = busy
+            state.wants_long = length
+            state.wants_child = children
+            state.wants_romantic = romantic
+            suggestions = state.suggestions
+
+            for column, row in suggestions.iterrows():
+                suggestion = row
+                add = [False, False, False, False]
+                sug_crowdedness = is_busy(suggestion)
+                sug_long = is_long(suggestion)
+                sug_children = children_advised(suggestion)
+                sug_romantic = is_romantic(suggestion)
+                sug_properties = [sug_crowdedness, sug_long, sug_children, sug_romantic]
+
+                for i in range(len(reqs)):
+                    if reqs[i] is None:
+                        add[i] = True
+                    elif reqs[i] == sug_properties[i]:
+                        add[i] = True
+                    else:
+                        add[i] = False
+                if sum(add) != 4:
+
+                    state.suggestions.drop(axis=0, labels=column)
+
+
+        state.state_number = 6
+
     # If the state can't generate a suggestion, try again
-    elif state.state_number == 5 and len(state.suggestions) == 0:
+    elif state.state_number == 6 and len(state.suggestions) == 0:
         state.area = None
         state.food_type = None
         state.price = None
@@ -198,18 +248,18 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         clf = classifier.load_from_file()
         response_type = clf.transform_and_predict(sentence, tfidf)
         # If an alternative is requested, no state update is needed
-        if state.state_number == 5 and response_type == "reqalts":
+        if state.state_number == 6 and response_type == "reqalts":
             return
 
         # If a request is made, the state should be updated to give details in the next iteration
         # if response_type == "request":
         request_type = determine_post_or_phone_question(sentence)
         if request_type == "post":
-            state.state_number = 6
-        elif request_type == "phone":
             state.state_number = 7
-        else:
+        elif request_type == "phone":
             state.state_number = 8
+        else:
+            state.state_number = 9
 
 
 def extract_from_sentence(sentence, state):

@@ -135,3 +135,40 @@ def extract_post_or_phone(sentence):
             else phone_matched[0] if len(phone_matched) != 0 else None
 
     return result
+
+
+def extract_additional(sentence):
+    busy = None
+    length = None
+    children = None
+    romantic = None
+
+    unromantic_pattern = re.compile(r"(no(t|n) (un)*romantic)")
+    romantic_pattern = re.compile(r"(romantic)")
+    if unromantic_pattern.findall(sentence):
+        romantic = False
+    elif romantic_pattern.findall(sentence):
+        romantic = True
+
+    quiet_pattern = re.compile(r"(no(t|n) busy)|(quiet)")
+    busy_pattern = re.compile(r"(busy)|(crowded)")
+    if quiet_pattern.findall(sentence):
+        busy = False
+    elif busy_pattern.findall(sentence):
+        busy = True
+
+    paedophobia_pattern = re.compile(r"(no(t|n)? (child(ren)?)|(kids?)|(baby|(ies)))")
+    kids_pattern = re.compile(r"(child(ren)?)|(kids?)|(baby|(ies))")
+    if paedophobia_pattern.findall(sentence):
+        children = False
+    elif kids_pattern.findall(sentence):
+        children = True
+
+    short_pattern = re.compile(r"(short)")
+    long_pattern = re.compile(r"(long)")
+    if short_pattern.findall(sentence):
+        length = False
+    elif long_pattern.findall(sentence):
+        length = True
+
+    return busy, length, children, romantic
