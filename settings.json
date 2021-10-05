@@ -4,5 +4,5 @@
   "informal": true,
   "addDelay": 0,
   "useCaps": false,
-  "tts": false
+  "tts": true
 }
