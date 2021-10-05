@@ -61,7 +61,8 @@ def preprocess_text(text):
     1) Lowercase
     2) Punctuation removal
     3) Normalize whitespaces
-    4) Stem words using a semi-aggressive stemmer (the classical Porter Stemmer)
+    4) Fix unicode symbols
+    5) Stem words using a semi-aggressive stemmer (the classical Porter Stemmer)
 
     :param text: str - the string to be processed
     :return: str - the processed string
