@@ -30,7 +30,7 @@ def load_dataset():
                 y_train, y_test: array - contains the labels for the training and test sets
     """
     raw_data = dict()
-    with open("../data/dialog_acts.dat", "r") as f:
+    with open("../../data/dialog_acts.dat", "r") as f:
         for line in f:
             [key, value] = line.split(" ", 1)
             value = value.strip("\n")
@@ -191,3 +191,5 @@ def execute_ml_pipeline(enable_save):
 
     if enable_save:
         dump(tfidf, "../models/tfidf.joblib")
+
+load_dataset()
