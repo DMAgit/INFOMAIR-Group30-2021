@@ -176,7 +176,7 @@ def initialize_state(classifier: Classifier, settings: dict, tts=None):
 
 def update_state(state: State, classifier: Classifier, sentence: str):
     # Ask for more info if it is required
-    if state.food_type is None or state.price is None or state.area is None:
+    if state.state_number < 5 and (state.food_type is None or state.price is None or state.area is None):
         new_food_type, new_area, new_price = extract_from_sentence(sentence, state)
         if new_food_type is not None:
             state.food_type = new_food_type
@@ -200,7 +200,7 @@ def update_state(state: State, classifier: Classifier, sentence: str):
         clf = classifier.load_from_file()
         response_type = clf.transform_and_predict(sentence, tfidf)
         if response_type == "deny":
-            state.state_number = 5
+            state.state_number = 6
             return
         else:
             busy, length, children, romantic = extract_additional(sentence)
@@ -230,7 +230,6 @@ def update_state(state: State, classifier: Classifier, sentence: str):
                 if sum(add) != 4:
 
                     state.suggestions.drop(axis=0, labels=column)
-
 
         state.state_number = 6
 
