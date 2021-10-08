@@ -20,6 +20,12 @@ class TTS:
             print("Your system doesn't support TTS, check drivers (macOS: nsss, windows: sapi5, others: espeak)")
 
     def speak(self, text):
+        """
+        Function that given a piece of text and if the system has the proper drivers, will read it out loud using the
+        default sound device.
+
+        :param text: str - the text to be read
+        """
         self.engine.say(text)
         self.engine.runAndWait()
         self.engine.stop()

@@ -1,9 +1,3 @@
-import pandas as pd
-# df = pd.read_csv(r"../data/restaurant_info_properties.csv")
-#
-# for column, row in df.iterrows():
-#     print(row.crowdedness)
-
 def is_busy(suggestion):
     if suggestion.crowdedness == "busy":
         return True
@@ -83,6 +77,3 @@ def reasoning(state, suggestion):
 
     reasoning = busy_sentence + child_sentence + romantic_sentence + long_sentence
     return reasoning
-
-
-

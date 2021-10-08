@@ -3,21 +3,14 @@ import pandas as pd
 from Levenshtein import distance
 
 
-def get_test_utterances():
-    return ["I'm looking for world food", "I want a restaurant that serves world food",
-            "I want a restaurant serving Swedish food", "I'm looking for a restaurant in the center",
-            "I would like a cheap restaurant in the west part of town",
-            "I'm looking for a moderately priced restaurant in the west part of town",
-            "I'm looking for a restaurant in any area that serves Tuscan food", "Can I have an expensive restaurant",
-            "I'm looking for an expensive restaurant and it should serve international food",
-            "I need a Cuban restaurant that is moderately priced",
-            "I'm looking for a moderately priced restaurant with Catalan food",
-            "What is a cheap restaurant in the south part of town", "What about Chinese food",
-            "I wanna find a cheap restaurant", "I'm looking for Persian food please",
-            "Find a Cuban restaurant in the center"]
-
-
 def get_possible_preferences():
+    """
+    Loads all the possible vales from each set of preferences from the available data
+
+    :return: foods: set - all the valid cuisines
+                areas: set - all the valid areas
+                price_ranges: set - all the valid price ranges
+    """
     df = pd.read_csv("../data/restaurant_info.csv")
     foods = set(list(df["food"]))
     areas = set(list(df["area"].dropna()))
@@ -27,6 +20,13 @@ def get_possible_preferences():
 
 
 def is_food_in_set(sentence, possible_foods):
+    """
+    Given a sentence checks if it contains a valid food type
+
+    :param sentence: str - the sentence to check
+    :param possible_foods: set - all the valid cuisines
+    :return: token: str - the food type found / None if no cuisine on the sentence
+    """
     for token in sentence.split(" "):
         if token in possible_foods:
             return token
@@ -56,6 +56,17 @@ def get_closest_levenshtein(word, possible_words, threshold):
 
 
 def process_preference_type(preference, possible_preferences, threshold):
+    """
+    Given a preference as a string checks using levenshtein distance if it is on the set of possible values for
+    that preference
+
+    :param preference: str - the preference (food, area, price)
+    :param possible_preferences: set - the possible valid values for that preference
+    :param threshold: int - the maximum distance allowed when applying levenshtein
+    :return: preference: str - if it is directly contained on the set
+                candidate: str - the most similar preference found
+                None - if there is no match at all
+    """
     candidate, min_distance = get_closest_levenshtein(preference, possible_preferences, threshold)
     if preference in possible_preferences:
         return preference
@@ -65,6 +76,16 @@ def process_preference_type(preference, possible_preferences, threshold):
 
 
 def extract_preferences_from_sentence(sentence, lev_threshold, state_number):
+    """
+    Function that given a sentence applies pattern matching to extract user preferences taking into account the
+    current state of the dialog manager. Uses levenshtein distance to find the most similar preferences is there
+    is not an exact match. Also processes the cases when the user does not care about a preference.
+
+    :param sentence: str - the sentence to extract the preferences from
+    :param lev_threshold: int - the maximum distance allowed when applying levenshtein
+    :param state_number: int - the current state of the dialog manager (used to check for the "do not care" utterances)
+    :return: food, area, price_range: str - the preferences extracted (None if no match)
+    """
     # Matches <type> food and <type> restaurant
     food_pattern = re.compile(r"(\w+)\s*(?:food|restaurant)")
     # Matches any mention of cardinality
@@ -122,6 +143,13 @@ def extract_preferences_from_sentence(sentence, lev_threshold, state_number):
 
 
 def extract_post_or_phone(sentence):
+    """
+    Function that determines if the user is requesting the phone number or the postal code of a restaurant applying
+    pattern matching. In this case a default and tested value for the levenshtein threshold is used (4).
+
+    :param sentence: str - the sentence to analyse
+    :return: result: str - phone/post or None if no match
+    """
     post_pattern = re.compile(r"(postal\s*|post\s*)(?:code)?")
     phone_pattern = re.compile(r"(telephone\s*|phone\s*)(?:number)?")
     post_matched = post_pattern.findall(sentence)
@@ -138,6 +166,13 @@ def extract_post_or_phone(sentence):
 
 
 def extract_additional(sentence):
+    """
+    Function that applies pattern matching to determine the additional characteristics of a restaurant: busyness, long
+    stay, romantic or children friendly.
+
+    :param sentence: str - the sentence to extract the preferences from
+    :return: busy, length, children, romantic: bool - if the sentences matches any of the preferences described above
+    """
     busy = None
     length = None
     children = None

@@ -191,5 +191,3 @@ def execute_ml_pipeline(enable_save):
 
     if enable_save:
         dump(tfidf, "../models/tfidf.joblib")
-
-load_dataset()
