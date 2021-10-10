@@ -65,7 +65,7 @@ def main():
             state = initialize_state(switch.get(command), settings, tts)
         else:
             state = initialize_state(switch.get(command), settings)
-        while state.state_number < 8:
+        while state.state_number < 9:
             if settings['addDelay'] > 0:
                 print('Processing...')
                 time.sleep(settings['addDelay'])
@@ -84,13 +84,6 @@ def main():
         else:
             print(output)
         break
-
-        # Old
-        # sentence = input("Give a sentence to classify (Use EXIT to exit): ")
-        # if sentence == "EXIT":
-        #     break
-        #
-        # predict_with_bow(sentence.lower(), switch.get(command))
 
 
 def setup_description():

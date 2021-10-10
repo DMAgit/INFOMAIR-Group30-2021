@@ -1,38 +1,50 @@
 def is_busy(suggestion):
-    if suggestion.crowdedness == "busy":
-        return True
-    if suggestion.food_quality == "good" and suggestion.pricerange == "cheap":
-        return True
-    return False
+    """
+    Determines if a suggestion restaurant is busy.
+    :param suggestion: Suggestion to classify.
+    :return: Boolean indicating business.
+    """
+    return suggestion.crowdedness == "busy" or (suggestion.food_quality == "good" and suggestion.pricerange == "cheap")
 
 
 def is_long(suggestion):
-    if suggestion.length_stay == "long":
-        return True
-    if suggestion.food == "spanish":
-        return True
-    if is_busy(suggestion):
-        return True
-    return False
+    """
+    Determines if a suggestion restaurant takes long.
+    :param suggestion: Suggestion to classify.
+    :return: Boolean indicating length of stay.
+    """
+    return suggestion.length_stay == "long" or suggestion.food == "spanish" or is_busy(suggestion)
 
 
 def children_advised(suggestion):
-    if is_long(suggestion):
-        return False
-    return True
+    """
+    Determines if it is advised to bring children to a suggestion.
+    :param suggestion: Suggestion to classify.
+    :return: Boolean indicating child-appropriateness.
+    """
+    return not is_long(suggestion)
 
 
 def is_romantic(suggestion):
-    # crowdedness takes priority over length of stay, so if a restaurant is busy, the restaurant will never be romantic
+    """
+    Determines if a suggested restaurant is romantic.
+    :param suggestion: Suggestion to classify.
+    :return: Boolean indicating if the restaurant is romantic.
+    """
+    # A restaurant being crowded takes priority over length of stay,
+    # so if a restaurant is busy, the restaurant will never be romantic
     if is_busy(suggestion):
         return False
-    if is_long(suggestion):
-        return True
-
-    return False
+    return is_long(suggestion)
 
 
-def reasoning(state, suggestion):
+def generate_reasoning(state, suggestion):
+    """
+    Generates a sentence explaining the restaurant choice.
+    :param state: Dialog state.
+    :param suggestion: Given suggestion.
+    :return: String containing the explanation for the suggestion.
+    """
     busy_sentence = ""
     child_sentence = ""
     romantic_sentence = ""
@@ -62,11 +74,11 @@ def reasoning(state, suggestion):
                 long_sentence = long_sentence + " this restaurant is always full of people.\n"
         else:
             long_sentence = f"{suggestion.restaurantname} is not suitable for long visits.\n"
+
     if state.wants_romantic is not None:
         if state.wants_romantic:
             romantic_sentence = f"{suggestion.restaurantname} is suitable for romantic occasions, because you can " \
-                                f"stay here for a long time.\n" \
-
+                                f"stay here for a long time.\n"
         else:
             romantic_sentence = f"{suggestion.restaurantname} is not suitable for romantic occasions."
             if is_busy(suggestion) == "busy":
@@ -75,5 +87,4 @@ def reasoning(state, suggestion):
             else:
                 romantic_sentence = "Our database shows " + romantic_sentence + "\n"
 
-    reasoning = busy_sentence + child_sentence + romantic_sentence + long_sentence
-    return reasoning
+    return busy_sentence + child_sentence + romantic_sentence + long_sentence

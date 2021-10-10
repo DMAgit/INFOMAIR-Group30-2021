@@ -4,7 +4,7 @@ import pandas as pd
 import random
 from src.ml.classifiers.classifier import Classifier
 from preference_extractor import extract_preferences_from_sentence, extract_post_or_phone, extract_additional
-from implication_rules import is_busy, is_long, is_romantic, children_advised, reasoning
+from implication_rules import is_busy, is_long, is_romantic, children_advised, generate_reasoning
 
 restaurants = pd.read_csv(r'../data/restaurant_info_properties.csv')
 
@@ -68,7 +68,7 @@ class State:
             suggestion = self.get_suggestion()
             if suggestion is not None:
                 return self.generate_random_text_suggestion(
-                    suggestion) + ". " + reasoning(self, suggestion) + self.state_responses["6"]
+                    suggestion) + ". " + generate_reasoning(self, suggestion) + self.state_responses["6"]
             else:
                 return self.generate_random_text_suggestion_negative()
         elif self.state_number == 7:
@@ -203,22 +203,14 @@ def update_state(state: State, classifier: Classifier, sentence: str):
             state.state_number = 6
             return
         else:
-            busy, length, children, romantic = extract_additional(sentence)
-            reqs = [busy, length, children, romantic]
-            state.wants_busy = busy
-            state.wants_long = length
-            state.wants_child = children
-            state.wants_romantic = romantic
+            state.wants_busy, state.wants_long, state.wants_child, state.wants_romantic = extract_additional(sentence)
+            reqs = [state.wants_busy, state.wants_long, state.wants_child, state.wants_romantic]
             suggestions = state.suggestions
 
-            for column, row in suggestions.iterrows():
-                suggestion = row
+            for column, suggestion in suggestions.iterrows():
                 add = [False, False, False, False]
-                sug_crowdedness = is_busy(suggestion)
-                sug_long = is_long(suggestion)
-                sug_children = children_advised(suggestion)
-                sug_romantic = is_romantic(suggestion)
-                sug_properties = [sug_crowdedness, sug_long, sug_children, sug_romantic]
+                sug_properties = \
+                    [is_busy(suggestion), is_long(suggestion), children_advised(suggestion), is_romantic(suggestion)]
 
                 for i in range(len(reqs)):
                     if reqs[i] is None:
@@ -235,10 +227,7 @@ def update_state(state: State, classifier: Classifier, sentence: str):
 
     # If the state can't generate a suggestion, try again
     elif state.state_number == 6 and len(state.suggestions) == 0:
-        state.area = None
-        state.food_type = None
-        state.price = None
-        state.state_number = 2
+        state.area, state.food_type, state.price, state.state_number = None, None, None, 2
         return
 
     # Otherwise, check if a request needs to be made
