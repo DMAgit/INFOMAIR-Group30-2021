@@ -25,6 +25,15 @@ Alternatively, the `--settings` flag can be used when starting from main to spec
 For example, to run with the settings file in the current folder, run:\
 `$ python main.py --setings mySettings.json`
 
+The current available settings are:
+
+* chooseClassifier: false to use the best classifier according to our selection (sgd) and true to see the list of possible pretrained classifiers to use (including the baselines)
+* levenshteinDistance: the threshold to use in preference extraction (food, area, price and additional requests as phone or postal code)
+* informal: switch between formal and informal system utterances
+* addDelay: amount of seconds of delay between answers
+* useCaps: switch between lower and uppercase system responses
+* tts: enable or disable the text-to-speech of the system utterances
+
 ### Development mode
 The models used in the program are pre-trained and saved in the repository, but it is also possible to train them yourself and see the training results. 
 To do this, the program needs to be ran with the "development" flag as such:\
