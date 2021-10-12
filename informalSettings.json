@@ -1,7 +1,7 @@
 {
   "chooseClassifier": false,
   "levenshteinDistance": 3,
-  "informal": false,
+  "informal": true,
   "addDelay": 0,
   "useCaps": false,
   "tts": false
