@@ -30,10 +30,10 @@ class State:
             "5": "Are there any additional requirements for the restaurant?",
             "6": "\nDo you want any information about it, such as the phone or post code? ",
             "7_no_postcode":
-                "I'm sorry, i don't have the postcode for this restaurant. Any other information request? ",
+                "I am sorry, I do not have the postcode for this restaurant. Any other information request? ",
             "7_give_postcode": lambda post_code: f"It is located at {post_code}. Any other information request? ",
             "8_no_phone":
-                "I'm sorry, i don't have the phone number for this restaurant. Any other information request? ",
+                "I am sorry, I do not have the phone number for this restaurant. Any other information request? ",
             "8_give_phone": lambda phone_number: f"The phone number is {phone_number}. Any other information request? ",
             "goodbye": "Goodbye"
         } if not self.settings["informal"] else \
@@ -42,7 +42,7 @@ class State:
                 "2": "What kind of food do you want? ",
                 "3": "How much money do you have? Do you want a cheap restaurant, or a moderate or expensive one? ",
                 "4": "Where do you want the place to be at? ",
-                "5": "Did you have any other wants from the restaurant?",
+                "5": "Did you have any other wants from the restaurant? ",
                 "6": "\nWant to hear about it? I might have the phone number or post code. ",
                 "7_no_postcode": "Oh my bad, I don't have the postcode. Need anything else? ",
                 "7_give_postcode": lambda post_code: f"Go to {post_code}. Need anything else? ",
@@ -101,7 +101,7 @@ class State:
 
     def generate_random_text_suggestion_negative(self):
         responses = [f"No restaurants meet the specified requirements. Please give different specifications. ",
-                     f"I'm sorry, no fitting restaurant has been found. Please give different specifications. ",
+                     f"I am sorry, no fitting restaurant has been found. Please give different specifications. ",
                      f"A restaurant with such requirements does not exist, please give different specifications. "] \
             if not self.settings["informal"] else \
             [f"You need to try something else, I don't know anything like that. ",
